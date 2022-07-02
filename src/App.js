@@ -1,32 +1,48 @@
-import * as XLSX from 'xlsx';
+import { useState, useEffect } from 'react'
+import { useSelector } from "react-redux";
 
-import { readArgo10 } from './mongodb/mongodb'
+import UploadSection from './components/UploadSection'
+import Header from './components/Header'
+import './style.css'
+
+import { checkStatus } from './functions/CheckStatus'
 
 function App() {
+  //Redux
+  const { url } = useSelector((state) => state.setting);
 
-  async function handleFileAsync(e) {
-    const file = e.target.files[0];
-    const data = await file.arrayBuffer();
-    /* data is an ArrayBuffer */
-    const workbook = XLSX.read(data).Sheets["Sheet1"];
-    console.log(workbook);
+  const [status, setStatus] = useState(false)
 
-    let fileJson = XLSX.utils.sheet_to_json(workbook);
-    console.log(fileJson);
-    console.log(fileJson.length);    
-  }
+  useEffect(() => {
+    const fetchStatus = async () => {
+      console.log("checking")
+      setStatus(await checkStatus(url))
+    }
 
-  const getFromDB = async () => {
-    await readArgo10()
-  }
+    if (!status) {
+      fetchStatus()
+    }
 
+  })
 
   return (
-    <div className="App">
-      Upload here: <br />
-      <input type="file" id="input_dom_element" onChange={handleFileAsync} />
+    <div className="App" >
+      <div className="center">
 
-      <button onClick={() => getFromDB()} >Get from db</button>
+        <Header status={status} />
+
+      </div>
+
+      <hr />
+
+      {
+        (status) ?
+          <div style={{ backgroundColor: 'lightgray', padding: 20 }}>
+            <UploadSection />
+          </div > : <></>
+
+      }
+
     </div>
   );
 }
