@@ -12,6 +12,7 @@ export const settingSlice = createSlice({
       console.log("payload: " + action.payload)
       state.url = action.payload
     },
+    
   },
 })
 

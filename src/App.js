@@ -19,9 +19,8 @@ function App() {
       setStatus(await checkStatus(url))
     }
 
-    if (!status) {
-      fetchStatus()
-    }
+    fetchStatus()
+
 
   })
 
