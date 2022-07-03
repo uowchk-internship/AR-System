@@ -4,9 +4,9 @@ import { useSelector } from "react-redux";
 import { Card, Badge, Button } from '@mantine/core';
 import * as XLSX from 'xlsx';
 
-import { saveArgo10, getArgo10Count, getArgo10Items, clearArgo10 } from '../../functions/Argo10'
+import { saveArgo29, getArgo29Count, getArgo29Items, clearArgo29 } from '../../functions/Argo29'
 
-const Argo10 = () => {
+const Argo29 = () => {
     //Redux
     const { url } = useSelector((state) => state.setting);
 
@@ -16,7 +16,7 @@ const Argo10 = () => {
 
     const clearData = async () => {
         setLoading(true)
-        await clearArgo10(url)
+        await clearArgo29(url)
         setLoaded(false)
         setLoading(false)
     }
@@ -65,14 +65,14 @@ const Argo10 = () => {
             jsonObjects.push(jsonObj);
         }
 
-        await saveArgo10(url, jsonObjects)
+        await saveArgo29(url, jsonObjects)
         setLoaded(false)
         setLoading(false)
     }
 
     useEffect(() => {
         const fetchNumber = async () => {
-            setEntryCount(await getArgo10Count(url))
+            setEntryCount(await getArgo29Count(url))
             setLoaded(true)
         }
 
@@ -86,7 +86,7 @@ const Argo10 = () => {
     return (
         <div style={{ width: 250, margin: 'auto', display: 'inline-block', padding:10 }}>
             <Card shadow="xl" p="xl">
-                <Card.Section><h3>Argo10</h3></Card.Section>
+                <Card.Section><h3>Argo29</h3></Card.Section>
 
                 <Card.Section>
                     <Badge size="lg" variant="outline">
@@ -108,14 +108,14 @@ const Argo10 = () => {
                         </Button>
                     </> :
                     <>
-                        <label for="argo10Upload">
+                        <label for="argo29Upload">
                             <Button
-                                onClick={() => document.getElementById('argo10Upload').click()}
+                                onClick={() => document.getElementById('argo29Upload').click()}
                                 loading={loading}>
                                 Upload CSV
                             </Button>
                         </label>
-                        <input hidden type="file" id="argo10Upload" onChange={handleFileAsync} />
+                        <input hidden type="file" id="argo29Upload" onChange={handleFileAsync} />
 
                     </>
                 }
@@ -126,4 +126,4 @@ const Argo10 = () => {
     );
 }
 
-export default Argo10;
+export default Argo29;
