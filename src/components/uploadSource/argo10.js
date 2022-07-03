@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { Card, Badge, Button } from '@mantine/core';
 import * as XLSX from 'xlsx';
 
-import { saveArgo10, getArgo10Count, getArgo10Items, clearArgo10 } from '../../functions/Argo10'
+import { saveArgo10, getArgo10Count, getArgo10Items, clearArgo10 } from '../../functions/source/Argo10'
 
 const Argo10 = () => {
     //Redux

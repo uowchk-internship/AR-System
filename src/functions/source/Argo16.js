@@ -1,9 +1,9 @@
 const axios = require('axios');
 
-//Argo10
-export const saveArgo10 = async (url, data) => {
+//Argo16
+export const saveArgo16 = async (url, data) => {
     let result = {}
-    url+="/api/argo10/"
+    url+="/api/source/argo16/"
     await axios.post(url, data)
         .then((response) => {
             if (response.status === 200) {
@@ -19,9 +19,9 @@ export const saveArgo10 = async (url, data) => {
     return result
 }
 
-export const getArgo10Count = async (url) => {
+export const getArgo16Count = async (url) => {
     let result = 0
-    url += "/api/argo10/count"
+    url += "/api/source/argo16/count"
     await axios.get(url)
         .then((response) => {
             if (response.status === 200) {
@@ -37,9 +37,9 @@ export const getArgo10Count = async (url) => {
     return result
 }
 
-export const getArgo10Items = async (url) => {
+export const getArgo16Items = async (url) => {
     let result = {}
-    url += "/api/argo10/"
+    url += "/api/source/argo16/"
     await axios.get(url)
         .then((response) => {
             if (response.status === 200) {
@@ -53,9 +53,9 @@ export const getArgo10Items = async (url) => {
     return result
 }
 
-export const clearArgo10 = async (url) => {
+export const clearArgo16 = async (url) => {
     let result = ""
-    url += "/api/argo10/removeAll"
+    url += "/api/source/argo16/removeAll"
     await axios.get(url)
         .then((response) => {
             if (response.status === 200) {

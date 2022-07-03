@@ -1,9 +1,9 @@
 const axios = require('axios');
 
-//programPlan
-export const saveProgramPlan = async (url, data) => {
+//Argo11
+export const saveArgo11 = async (url, data) => {
     let result = {}
-    url+="/api/programPlan/"
+    url+="/api/source/argo11/"
     await axios.post(url, data)
         .then((response) => {
             if (response.status === 200) {
@@ -19,9 +19,9 @@ export const saveProgramPlan = async (url, data) => {
     return result
 }
 
-export const getProgramPlanCount = async (url) => {
+export const getArgo11Count = async (url) => {
     let result = 0
-    url += "/api/programPlan/count"
+    url += "/api/source/argo11/count"
     await axios.get(url)
         .then((response) => {
             if (response.status === 200) {
@@ -37,9 +37,9 @@ export const getProgramPlanCount = async (url) => {
     return result
 }
 
-export const getProgramPlanItems = async (url) => {
+export const getArgo11Items = async (url) => {
     let result = {}
-    url += "/api/programPlan/"
+    url += "/api/source/argo11/"
     await axios.get(url)
         .then((response) => {
             if (response.status === 200) {
@@ -53,9 +53,9 @@ export const getProgramPlanItems = async (url) => {
     return result
 }
 
-export const clearProgramPlan = async (url) => {
+export const clearArgo11 = async (url) => {
     let result = ""
-    url += "/api/programPlan/removeAll"
+    url += "/api/source/argo11/removeAll"
     await axios.get(url)
         .then((response) => {
             if (response.status === 200) {

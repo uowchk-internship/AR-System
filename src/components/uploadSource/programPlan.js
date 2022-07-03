@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { Card, Badge, Button } from '@mantine/core';
 import * as XLSX from 'xlsx';
 
-import { saveProgramPlan, getProgramPlanCount, getProgramPlanItems, clearProgramPlan } from '../../functions/ProgramPlan'
+import { saveProgramPlan, getProgramPlanCount, getProgramPlanItems, clearProgramPlan } from '../../functions/source/ProgramPlan'
 
 const ProgramPlan = () => {
     //Redux
@@ -51,7 +51,7 @@ const ProgramPlan = () => {
                             type: item[key]
                         }
 
-                        console.log(tempObj)
+                        // console.log(tempObj)
 
                         jsonObjects.push(tempObj)
                     }
