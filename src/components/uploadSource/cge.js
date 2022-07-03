@@ -72,7 +72,7 @@ const Cge = () => {
     return (
         <div style={{ width: 250, margin: 'auto', display: 'inline-block', padding: 10 }}>
             <Card shadow="xl" p="xl">
-                <Card.Section><h3>Program Plan</h3></Card.Section>
+                <Card.Section><h3>CGE</h3></Card.Section>
 
                 <Card.Section>
                     <Badge size="lg" variant="outline">
