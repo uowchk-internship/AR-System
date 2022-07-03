@@ -4,9 +4,9 @@ import { useSelector } from "react-redux";
 import { Card, Badge, Button } from '@mantine/core';
 import * as XLSX from 'xlsx';
 
-import { saveArgo29, getArgo29Count, getArgo29Items, clearArgo29 } from '../../functions/Argo29'
+import { saveProgramPlan, getProgramPlanCount, getProgramPlanItems, clearProgramPlan } from '../../functions/ProgramPlan'
 
-const Argo29 = () => {
+const ProgramPlan = () => {
     //Redux
     const { url } = useSelector((state) => state.setting);
 
@@ -16,7 +16,7 @@ const Argo29 = () => {
 
     const clearData = async () => {
         setLoading(true)
-        await clearArgo29(url)
+        await clearProgramPlan(url)
         setLoaded(false)
         setLoading(false)
     }
@@ -35,24 +35,41 @@ const Argo29 = () => {
 
         let jsonObjects = []
         for (let item of fileJson) {
-            let jsonObj = {
-                id: 0,
-                spridenId: (item["MultiColumn1.SPRIDEN_ID"] === undefined) ? "" : item["MultiColumn1.SPRIDEN_ID"],
-                shrttrmPidm: (item["MultiColumn1.SHRTTRM_PIDM"] === undefined) ? "" : item["MultiColumn1.SHRTTRM_PIDM"],
-                shrttrmTermCode: (item["MultiColumn1.SHRTTRM_TERM_CODE"] === undefined) ? "" : item["MultiColumn1.SHRTTRM_TERM_CODE"],
-                stvastdDesc: (item["MultiColumn1.STVASTD_DESC"] === undefined) ? "" : item["MultiColumn1.STVASTD_DESC"]
+
+            if (item["__rowNum__"] >= 15 ){
+                // console.log(item)
+                let objectKeys =  Object.keys(item)
+
+                for (let key of objectKeys) {
+                    
+                    if (!(key === "Course" || key === "Prog")){
+                        // console.log(key)
+                        let tempObj = {
+                            course: item["Course"],
+                            credit: item["Prog"],
+                            program: key,
+                            type: item[key]
+                        }
+
+                        console.log(tempObj)
+
+                        jsonObjects.push(tempObj)
+                    }
+                }
+
+
             }
-            jsonObjects.push(jsonObj);
+            
         }
 
-        await saveArgo29(url, jsonObjects)
+        await saveProgramPlan(url, jsonObjects)
         setLoaded(false)
         setLoading(false)
     }
 
     useEffect(() => {
         const fetchNumber = async () => {
-            setEntryCount(await getArgo29Count(url))
+            setEntryCount(await getProgramPlanCount(url))
             setLoaded(true)
         }
 
@@ -66,7 +83,7 @@ const Argo29 = () => {
     return (
         <div style={{ width: 250, margin: 'auto', display: 'inline-block', padding: 10 }}>
             <Card shadow="xl" p="xl">
-                <Card.Section><h3>Argo29</h3></Card.Section>
+                <Card.Section><h3>Program Plan</h3></Card.Section>
 
                 <Card.Section>
                     <Badge size="lg" variant="outline">
@@ -92,14 +109,14 @@ const Argo29 = () => {
                         </Button>
                     </> :
                     <>
-                        <label for="argo29Upload">
+                        <label for="programPlanUpload">
                             <Button
-                                onClick={() => document.getElementById('argo29Upload').click()}
+                                onClick={() => document.getElementById('programPlanUpload').click()}
                                 loading={loading}>
                                 Upload CSV
                             </Button>
                         </label>
-                        <input hidden type="file" id="argo29Upload" onChange={handleFileAsync} />
+                        <input hidden type="file" id="programPlanUpload" onChange={handleFileAsync} />
 
                     </>
                 }
@@ -110,4 +127,4 @@ const Argo29 = () => {
     );
 }
 
-export default Argo29;
+export default ProgramPlan;
