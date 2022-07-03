@@ -84,7 +84,7 @@ const Argo10 = () => {
 
 
     return (
-        <div style={{ width: 250, margin: 'auto', display: 'inline-block', padding:10 }}>
+        <div style={{ width: 250, margin: 'auto', display: 'inline-block', padding: 10 }}>
             <Card shadow="xl" p="xl">
                 <Card.Section><h3>Argo10</h3></Card.Section>
 
@@ -92,7 +92,10 @@ const Argo10 = () => {
                     <Badge size="lg" variant="outline">
                         {loaded ?
                             <>
-                                {entryCount} stored
+                                {(entryCount > 0) ?
+                                    `${entryCount} rows` : `Not yet upload`
+                                }
+
                             </> :
                             <> Loading...</>
                         }
@@ -102,6 +105,7 @@ const Argo10 = () => {
                 {(entryCount > 0) ?
                     <>
                         <Button
+                            color="red"
                             loading={loading}
                             onClick={() => clearData()}>
                             Clear all data

@@ -31,7 +31,7 @@ const Argo11 = () => {
         // console.log(workbook);
 
         let fileJson = XLSX.utils.sheet_to_json(workbook);
-        console.log(fileJson);
+        // console.log(fileJson);
 
         let jsonObjects = []
         for (let item of fileJson) {
@@ -97,15 +97,18 @@ const Argo11 = () => {
 
 
     return (
-        <div style={{ width: 250, margin: 'auto', display: 'inline-block', padding:10 }}>
+        <div style={{ width: 250, margin: 'auto', display: 'inline-block', padding: 10 }}>
             <Card shadow="xl" p="xl">
                 <Card.Section><h3>Argo11</h3></Card.Section>
 
                 <Card.Section>
-                    <Badge size="lg" variant="outline">
+                    <Badge size="lg" variant="outline" >
                         {loaded ?
                             <>
-                                {entryCount} stored
+                                {(entryCount > 0) ?
+                                    `${entryCount} rows` : `Not yet upload`
+                                }
+
                             </> :
                             <> Loading...</>
                         }
@@ -115,6 +118,7 @@ const Argo11 = () => {
                 {(entryCount > 0) ?
                     <>
                         <Button
+                            color="red"
                             loading={loading}
                             onClick={() => clearData()}>
                             Clear all data

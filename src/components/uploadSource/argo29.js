@@ -31,36 +31,16 @@ const Argo29 = () => {
         // console.log(workbook);
 
         let fileJson = XLSX.utils.sheet_to_json(workbook);
-        // console.log(fileJson);
+        console.log(fileJson);
 
         let jsonObjects = []
         for (let item of fileJson) {
             let jsonObj = {
                 id: 0,
-                cohort: (item["MultiColumn1.Cohort"] === undefined) ? "" : item["MultiColumn1.Cohort"],
-                internalId: (item["MultiColumn1.InternalId"] === undefined) ? "" : item["MultiColumn1.InternalId"],
-                studentId: (item["MultiColumn1.StudentID"] === undefined) ? "" : item["MultiColumn1.StudentID"],
-                lastName: (item["MultiColumn1.LastName"] === undefined) ? "" : item["MultiColumn1.LastName"],
-                firstName: (item["MultiColumn1.FirstName"] === undefined) ? "" : item["MultiColumn1.FirstName"],
-                enrolYearTerm: (item["MultiColumn1.EnrolYearTerm"] === undefined) ? "" : item["MultiColumn1.EnrolYearTerm"],
-                progCode: (item["MultiColumn1.ProgCode"] === undefined) ? "" : item["MultiColumn1.ProgCode"],
-                studStatus: (item["MultiColumn1.StudStatus"] === undefined) ? "" : item["MultiColumn1.StudStatus"],
-                deptCode: (item["MultiColumn1.DeptCode"] === undefined) ? "" : item["MultiColumn1.DeptCode"],
-                blockCode: (item["MultiColumn1.BlockCode"] === undefined) ? "" : item["MultiColumn1.BlockCode"],
-                shrtcknTermCode: (item["MultiColumn1.SHRTCKN_TERM_CODE"] === undefined) ? "" : item["MultiColumn1.SHRTCKN_TERM_CODE"],
-                shrtcknSubjCode: (item["MultiColumn1.SHRTCKN_SUBJ_CODE"] === undefined) ? "" : item["MultiColumn1.SHRTCKN_SUBJ_CODE"],
-                shrtcknCrseNumb: (item["MultiColumn1.SHRTCKN_CRSE_NUMB"] === undefined) ? "" : item["MultiColumn1.SHRTCKN_CRSE_NUMB"],
-                shrtcknCrseTitle: (item["MultiColumn1.shrtckn_crse_title"] === undefined) ? "" : item["MultiColumn1.shrtckn_crse_title"],
-                shrtckgCreditHours: (item["MultiColumn1.SHRTCKG_CREDIT_HOURS"] === undefined) ? "" : item["MultiColumn1.SHRTCKG_CREDIT_HOURS"],
-                shrtckgHoursAttempted: (item["MultiColumn1.shrtckg_hours_attempted"] === undefined) ? "" : item["MultiColumn1.shrtckg_hours_attempted"],
-                shrtckgGrdeCodeFinal: (item["MultiColumn1.SHRTCKG_GRDE_CODE_FINAL"] === undefined) ? "" : item["MultiColumn1.SHRTCKG_GRDE_CODE_FINAL"],
-                excludeSubject: (item["MultiColumn1.exclude_subject"] === undefined) ? "" : item["MultiColumn1.exclude_subject"],
-                gradePoint: (item["MultiColumn1.grade_point"] === undefined) ? "" : item["MultiColumn1.grade_point"],
-                countGpaInd: (item["MultiColumn1.count_gpa_ind"] === undefined) ? "" : item["MultiColumn1.count_gpa_ind"],
-                instName: (item["MultiColumn1.inst_name"] === undefined) ? "" : item["MultiColumn1.inst_name"],
-                attemptedInd: (item["MultiColumn1.attempted_ind"] === undefined) ? "" : item["MultiColumn1.attempted_ind"],
-                passedInd: (item["MultiColumn1.passed_ind"] === undefined) ? "" : item["MultiColumn1.passed_ind"],
-                completedInd: (item["MultiColumn1.completed_ind"] === undefined) ? "" : item["MultiColumn1.completed_ind"]
+                spridenId: (item["MultiColumn1.SPRIDEN_ID"] === undefined) ? "" : item["MultiColumn1.SPRIDEN_ID"],
+                shrttrmPidm: (item["MultiColumn1.SHRTTRM_PIDM"] === undefined) ? "" : item["MultiColumn1.SHRTTRM_PIDM"],
+                shrttrmTermCode: (item["MultiColumn1.SHRTTRM_TERM_CODE"] === undefined) ? "" : item["MultiColumn1.SHRTTRM_TERM_CODE"],
+                stvastdDesc: (item["MultiColumn1.STVASTD_DESC"] === undefined) ? "" : item["MultiColumn1.STVASTD_DESC"]
             }
             jsonObjects.push(jsonObj);
         }
@@ -84,7 +64,7 @@ const Argo29 = () => {
 
 
     return (
-        <div style={{ width: 250, margin: 'auto', display: 'inline-block', padding:10 }}>
+        <div style={{ width: 250, margin: 'auto', display: 'inline-block', padding: 10 }}>
             <Card shadow="xl" p="xl">
                 <Card.Section><h3>Argo29</h3></Card.Section>
 
@@ -92,7 +72,10 @@ const Argo29 = () => {
                     <Badge size="lg" variant="outline">
                         {loaded ?
                             <>
-                                {entryCount} stored
+                                {(entryCount > 0) ?
+                                    `${entryCount} rows` : `Not yet upload`
+                                }
+
                             </> :
                             <> Loading...</>
                         }
@@ -102,6 +85,7 @@ const Argo29 = () => {
                 {(entryCount > 0) ?
                     <>
                         <Button
+                            color="red"
                             loading={loading}
                             onClick={() => clearData()}>
                             Clear all data

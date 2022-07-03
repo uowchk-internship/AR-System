@@ -37,30 +37,22 @@ const Argo16 = () => {
         for (let item of fileJson) {
             let jsonObj = {
                 id: 0,
-                cohort: (item["MultiColumn1.Cohort"] === undefined) ? "" : item["MultiColumn1.Cohort"],
-                internalId: (item["MultiColumn1.InternalId"] === undefined) ? "" : item["MultiColumn1.InternalId"],
-                studentId: (item["MultiColumn1.StudentID"] === undefined) ? "" : item["MultiColumn1.StudentID"],
+                term: (item["MultiColumn1.Term"] === undefined) ? "" : item["MultiColumn1.Term"],
+                pidm: (item["MultiColumn1.PIDM"] === undefined) ? "" : item["MultiColumn1.PIDM"],
+                studId: (item["MultiColumn1.StudID"] === undefined) ? "" : item["MultiColumn1.StudID"],
                 lastName: (item["MultiColumn1.LastName"] === undefined) ? "" : item["MultiColumn1.LastName"],
                 firstName: (item["MultiColumn1.FirstName"] === undefined) ? "" : item["MultiColumn1.FirstName"],
-                enrolYearTerm: (item["MultiColumn1.EnrolYearTerm"] === undefined) ? "" : item["MultiColumn1.EnrolYearTerm"],
-                progCode: (item["MultiColumn1.ProgCode"] === undefined) ? "" : item["MultiColumn1.ProgCode"],
+                faculty: (item["MultiColumn1.Faculty"] === undefined) ? "" : item["MultiColumn1.Faculty"],
+                programme: (item["MultiColumn1.Programme"] === undefined) ? "" : item["MultiColumn1.Programme"],
+                level: (item["MultiColumn1.Level"] === undefined) ? "" : item["MultiColumn1.Level"],
+                attempHr: (item["MultiColumn1.AttempHr"] === undefined) ? "" : item["MultiColumn1.AttempHr"],
+                earnHr: (item["MultiColumn1.EarnHr"] === undefined) ? "" : item["MultiColumn1.EarnHr"],
+                passHr: (item["MultiColumn1.PassHr"] === undefined) ? "" : item["MultiColumn1.PassHr"],
+                gpaHr: (item["MultiColumn1.GPAHr"] === undefined) ? "" : item["MultiColumn1.GPAHr"],
+                qualPts: (item["MultiColumn1.QualPts"] === undefined) ? "" : item["MultiColumn1.QualPts"],
+                sgpa: (item["MultiColumn1.SGPA"] === undefined) ? "" : item["MultiColumn1.SGPA"],
+                cgpa: (item["MultiColumn1.CGPA"] === undefined) ? "" : item["MultiColumn1.CGPA"],
                 studStatus: (item["MultiColumn1.StudStatus"] === undefined) ? "" : item["MultiColumn1.StudStatus"],
-                deptCode: (item["MultiColumn1.DeptCode"] === undefined) ? "" : item["MultiColumn1.DeptCode"],
-                blockCode: (item["MultiColumn1.BlockCode"] === undefined) ? "" : item["MultiColumn1.BlockCode"],
-                shrtcknTermCode: (item["MultiColumn1.SHRTCKN_TERM_CODE"] === undefined) ? "" : item["MultiColumn1.SHRTCKN_TERM_CODE"],
-                shrtcknSubjCode: (item["MultiColumn1.SHRTCKN_SUBJ_CODE"] === undefined) ? "" : item["MultiColumn1.SHRTCKN_SUBJ_CODE"],
-                shrtcknCrseNumb: (item["MultiColumn1.SHRTCKN_CRSE_NUMB"] === undefined) ? "" : item["MultiColumn1.SHRTCKN_CRSE_NUMB"],
-                shrtcknCrseTitle: (item["MultiColumn1.shrtckn_crse_title"] === undefined) ? "" : item["MultiColumn1.shrtckn_crse_title"],
-                shrtckgCreditHours: (item["MultiColumn1.SHRTCKG_CREDIT_HOURS"] === undefined) ? "" : item["MultiColumn1.SHRTCKG_CREDIT_HOURS"],
-                shrtckgHoursAttempted: (item["MultiColumn1.shrtckg_hours_attempted"] === undefined) ? "" : item["MultiColumn1.shrtckg_hours_attempted"],
-                shrtckgGrdeCodeFinal: (item["MultiColumn1.SHRTCKG_GRDE_CODE_FINAL"] === undefined) ? "" : item["MultiColumn1.SHRTCKG_GRDE_CODE_FINAL"],
-                excludeSubject: (item["MultiColumn1.exclude_subject"] === undefined) ? "" : item["MultiColumn1.exclude_subject"],
-                gradePoint: (item["MultiColumn1.grade_point"] === undefined) ? "" : item["MultiColumn1.grade_point"],
-                countGpaInd: (item["MultiColumn1.count_gpa_ind"] === undefined) ? "" : item["MultiColumn1.count_gpa_ind"],
-                instName: (item["MultiColumn1.inst_name"] === undefined) ? "" : item["MultiColumn1.inst_name"],
-                attemptedInd: (item["MultiColumn1.attempted_ind"] === undefined) ? "" : item["MultiColumn1.attempted_ind"],
-                passedInd: (item["MultiColumn1.passed_ind"] === undefined) ? "" : item["MultiColumn1.passed_ind"],
-                completedInd: (item["MultiColumn1.completed_ind"] === undefined) ? "" : item["MultiColumn1.completed_ind"]
             }
             jsonObjects.push(jsonObj);
         }
@@ -84,7 +76,7 @@ const Argo16 = () => {
 
 
     return (
-        <div style={{ width: 250, margin: 'auto', display: 'inline-block', padding:10 }}>
+        <div style={{ width: 250, margin: 'auto', display: 'inline-block', padding: 10 }}>
             <Card shadow="xl" p="xl">
                 <Card.Section><h3>Argo16</h3></Card.Section>
 
@@ -92,7 +84,10 @@ const Argo16 = () => {
                     <Badge size="lg" variant="outline">
                         {loaded ?
                             <>
-                                {entryCount} stored
+                                {(entryCount > 0) ?
+                                    `${entryCount} rows` : `Not yet upload`
+                                }
+
                             </> :
                             <> Loading...</>
                         }
@@ -102,6 +97,7 @@ const Argo16 = () => {
                 {(entryCount > 0) ?
                     <>
                         <Button
+                            color="red"
                             loading={loading}
                             onClick={() => clearData()}>
                             Clear all data
