@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { Card, Badge, Button } from '@mantine/core';
 import * as XLSX from 'xlsx';
 
-import { saveProgramPlan, getProgramPlanCount, getProgramPlanItems, clearProgramPlan } from '../../functions/source/ProgramPlan'
+import { saveProgramPlan, getProgramPlanCount, clearProgramPlan } from '../../functions/source/ProgramPlan'
 
 const ProgramPlan = () => {
     //Redux
