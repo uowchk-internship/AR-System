@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 
 import UploadSection from './components/UploadSection'
 import Header from './components/Header'
+import Grade from './components/reports/grade'
 import './style.css'
 
 import { checkStatus } from './functions/CheckStatus'
@@ -38,6 +39,7 @@ function App() {
         (status) ?
           <div style={{ backgroundColor: 'lightgray', padding: 20 }}>
             <UploadSection />
+            <Grade />
           </div > : <></>
 
       }
