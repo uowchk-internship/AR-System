@@ -13,6 +13,7 @@ const Argo11 = () => {
     const [entryCount, setEntryCount] = useState(0)
     const [loaded, setLoaded] = useState(false)
     const [loading, setLoading] = useState(false)
+    const [oldURL, setOldURL] = useState("")
 
     const clearData = async () => {
         setLoading(true)
@@ -87,9 +88,13 @@ const Argo11 = () => {
         const fetchNumber = async () => {
             setEntryCount(await getArgo11Count(url))
             setLoaded(true)
+            setOldURL(url)
         }
 
         if (!loaded) {
+            fetchNumber()
+        }
+        if (url !== oldURL) {
             fetchNumber()
         }
 

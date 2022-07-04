@@ -38,6 +38,15 @@ const Header = (props) => {
 
             <Collapse in={showSetting}>
                 <div style={{ backgroundColor: 'lightgrey', padding: 10, borderRadius: 10 }}>
+                    <Button
+                        onClick={() => { dispatch(setURL("")); dispatch(setURL("https://tomcat.johnnyip.com/ar")) }} >
+                        Remote Server (For Test)
+                    </Button>
+                    <Button
+                        onClick={() => dispatch(setURL("http://localhost:8080"))} >
+                        Local Server
+                    </Button>
+
                     <TextInput
                         value={url}
                         label="Server URL"
