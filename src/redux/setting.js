@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  url: 'http://localhost:8080'
+  // url: 'http://localhost:8080'
+  url: 'https://tomcat.johnnyip.com/ar'
 }
 
 export const settingSlice = createSlice({
