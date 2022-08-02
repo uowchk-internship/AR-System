@@ -113,6 +113,14 @@ const ProgramPlan = (props) => {
                 {(entryCount > 0) ?
                     <>
                         <Button
+                            onClick={async () => {
+                                setShowData(true)
+                                setDisplayData(await getFirst10RowOfItem(url, year))
+                            }}>
+                            View First 10 Rows
+                        </Button>
+
+                        <Button
                             color="red"
                             loading={loading}
                             onClick={() => clearData()}>

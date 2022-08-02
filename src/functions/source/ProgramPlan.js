@@ -72,9 +72,11 @@ export const getProgramPlanItems = async (url) => {
     return result
 }
 
-export const getFirst10RowOfItem = async (url,year) => {
+export const getFirst10RowOfItem = async (url, year) => {
     let result = {}
-    url += "/api/source/programPlan/first10Rows/"+year
+    url += "/api/source/programPlan/first10Rows/" + year
+    console.log("url: ")
+    console.log(url)
     await axios.get(url)
         .then((response) => {
             if (response.status === 200) {

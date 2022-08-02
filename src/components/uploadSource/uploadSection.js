@@ -9,8 +9,6 @@ import Argo29 from './argo29'
 import ProgramPlan from './programPlan'
 import Cge from './cge'
 
-import ViewDataCompoment from './viewData'
-
 import { getArgo10Years } from '../../functions/source/Argo10'
 
 function UploadSection() {
@@ -68,7 +66,9 @@ function UploadSection() {
                 withCloseButton={false}
                 size="55%"
             >
-                <ViewDataCompoment displayData={displayData} />
+                <div style={{ textAlign: 'left' }}>
+                    <pre>{JSON.stringify(displayData, null, '\t')}</pre>
+                </div>
             </Modal>
 
 
