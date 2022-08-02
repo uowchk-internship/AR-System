@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useSelector } from "react-redux";
-import { AppShell, Navbar, Header, Button, Aside, Footer } from '@mantine/core';
+import { AppShell, Navbar } from '@mantine/core';
 
-import UploadSection from './components/uploadSection'
+import UploadSection from './components/uploadSource/uploadSection'
 import Grade from './components/reports/grade'
 
 import SettingComponent from './components/setting'

@@ -40,7 +40,7 @@ const Cge = () => {
             console.log(item);
 
             let tempObj = {
-                id:0,
+                id: 0,
                 code: (item["Code"] === undefined) ? "" : item["Code"],
                 title: (item["Title"] === undefined) ? "" : item["Title"],
                 domain: (item["Domain"] === undefined) ? "" : item["Domain"],
@@ -49,7 +49,7 @@ const Cge = () => {
 
             jsonObjects.push(tempObj);
 
-            
+
         }
 
         await saveCge(url, jsonObjects)
@@ -75,24 +75,24 @@ const Cge = () => {
 
 
     return (
-        <div style={{ width: 250, margin: 'auto', display: 'inline-block', padding: 10 }}>
-            <Card shadow="xl" p="xl">
-                <Card.Section><h3>CGE</h3></Card.Section>
+        <tr>
+            <td>
+                <h2>CGE</h2>
+            </td>
 
-                <Card.Section>
-                    <Badge size="lg" variant="outline">
-                        {loaded ?
-                            <>
-                                {(entryCount > 0) ?
-                                    `${entryCount} rows` : `Not yet upload`
-                                }
-
-                            </> :
-                            <> Loading...</>
-                        }
-                    </Badge>
-                </Card.Section>
-                <br />
+            <td>
+                <Badge size="lg" variant="outline">
+                    {loaded ?
+                        <>
+                            {(entryCount > 0) ?
+                                `${entryCount} rows` : `Not yet upload`
+                            }
+                        </> :
+                        <> Loading...</>
+                    }
+                </Badge>
+            </td>
+            <td>
                 {(entryCount > 0) ?
                     <>
                         <Button
@@ -114,10 +114,9 @@ const Cge = () => {
 
                     </>
                 }
+            </td>
+        </tr >
 
-            </Card>
-
-        </div>
     );
 }
 

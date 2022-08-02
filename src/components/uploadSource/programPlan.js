@@ -37,13 +37,13 @@ const ProgramPlan = () => {
         let jsonObjects = []
         for (let item of fileJson) {
 
-            if (item["__rowNum__"] >= 15 ){
+            if (item["__rowNum__"] >= 15) {
                 // console.log(item)
-                let objectKeys =  Object.keys(item)
+                let objectKeys = Object.keys(item)
 
                 for (let key of objectKeys) {
-                    
-                    if (!(key === "Course" || key === "Prog")){
+
+                    if (!(key === "Course" || key === "Prog")) {
                         // console.log(key)
                         let tempObj = {
                             course: item["Course"],
@@ -60,7 +60,7 @@ const ProgramPlan = () => {
 
 
             }
-            
+
         }
 
         await saveProgramPlan(url, jsonObjects)
@@ -86,24 +86,24 @@ const ProgramPlan = () => {
 
 
     return (
-        <div style={{ width: 250, margin: 'auto', display: 'inline-block', padding: 10 }}>
-            <Card shadow="xl" p="xl">
-                <Card.Section><h3>Program Plan</h3></Card.Section>
+        <tr>
+            <td>
+                <h2>Program Plan</h2>
+            </td>
 
-                <Card.Section>
-                    <Badge size="lg" variant="outline">
-                        {loaded ?
-                            <>
-                                {(entryCount > 0) ?
-                                    `${entryCount} rows` : `Not yet upload`
-                                }
-
-                            </> :
-                            <> Loading...</>
-                        }
-                    </Badge>
-                </Card.Section>
-                <br />
+            <td>
+                <Badge size="lg" variant="outline">
+                    {loaded ?
+                        <>
+                            {(entryCount > 0) ?
+                                `${entryCount} rows` : `Not yet upload`
+                            }
+                        </> :
+                        <> Loading...</>
+                    }
+                </Badge>
+            </td>
+            <td>
                 {(entryCount > 0) ?
                     <>
                         <Button
@@ -125,10 +125,8 @@ const ProgramPlan = () => {
 
                     </>
                 }
-
-            </Card>
-
-        </div>
+            </td>
+        </tr >
     );
 }
 

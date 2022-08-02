@@ -81,49 +81,48 @@ const Argo16 = () => {
 
 
     return (
-        <div style={{ width: 250, margin: 'auto', display: 'inline-block', padding: 10 }}>
-            <Card shadow="xl" p="xl">
-                <Card.Section><h3>Argo16</h3></Card.Section>
+        <tr>
+            <td>
+                <h2>Argo16</h2>
+            </td>
 
-                <Card.Section>
-                    <Badge size="lg" variant="outline">
-                        {loaded ?
-                            <>
-                                {(entryCount > 0) ?
-                                    `${entryCount} rows` : `Not yet upload`
-                                }
-
-                            </> :
-                            <> Loading...</>
-                        }
-                    </Badge>
-                </Card.Section>
-                <br />
-                {(entryCount > 0) ?
-                    <>
-                        <Button
-                            color="red"
-                            loading={loading}
-                            onClick={() => clearData()}>
-                            Clear all data
-                        </Button>
-                    </> :
-                    <>
-                        <label for="argo16Upload">
+            <td>
+                <Badge size="lg" variant="outline">
+                    {loaded ?
+                        <>
+                            {(entryCount > 0) ?
+                                `${entryCount} rows` : `Not yet upload`
+                            }
+                        </> :
+                        <> Loading...</>
+                    }
+                </Badge>
+            </td>
+            <td>
+                {
+                    (entryCount > 0) ?
+                        <>
                             <Button
-                                onClick={() => document.getElementById('argo16Upload').click()}
-                                loading={loading}>
-                                Upload CSV
+                                color="red"
+                                loading={loading}
+                                onClick={() => clearData()}>
+                                Clear all data
                             </Button>
-                        </label>
-                        <input hidden type="file" id="argo16Upload" onChange={handleFileAsync} />
+                        </> :
+                        <>
+                            <label for="argo16Upload">
+                                <Button
+                                    onClick={() => document.getElementById('argo16Upload').click()}
+                                    loading={loading}>
+                                    Upload CSV
+                                </Button>
+                            </label>
+                            <input hidden type="file" id="argo16Upload" onChange={handleFileAsync} />
 
-                    </>
+                        </>
                 }
-
-            </Card>
-
-        </div>
+            </td>
+        </tr >
     );
 }
 

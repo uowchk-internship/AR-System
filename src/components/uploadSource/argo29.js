@@ -69,24 +69,24 @@ const Argo29 = () => {
 
 
     return (
-        <div style={{ width: 250, margin: 'auto', display: 'inline-block', padding: 10 }}>
-            <Card shadow="xl" p="xl">
-                <Card.Section><h3>Argo29</h3></Card.Section>
+        <tr>
+            <td>
+                <h2>Argo29</h2>
+            </td>
 
-                <Card.Section>
-                    <Badge size="lg" variant="outline">
-                        {loaded ?
-                            <>
-                                {(entryCount > 0) ?
-                                    `${entryCount} rows` : `Not yet upload`
-                                }
-
-                            </> :
-                            <> Loading...</>
-                        }
-                    </Badge>
-                </Card.Section>
-                <br />
+            <td>
+                <Badge size="lg" variant="outline">
+                    {loaded ?
+                        <>
+                            {(entryCount > 0) ?
+                                `${entryCount} rows` : `Not yet upload`
+                            }
+                        </> :
+                        <> Loading...</>
+                    }
+                </Badge>
+            </td>
+            <td>
                 {(entryCount > 0) ?
                     <>
                         <Button
@@ -108,11 +108,9 @@ const Argo29 = () => {
 
                     </>
                 }
-
-            </Card>
-
-        </div>
-    );
+            </td>
+        </tr >
+    )
 }
 
 export default Argo29;

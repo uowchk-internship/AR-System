@@ -1,12 +1,7 @@
-import { useState } from 'react'
-import { Badge } from '@mantine/core';
 import { useSelector, useDispatch } from "react-redux";
-
-import { TextInput, Button, Collapse } from '@mantine/core';
-import { Settings } from 'tabler-icons-react';
+import { TextInput, Button } from '@mantine/core';
 
 import { setURL } from '../redux/setting'
-
 
 const SettingComponent = (props) => {
 

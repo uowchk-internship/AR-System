@@ -1,5 +1,4 @@
-import { useState } from 'react'
-import { AppShell, Navbar, Button, Badge, Header, Aside, Footer } from '@mantine/core';
+import { Navbar, Button, Badge } from '@mantine/core';
 import { CloudUpload, Settings } from 'tabler-icons-react';
 
 

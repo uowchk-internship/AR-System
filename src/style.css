@@ -6,3 +6,7 @@ body{
     margin-left: 30%;
     margin-right: 30%;
 }
+
+th, td{
+    text-align: left;
+}
