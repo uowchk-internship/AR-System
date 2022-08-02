@@ -3,7 +3,7 @@ const axios = require('axios');
 //Argo10
 export const saveArgo10 = async (url, data) => {
     let result = {}
-    url+="/api/source/argo10/"
+    url += "/api/source/argo10/"
     await axios.post(url, data)
         .then((response) => {
             if (response.status === 200) {
@@ -56,6 +56,22 @@ export const getArgo10Items = async (url) => {
 export const getArgo10Years = async (url) => {
     let result = {}
     url += "/api/source/argo10/enrolTerms"
+    await axios.get(url)
+        .then((response) => {
+            if (response.status === 200) {
+                result = response.data
+            }
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+
+    return result
+}
+
+export const getFirst10RowOfItem = async (url) => {
+    let result = {}
+    url += "/api/source/argo10/first10Rows"
     await axios.get(url)
         .then((response) => {
             if (response.status === 200) {

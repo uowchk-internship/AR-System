@@ -43,7 +43,7 @@ export default function NavBarItem(props) {
                     disabled={!status}
                     onClick={() => setChosenTab("upload")}
                     style={{ width: '100%', height: "50px" }}>
-                    <h2>Upload</h2>
+                    <h2>Upload Data Source</h2>
                 </Button>
             </Navbar.Section>
             <Navbar.Section grow mt="md">

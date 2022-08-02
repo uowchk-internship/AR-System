@@ -53,6 +53,22 @@ export const getArgo16Items = async (url) => {
     return result
 }
 
+export const getFirst10RowOfItem = async (url) => {
+    let result = {}
+    url += "/api/source/argo16/first10Rows"
+    await axios.get(url)
+        .then((response) => {
+            if (response.status === 200) {
+                result = response.data
+            }
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+
+    return result
+}
+
 export const clearArgo16 = async (url) => {
     let result = ""
     url += "/api/source/argo16/removeAll"

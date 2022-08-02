@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react'
 import { useSelector } from "react-redux";
 
-import { Card, Badge, Button } from '@mantine/core';
+import { Badge, Button } from '@mantine/core';
 import * as XLSX from 'xlsx';
 
-import { saveProgramPlan, getProgramPlanCount, getProgramPlanCountByYear, clearProgramPlan } from '../../functions/source/ProgramPlan'
+import { saveProgramPlan, getProgramPlanCountByYear, clearProgramPlan } from '../../functions/source/ProgramPlan'
 
 const ProgramPlan = (props) => {
     let item = props.item
@@ -95,7 +95,7 @@ const ProgramPlan = (props) => {
             </td>
 
             <td>
-                <Badge size="lg" variant="outline">
+                <Badge size="lg" variant="outline" color={(entryCount > 0) ? "" : "gray"}>
                     {loaded ?
                         <>
                             {(entryCount > 0) ?
@@ -113,7 +113,7 @@ const ProgramPlan = (props) => {
                             color="red"
                             loading={loading}
                             onClick={() => clearData()}>
-                            Clear all data
+                            Clear all Program Plan data
                         </Button>
                     </> :
                     <>
@@ -121,7 +121,7 @@ const ProgramPlan = (props) => {
                             <Button
                                 onClick={() => document.getElementById(`programPlanUpload_${year}`).click()}
                                 loading={loading}>
-                                Upload CSV
+                                Upload Program Plan
                             </Button>
                         </label>
                         <a href="/Program_Plan_Sample.xlsx" download="Program_Plan_Sample.xlsx">

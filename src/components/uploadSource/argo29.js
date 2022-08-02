@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useSelector } from "react-redux";
 
-import { Card, Badge, Button } from '@mantine/core';
+import { Badge, Button } from '@mantine/core';
 import * as XLSX from 'xlsx';
 
 import { saveArgo29, getArgo29Count, clearArgo29 } from '../../functions/source/Argo29'
@@ -75,7 +75,7 @@ const Argo29 = () => {
             </td>
 
             <td>
-                <Badge size="lg" variant="outline">
+                <Badge size="lg" variant="outline" color={(entryCount > 0) ? "" : "gray"}>
                     {loaded ?
                         <>
                             {(entryCount > 0) ?
@@ -93,7 +93,7 @@ const Argo29 = () => {
                             color="red"
                             loading={loading}
                             onClick={() => clearData()}>
-                            Clear all data
+                            Clear all argo29 data
                         </Button>
                     </> :
                     <>
@@ -101,7 +101,7 @@ const Argo29 = () => {
                             <Button
                                 onClick={() => document.getElementById('argo29Upload').click()}
                                 loading={loading}>
-                                Upload CSV
+                                Upload argo29
                             </Button>
                         </label>
                         <input hidden type="file" id="argo29Upload" onChange={handleFileAsync} />

@@ -1,4 +1,4 @@
-import { Table } from '@mantine/core';
+import { Table, Modal } from '@mantine/core';
 import { useState, useEffect } from 'react'
 import { useSelector } from "react-redux";
 
@@ -9,6 +9,8 @@ import Argo29 from './argo29'
 import ProgramPlan from './programPlan'
 import Cge from './cge'
 
+import ViewDataCompoment from './viewData'
+
 import { getArgo10Years } from '../../functions/source/Argo10'
 
 function UploadSection() {
@@ -16,6 +18,7 @@ function UploadSection() {
 
     const [programYears, setProgramYears] = useState([])
     const [fetched, setFetched] = useState(false)
+    const [showData, setShowData] = useState(false)
 
     useEffect(() => {
         const getYears = async () => {
@@ -31,7 +34,7 @@ function UploadSection() {
     })
     return (
         <div>
-            <Table striped>
+            <Table striped highlightOnHover>
                 <thead>
                     <tr>
                         <th width="30%">Name</th>
@@ -45,7 +48,6 @@ function UploadSection() {
                     <Argo11 />
                     <Argo16 />
                     <Argo29 />
-
                     <Cge />
 
                     {programYears.length !== 0 ?
@@ -56,6 +58,15 @@ function UploadSection() {
                         : <></>}
                 </tbody>
             </Table>
+
+            <Modal
+                opened={showData}
+                onClose={() => setShowData(false)}
+                title="Introduce yourself!"
+            >
+                <ViewDataCompoment />
+            </Modal>
+
 
         </div>
     );

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useSelector } from "react-redux";
 
-import { Card, Badge, Button } from '@mantine/core';
+import { Badge, Button } from '@mantine/core';
 import * as XLSX from 'xlsx';
 
 import { saveCge, getCgeCount, clearCge } from '../../functions/source/Cge'
@@ -81,7 +81,7 @@ const Cge = () => {
             </td>
 
             <td>
-                <Badge size="lg" variant="outline">
+                <Badge size="lg" variant="outline" color={(entryCount > 0) ? "":"gray"}>
                     {loaded ?
                         <>
                             {(entryCount > 0) ?
@@ -99,7 +99,7 @@ const Cge = () => {
                             color="red"
                             loading={loading}
                             onClick={() => clearData()}>
-                            Clear all data
+                            Clear all CGE data
                         </Button>
                     </> :
                     <>
@@ -107,7 +107,7 @@ const Cge = () => {
                             <Button
                                 onClick={() => document.getElementById('cgeUpload').click()}
                                 loading={loading}>
-                                Upload CSV
+                                Upload CGE
                             </Button>
                         </label>
                         <a href="/CGE_Sample.csv" download="CGE_Sample.csv">

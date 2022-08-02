@@ -72,6 +72,22 @@ export const getProgramPlanItems = async (url) => {
     return result
 }
 
+export const getFirst10RowOfItem = async (url,year) => {
+    let result = {}
+    url += "/api/source/programPlan/first10Rows/"+year
+    await axios.get(url)
+        .then((response) => {
+            if (response.status === 200) {
+                result = response.data
+            }
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+
+    return result
+}
+
 export const clearProgramPlan = async (url) => {
     let result = ""
     url += "/api/source/programPlan/removeAll"
