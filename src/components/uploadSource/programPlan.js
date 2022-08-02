@@ -37,6 +37,7 @@ const ProgramPlan = (props) => {
         let fileJson = XLSX.utils.sheet_to_json(workbook);
         // console.log(fileJson);
 
+        console.log("Year: " + year)
         let jsonObjects = []
         for (let item of fileJson) {
 
@@ -116,19 +117,21 @@ const ProgramPlan = (props) => {
                         </Button>
                     </> :
                     <>
-                        <label htmlFor="programPlanUpload">
+                        <label htmlFor={`programPlanUpload_${year}`}>
                             <Button
-                                onClick={() => document.getElementById('programPlanUpload').click()}
+                                onClick={() => document.getElementById(`programPlanUpload_${year}`).click()}
                                 loading={loading}>
                                 Upload CSV
                             </Button>
-                            <Button
-                                onClick={() => window.open('/Program_Plan_Sample.xlsx', '_blank')}
-                                loading={loading}>
+                        </label>
+                        <a href="/Program_Plan_Sample.xlsx" download="Program_Plan_Sample.xlsx">
+                            <Button>
                                 Download Sample
                             </Button>
-                        </label>
-                        <input hidden type="file" id="programPlanUpload" onChange={handleFileAsync} />
+                        </a>
+
+
+                        <input hidden type="file" id={`programPlanUpload_${year}`} onChange={handleFileAsync} />
 
                     </>
                 }

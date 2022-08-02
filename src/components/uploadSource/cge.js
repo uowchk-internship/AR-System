@@ -110,6 +110,11 @@ const Cge = () => {
                                 Upload CSV
                             </Button>
                         </label>
+                        <a href="/CGE_Sample.csv" download="CGE_Sample.csv">
+                            <Button>
+                                Download Sample
+                            </Button>
+                        </a>
                         <input hidden type="file" id="cgeUpload" onChange={handleFileAsync} />
 
                     </>

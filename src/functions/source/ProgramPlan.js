@@ -4,8 +4,6 @@ const axios = require('axios');
 export const saveProgramPlan = async (url, data) => {
     let result = {}
     url += "/api/source/programPlan/"
-    console.log(data)
-    console.log(JSON.stringify(data))
     await axios.post(url, data)
         .then((response) => {
             if (response.status === 200) {
