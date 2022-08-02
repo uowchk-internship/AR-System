@@ -1,12 +1,22 @@
-body{
+body {
     text-align: center;
 }
 
-.center{
+.center {
     margin-left: 30%;
     margin-right: 30%;
 }
 
-th, td{
+th,
+td {
     text-align: left;
+}
+
+.reportTable th {
+    text-align: right;
+    padding-right: 10px;
+}
+
+.reportTable tr {
+    padding: 5px;
 }

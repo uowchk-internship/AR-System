@@ -39,7 +39,7 @@ const Grade = () => {
     const [showModal, setShowModal] = useState(false)
     const [chosenError, setChosenError] = useState("argo11")
 
-    const filter = async (studentList_) => {
+    const filter = async (studentList_) => {        
         if (studentList_ === undefined) {
             studentList_ = studentList
         }
@@ -58,8 +58,9 @@ const Grade = () => {
         console.log(studentList_[0])
         for (let student of studentList_) {
             //Student List
-            if ((student.progCode === chosenProgram) ||
-                (chosenProgram === "ALL" && programList.includes(student.progCode))) {
+            let nameAfterConcat = `${student.progCode} (${student.programmeTitle})`
+            if ((nameAfterConcat === chosenProgram) ||
+                (chosenProgram === "ALL" && programList.includes(nameAfterConcat))) {
                 studentOptions.push(
                     {
                         value: student.studentId,
@@ -71,7 +72,7 @@ const Grade = () => {
 
         setProgramOptionList(programOptions)
         setStudentIdOptionList(studentOptions)
-        
+
         if (chosenStudent !== "ALL") {
             setCount(1)
         } else {
@@ -103,6 +104,7 @@ const Grade = () => {
             loadData()
         }
 
+
         if (chosenDepartment !== oldDepartment) {
             setOldDepartment(chosenDepartment)
 
@@ -112,6 +114,7 @@ const Grade = () => {
             setChosenStudent("ALL")
             setOldStudent("ALL")
 
+            setCount(1)
             filter()
         } else if (chosenProgram !== oldProgram) {
             setOldProgram(chosenProgram)
@@ -132,24 +135,49 @@ const Grade = () => {
         <>
             <h2 style={{ paddingTop: 100 }}>Download reports </h2>
 
-            <Group grow style={{ paddingLeft: 40, paddingRight: 40 }}>
-                <Select
-                    data={departmentOptionList}
-                    onChange={setChosenDepartment}
-                    value={chosenDepartment} />
+            {/* <Group grow style={{ paddingLeft: 40, paddingRight: 40 }}> */}
+            <Table
+                class="reportTable"
+                striped highlightOnHover
+                style={{ width: "60%", marginLeft: "20%", marginRight: "20%" }}>
+                <tbody>
+                    <tr>
+                        <th>Department</th>
+                        <td>
+                            <Select
+                                data={departmentOptionList}
+                                onChange={setChosenDepartment}
+                                value={chosenDepartment} />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Program</th>
+                        <td>
+                            <Select
+                                searchable
+                                data={programOptionList}
+                                onChange={setChosenProgram}
+                                value={chosenProgram} />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Students</th>
+                        <td>
+                            <Select
+                                searchable
+                                data={studentIdOptionList}
+                                onChange={setChosenStudent}
+                                value={chosenStudent} />
+                        </td>
+                    </tr>
+                </tbody>
+            </Table>
+            <div style={{ width: "50%", marginLeft: "25%", marginRight: "25%" }}>
 
-                <Select
-                    searchable
-                    data={programOptionList}
-                    onChange={setChosenProgram}
-                    value={chosenProgram} />
 
-                <Select
-                    searchable
-                    data={studentIdOptionList}
-                    onChange={setChosenStudent}
-                    value={chosenStudent} />
-            </Group>
+
+            </div>
+            {/* </Group> */}
 
 
             <h2>
