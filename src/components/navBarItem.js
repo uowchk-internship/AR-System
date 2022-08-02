@@ -22,6 +22,11 @@ export default function NavBarItem(props) {
                                 <span style={{ color: 'red' }}> Not connected</span>
                         }
                     </h2>
+                    <p>
+                        Hi, [user]
+                        <Button>Sign Out</Button>
+                    </p>
+                    <Button>Sign In</Button>
                 </div>
             </Navbar.Section>
 

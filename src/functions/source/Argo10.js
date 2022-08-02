@@ -53,6 +53,23 @@ export const getArgo10Items = async (url) => {
     return result
 }
 
+export const getArgo10Years = async (url) => {
+    let result = {}
+    url += "/api/source/argo10/enrolTerms"
+    await axios.get(url)
+        .then((response) => {
+            if (response.status === 200) {
+                result = response.data
+            }
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+
+    return result
+}
+
+
 export const clearArgo10 = async (url) => {
     let result = ""
     url += "/api/source/argo10/removeAll"

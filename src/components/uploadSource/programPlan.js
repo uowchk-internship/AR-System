@@ -4,9 +4,12 @@ import { useSelector } from "react-redux";
 import { Card, Badge, Button } from '@mantine/core';
 import * as XLSX from 'xlsx';
 
-import { saveProgramPlan, getProgramPlanCount, clearProgramPlan } from '../../functions/source/ProgramPlan'
+import { saveProgramPlan, getProgramPlanCount, getProgramPlanCountByYear, clearProgramPlan } from '../../functions/source/ProgramPlan'
 
-const ProgramPlan = () => {
+const ProgramPlan = (props) => {
+    let item = props.item
+    let year = item.substring(0, 4)
+
     //Redux
     const { url } = useSelector((state) => state.setting);
 
@@ -37,27 +40,26 @@ const ProgramPlan = () => {
         let jsonObjects = []
         for (let item of fileJson) {
 
-            if (item["__rowNum__"] >= 15) {
-                // console.log(item)
-                let objectKeys = Object.keys(item)
+            let objectKeys = Object.keys(item)
+            // console.log(item)
+            // console.log(objectKeys)
 
-                for (let key of objectKeys) {
+            for (let key of objectKeys) {
 
-                    if (!(key === "Course" || key === "Prog")) {
-                        // console.log(key)
-                        let tempObj = {
-                            course: item["Course"],
-                            credit: item["Prog"],
-                            program: key,
-                            type: item[key]
-                        }
-
-                        // console.log(tempObj)
-
-                        jsonObjects.push(tempObj)
+                if (!(key === "Course" || key === "UOC")) {
+                    // console.log(key)
+                    let tempObj = {
+                        course: item["Course"],
+                        credit: item["UOC"],
+                        program: key,
+                        type: item[key],
+                        year: year
                     }
-                }
 
+                    // console.log(tempObj)
+
+                    jsonObjects.push(tempObj)
+                }
 
             }
 
@@ -70,7 +72,7 @@ const ProgramPlan = () => {
 
     useEffect(() => {
         const fetchNumber = async () => {
-            setEntryCount(await getProgramPlanCount(url))
+            setEntryCount(await getProgramPlanCountByYear(url, year))
             setLoaded(true)
             setOldURL(url)
         }
@@ -88,7 +90,7 @@ const ProgramPlan = () => {
     return (
         <tr>
             <td>
-                <h2>Program Plan</h2>
+                <h2>Program Plan - ({year})</h2>
             </td>
 
             <td>
@@ -114,11 +116,16 @@ const ProgramPlan = () => {
                         </Button>
                     </> :
                     <>
-                        <label for="programPlanUpload">
+                        <label htmlFor="programPlanUpload">
                             <Button
                                 onClick={() => document.getElementById('programPlanUpload').click()}
                                 loading={loading}>
                                 Upload CSV
+                            </Button>
+                            <Button
+                                onClick={() => window.open('/Program_Plan_Sample.xlsx', '_blank')}
+                                loading={loading}>
+                                Download Sample
                             </Button>
                         </label>
                         <input hidden type="file" id="programPlanUpload" onChange={handleFileAsync} />

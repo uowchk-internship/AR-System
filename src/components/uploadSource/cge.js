@@ -103,7 +103,7 @@ const Cge = () => {
                         </Button>
                     </> :
                     <>
-                        <label for="cgeUpload">
+                        <label htmlFor="cgeUpload">
                             <Button
                                 onClick={() => document.getElementById('cgeUpload').click()}
                                 loading={loading}>

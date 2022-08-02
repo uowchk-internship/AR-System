@@ -3,7 +3,9 @@ const axios = require('axios');
 //programPlan
 export const saveProgramPlan = async (url, data) => {
     let result = {}
-    url+="/api/source/programPlan/"
+    url += "/api/source/programPlan/"
+    console.log(data)
+    console.log(JSON.stringify(data))
     await axios.post(url, data)
         .then((response) => {
             if (response.status === 200) {
@@ -36,6 +38,25 @@ export const getProgramPlanCount = async (url) => {
 
     return result
 }
+
+export const getProgramPlanCountByYear = async (url, year) => {
+    let result = 0
+    url += "/api/source/programPlan/countByYear/" + year
+    await axios.get(url)
+        .then((response) => {
+            if (response.status === 200) {
+                result = response.data
+            } else {
+                result = "No response from server"
+            }
+        })
+        .catch((err) => {
+            result = "No response from server"
+        })
+
+    return result
+}
+
 
 export const getProgramPlanItems = async (url) => {
     let result = {}

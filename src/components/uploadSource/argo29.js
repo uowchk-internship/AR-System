@@ -97,7 +97,7 @@ const Argo29 = () => {
                         </Button>
                     </> :
                     <>
-                        <label for="argo29Upload">
+                        <label htmlFor="argo29Upload">
                             <Button
                                 onClick={() => document.getElementById('argo29Upload').click()}
                                 loading={loading}>
