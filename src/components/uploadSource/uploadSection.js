@@ -18,7 +18,9 @@ function UploadSection() {
 
     const [programYears, setProgramYears] = useState([])
     const [fetched, setFetched] = useState(false)
+
     const [showData, setShowData] = useState(false)
+    const [displayData, setDisplayData] = useState([])
 
     useEffect(() => {
         const getYears = async () => {
@@ -44,15 +46,16 @@ function UploadSection() {
                 </thead>
 
                 <tbody>
-                    <Argo10 />
-                    <Argo11 />
-                    <Argo16 />
-                    <Argo29 />
-                    <Cge />
+                    <Argo10 setShowData={setShowData} setDisplayData={setDisplayData} />
+                    <Argo11 setShowData={setShowData} setDisplayData={setDisplayData} />
+                    <Argo16 setShowData={setShowData} setDisplayData={setDisplayData} />
+                    <Argo29 setShowData={setShowData} setDisplayData={setDisplayData} />
+                    <Cge setShowData={setShowData} setDisplayData={setDisplayData} />
 
                     {programYears.length !== 0 ?
                         [...programYears].map((item, i) => {
-                            return <ProgramPlan key={i} item={item} />
+                            return <ProgramPlan key={i} item={item}
+                                setShowData={setShowData} setDisplayData={setDisplayData} />
 
                         })
                         : <></>}
@@ -62,9 +65,10 @@ function UploadSection() {
             <Modal
                 opened={showData}
                 onClose={() => setShowData(false)}
-                title="Introduce yourself!"
+                withCloseButton={false}
+                size="55%"
             >
-                <ViewDataCompoment />
+                <ViewDataCompoment displayData={displayData} />
             </Modal>
 
 

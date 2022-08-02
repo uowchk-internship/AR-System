@@ -4,9 +4,12 @@ import { useSelector } from "react-redux";
 import { Badge, Button } from '@mantine/core';
 import * as XLSX from 'xlsx';
 
-import { saveCge, getCgeCount, clearCge } from '../../functions/source/Cge'
+import { saveCge, getCgeCount, getFirst10RowOfItem, clearCge } from '../../functions/source/Cge'
 
-const Cge = () => {
+const Cge = (props) => {
+    let setShowData = props.setShowData
+    let setDisplayData = props.setDisplayData
+
     //Redux
     const { url } = useSelector((state) => state.setting);
 
@@ -81,7 +84,7 @@ const Cge = () => {
             </td>
 
             <td>
-                <Badge size="lg" variant="outline" color={(entryCount > 0) ? "":"gray"}>
+                <Badge size="lg" variant="outline" color={(entryCount > 0) ? "" : "gray"}>
                     {loaded ?
                         <>
                             {(entryCount > 0) ?
@@ -95,6 +98,14 @@ const Cge = () => {
             <td>
                 {(entryCount > 0) ?
                     <>
+                        <Button
+                            onClick={async () => {
+                                setShowData(true)
+                                setDisplayData(await getFirst10RowOfItem(url))
+                            }}>
+                            View First 10 Rows
+                        </Button>
+
                         <Button
                             color="red"
                             loading={loading}

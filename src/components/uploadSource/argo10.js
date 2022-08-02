@@ -4,9 +4,12 @@ import { useSelector } from "react-redux";
 import { Badge, Button } from '@mantine/core';
 import * as XLSX from 'xlsx';
 
-import { saveArgo10, getArgo10Count, clearArgo10 } from '../../functions/source/Argo10'
+import { saveArgo10, getArgo10Count, getFirst10RowOfItem, clearArgo10 } from '../../functions/source/Argo10'
 
-const Argo10 = () => {
+const Argo10 = (props) => {
+    let setShowData = props.setShowData
+    let setDisplayData = props.setDisplayData
+
     //Redux
     const { url } = useSelector((state) => state.setting);
 
@@ -110,15 +113,18 @@ const Argo10 = () => {
                 {(entryCount > 0) ?
                     <>
                         <Button
-                            onClick={() => {}}>
-                            View first 10 rows of data
+                            onClick={async () => {
+                                setShowData(true)
+                                setDisplayData(await getFirst10RowOfItem(url))
+                            }}>
+                            View First 10 Rows
                         </Button>
 
                         <Button
                             color="red"
                             loading={loading}
                             onClick={() => clearData()}>
-                            Clear all argo10 data
+                            Clear All Argo10 Data
                         </Button>
                     </> :
                     <>

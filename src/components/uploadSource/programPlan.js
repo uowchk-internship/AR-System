@@ -4,11 +4,14 @@ import { useSelector } from "react-redux";
 import { Badge, Button } from '@mantine/core';
 import * as XLSX from 'xlsx';
 
-import { saveProgramPlan, getProgramPlanCountByYear, clearProgramPlan } from '../../functions/source/ProgramPlan'
+import { saveProgramPlan, getProgramPlanCountByYear, getFirst10RowOfItem, clearProgramPlan } from '../../functions/source/ProgramPlan'
 
 const ProgramPlan = (props) => {
     let item = props.item
     let year = item.substring(0, 4)
+
+    let setShowData = props.setShowData
+    let setDisplayData = props.setDisplayData
 
     //Redux
     const { url } = useSelector((state) => state.setting);

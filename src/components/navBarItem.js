@@ -23,10 +23,10 @@ export default function NavBarItem(props) {
                         }
                     </h2>
                     <p>
-                        Hi, [user]
+                        Hi, username.
                         <Button>Sign Out</Button>
                     </p>
-                    <Button>Sign In</Button>
+                    {/* <Button>Sign In</Button> */}
                 </div>
             </Navbar.Section>
 
