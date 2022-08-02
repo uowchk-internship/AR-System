@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { AppShell, Navbar } from '@mantine/core';
 
 import UploadSection from './components/uploadSource/uploadSection'
-import Grade from './components/reports/grade'
+import Grade from './components/degreeworks/grade'
 
 import SettingComponent from './components/setting'
 import NavBarItem from './components/navBarItem'

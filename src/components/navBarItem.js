@@ -1,5 +1,5 @@
 import { Navbar, Button, Badge } from '@mantine/core';
-import { CloudUpload, Settings } from 'tabler-icons-react';
+import { CloudUpload, Settings, Checklist } from 'tabler-icons-react';
 
 
 export default function NavBarItem(props) {
@@ -54,7 +54,7 @@ export default function NavBarItem(props) {
 
                 <Button variant={chosenTab === "degreeworks" ? "filled" : "subtle"}
                     color={chosenTab === "degreeworks" ? "" : "gray"}
-                    leftIcon={<CloudUpload />}
+                    leftIcon={<Checklist />}
                     disabled={!status}
                     onClick={() => setChosenTab("degreeworks")}
                     style={{ width: '100%', height: "50px" }}>
