@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react'
 import { useSelector } from "react-redux";
+import { AppShell, Navbar, Header, Button, Aside, Footer } from '@mantine/core';
 
-import UploadSection from './components/UploadSection'
-import Header from './components/Header'
+import UploadSection from './components/uploadSection'
 import Grade from './components/reports/grade'
+
+import SettingComponent from './components/setting'
+import NavBarItem from './components/navBarItem'
 import './style.css'
 
 import { checkStatus } from './functions/CheckStatus'
@@ -13,6 +16,8 @@ function App() {
   const { url } = useSelector((state) => state.setting);
 
   const [status, setStatus] = useState(false)
+  const [chosenTab, setChosenTab] = useState("")
+  const [height, setHeight] = useState(0)
 
   useEffect(() => {
     const fetchStatus = async () => {
@@ -22,27 +27,45 @@ function App() {
 
     fetchStatus()
 
-
+    if (typeof (window.innerWidth) == 'number') {
+      setHeight(window.innerHeight - 20)
+    }
   })
 
   return (
     <div className="App" >
-      <div className="center">
 
-        <Header status={status} />
+      <AppShell
+        padding="md"
 
-      </div>
+        navbar={
+          <Navbar width={{ base: 300 }} height={height} p="xs">
+            <NavBarItem
+              status={status}
+              setChosenTab={setChosenTab}
+              chosenTab={chosenTab} />
+          </Navbar>}
 
-      <hr />
+        styles={(theme) => ({
+          main: { backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0] },
+        })}
+      >
 
-      {
-        (status) ?
-          <div style={{ backgroundColor: 'lightgray', padding: 20 }}>
-            <UploadSection />
-            <Grade />
-          </div > : <></>
+        {
+          (chosenTab === "setting") ?
+            <SettingComponent /> :
+            (chosenTab === "upload") ?
+              <UploadSection /> :
+              (chosenTab === "degreeworks") ?
+                <Grade /> :
+                <></>
+        }
+      </AppShell>
 
-      }
+      {/* <div style={{ backgroundColor: 'lightgray', padding: 20 }}>
+        <UploadSection />
+        <Grade />
+      </div > */}
 
     </div>
   );

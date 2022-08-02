@@ -2,6 +2,6 @@
 
 Start the dev environment
 ```
-npm install
+npm install --force
 npm start
 ```
