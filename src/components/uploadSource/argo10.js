@@ -55,7 +55,11 @@ const Argo10 = (props) => {
                 shrtcknSubjCode: (item["MultiColumn1.SHRTCKN_SUBJ_CODE"] === undefined) ? "" : item["MultiColumn1.SHRTCKN_SUBJ_CODE"],
                 shrtcknCrseNumb: (item["MultiColumn1.SHRTCKN_CRSE_NUMB"] === undefined) ? "" : item["MultiColumn1.SHRTCKN_CRSE_NUMB"],
                 shrtcknCrseTitle: (item["MultiColumn1.shrtckn_crse_title"] === undefined) ? "" : item["MultiColumn1.shrtckn_crse_title"],
-                shrtckgCreditHours: (item["MultiColumn1.SHRTCKG_CREDIT_HOURS"] === undefined) ? "" : item["MultiColumn1.SHRTCKG_CREDIT_HOURS"],
+                shrtckgCreditHours: (item["MultiColumn1.SHRTCKG_CREDIT_HOURS"] === undefined || item["MultiColumn1.SHRTCKG_GRDE_CODE_FINAL"] === undefined) ? "" :
+                    ((item["MultiColumn1.SHRTCKG_GRDE_CODE_FINAL"].charAt(0) === "A") || (item["MultiColumn1.SHRTCKG_GRDE_CODE_FINAL"].charAt(0) === "B") ||
+                        (item["MultiColumn1.SHRTCKG_GRDE_CODE_FINAL"].charAt(0) === "C") || (item["MultiColumn1.SHRTCKG_GRDE_CODE_FINAL"].charAt(0) === "D") ||
+                        (item["MultiColumn1.SHRTCKG_GRDE_CODE_FINAL"].charAt(0) === "P")) ?
+                        item["MultiColumn1.SHRTCKG_CREDIT_HOURS"] : 0,
                 shrtckgHoursAttempted: (item["MultiColumn1.shrtckg_hours_attempted"] === undefined) ? "" : item["MultiColumn1.shrtckg_hours_attempted"],
                 shrtckgGrdeCodeFinal: (item["MultiColumn1.SHRTCKG_GRDE_CODE_FINAL"] === undefined) ? "" : item["MultiColumn1.SHRTCKG_GRDE_CODE_FINAL"],
                 excludeSubject: (item["MultiColumn1.exclude_subject"] === undefined) ? "" : item["MultiColumn1.exclude_subject"],

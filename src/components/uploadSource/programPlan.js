@@ -23,7 +23,7 @@ const ProgramPlan = (props) => {
 
     const clearData = async () => {
         setLoading(true)
-        await clearProgramPlan(url)
+        await clearProgramPlan(url, year)
         setLoaded(false)
         setLoading(false)
     }
@@ -51,16 +51,15 @@ const ProgramPlan = (props) => {
             for (let key of objectKeys) {
 
                 if (!(key === "Course" || key === "UOC")) {
-                    // console.log(key)
+                    console.log("key: "+key)
                     let tempObj = {
                         course: item["Course"],
-                        credit: item["UOC"],
-                        program: key,
-                        type: item[key],
+                        credit: (item["Course"].charAt(0) === "_" ? item[key] : item["UOC"]),
+                        program: key.toUpperCase(),
+                        type: (item["Course"].charAt(0) === "_" ? item["Course"].substring(1, item["Course"].length - 9) : item[key]),
                         year: year
                     }
 
-                    // console.log(tempObj)
 
                     jsonObjects.push(tempObj)
                 }
@@ -68,7 +67,6 @@ const ProgramPlan = (props) => {
             }
 
         }
-
         await saveProgramPlan(url, jsonObjects)
         setLoaded(false)
         setLoading(false)
