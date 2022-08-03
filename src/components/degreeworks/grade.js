@@ -37,11 +37,14 @@ const Grade = () => {
 
     const [tempResult, setTempResult] = useState({})
     const [loading, setLoading] = useState(false)
+    const [downloading, setDownloading] = useState(false)
 
     const [showModal, setShowModal] = useState(false)
     const [chosenError, setChosenError] = useState("argo11")
 
     const filter = async (studentList_, chosenDepartment_, chosenProgram_, chosenStudent_) => {
+        setTempResult({})
+
         if (studentList_.length === 0) {
             studentList_ = studentList
         }
@@ -185,7 +188,10 @@ const Grade = () => {
             <Button
                 loading={loading}
                 onClick={async () => {
+                    setDownloading(false)
+
                     await retrieveTempResult()
+
                 }}>
                 Generate report
             </Button>
@@ -240,22 +246,45 @@ const Grade = () => {
                                 </td>
                             </tr>
                         </tbody>
+                        <caption>For those students fall into the red category, their reports will not be generated.</caption>
                     </Table>
 
                     <br /><br />
 
                     {(count === 1) ?
-                        <a href={`${url}/api/report/grade/single/${chosenStudentList[0]}`} target="_blank" rel="noreferrer">
-                            <Button>
-                                Download single report
-                            </Button>
-                        </a>
+                        <>
+                            <a href={`${url}/api/report/grade/single/inline/${chosenStudentList[0]}`} target="_blank" rel="noreferrer">
+                                <Button>
+                                    View in New Tab
+                                </Button>
+                            </a>
+                            <a href={`${url}/api/report/grade/single/attachment/${chosenStudentList[0]}`} download={`${chosenStudentList[0]}.pdf`}>
+                                <Button>
+                                    Download as PDF File
+                                </Button>
+                            </a>
+                        </>
                         :
-                        <a href={`${url}/api/report/grade/zip`} download="Degreeworks-All.zip">
-                            <Button>
-                                Download all reports in zip
-                            </Button>
-                        </a>
+                        <>
+                            <form
+                                method="post"
+                                onSubmit={() => {
+                                    setDownloading(true)
+                                    setInterval(() => {
+                                        setDownloading(false)
+                                    }, 3000);
+                                }}
+                                action={`${url}/api/report/grade/zip`} >
+                                <input type="hidden" name="sid" value={chosenStudentList}></input>
+                                <Button
+                                    type="submit"
+                                    disabled={tempResult.normalCount === 0}
+                                    loading={downloading}
+                                    name="" >
+                                    Download All Reports in ZIP
+                                </Button>
+                            </form>
+                        </>
                     }
                     <Modal
                         opened={showModal}
