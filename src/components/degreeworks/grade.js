@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import { Button, Select, Table, Modal } from '@mantine/core';
 
 import { getArgo11Items, getProgramList } from '../../functions/source/Argo11'
-import { getTempExecuteResult } from '../../functions/report/degreeworks'
+import { getTempExecuteResult, generateWithId, updateHashmap } from '../../functions/report/degreeworks'
 
 const Grade = () => {
     const { url } = useSelector((state) => state.setting);
@@ -13,10 +13,10 @@ const Grade = () => {
     //Options
     const departmentOptionList = [
         { value: 'ALL', label: 'All' },
-        { value: 'BU', label: 'BU' },
-        { value: 'AH', label: 'AH' },
-        { value: 'ST', label: 'ST' },
-        { value: 'SS', label: 'SS' }
+        { value: 'BU', label: 'BU (Business)' },
+        { value: 'AH', label: 'AH (Arts and Humanities)' },
+        { value: 'ST', label: 'ST (Science and Technology)' },
+        { value: 'SS', label: 'SS (Social Science)' },
     ]
     const [programOptionList, setProgramOptionList] = useState([])
     const [studentIdOptionList, setStudentIdOptionList] = useState([])
@@ -25,6 +25,7 @@ const Grade = () => {
     const [chosenDepartment, setChosenDepartment] = useState("ALL")
     const [chosenProgram, setChosenProgram] = useState("ALL")
     const [chosenStudent, setChosenStudent] = useState("ALL")
+    const [chosenStudentList, setChosenStudentList] = useState([])
 
     //Old value
     const [oldDepartment, setOldDepartment] = useState("ALL")
@@ -47,6 +48,7 @@ const Grade = () => {
 
         let programOptions = [{ value: "ALL", label: "All" }]
         let studentOptions = [{ value: "ALL", label: "All" }]
+        let tempStudentList = []
 
         let programList = await getProgramList(url, chosenDepartment_);
 
@@ -63,9 +65,10 @@ const Grade = () => {
                 studentOptions.push(
                     {
                         value: student.studentId,
-                        label: `${student.studentId} (${student.firstName} ${student.lastName})`
+                        label: `${student.studentId} (${student.lastName} ${student.firstName})`
                     }
                 )
+                tempStudentList.push(student.studentId)
             }
         }
 
@@ -73,17 +76,23 @@ const Grade = () => {
         setStudentIdOptionList(studentOptions)
         if (chosenStudent_ !== "ALL") {
             setCount(1)
+            setChosenStudentList([chosenStudent_])
         } else {
             setCount(studentOptions.length - 1)
+            setChosenStudentList(tempStudentList)
         }
+
     }
 
     const retrieveTempResult = async () => {
         setLoading(true)
+        setTempResult({})
 
-        let result = await getTempExecuteResult(url);
+        // console.log(JSON.stringify(chosenStudentList))
+        // let body = JSON.stringify(chosenStudentList)
+        let result = await getTempExecuteResult(url, chosenStudentList);
 
-        console.log(result)
+
         setTempResult(result)
         setLoading(false)
     }
@@ -95,6 +104,8 @@ const Grade = () => {
             setStudentList(completeStudentList)
             filter(completeStudentList, "ALL", "ALL", "ALL")
             setLoaded(true)
+
+            updateHashmap(url)
         }
 
         if (!loaded) {
@@ -123,6 +134,7 @@ const Grade = () => {
             filter([], chosenDepartment, chosenProgram, chosenStudent)
         }
 
+
     })
 
 
@@ -130,7 +142,6 @@ const Grade = () => {
         <>
             <h2 style={{ paddingTop: 100 }}>Download reports </h2>
 
-            {/* <Group grow style={{ paddingLeft: 40, paddingRight: 40 }}> */}
             <Table
                 className="reportTable"
                 striped highlightOnHover
@@ -167,13 +178,6 @@ const Grade = () => {
                     </tr>
                 </tbody>
             </Table>
-            <div style={{ width: "50%", marginLeft: "25%", marginRight: "25%" }}>
-
-
-
-            </div>
-            {/* </Group> */}
-
 
             <h2>
                 <span style={{ fontSize: 30 }}>{count} </span>
@@ -252,27 +256,24 @@ const Grade = () => {
                             Download all reports in zip
                         </Button>
                     </a>
+                    <Modal
+                        opened={showModal}
+                        onClose={() => setShowModal(false)}
+                        title={chosenError}
+                    >
+                        {(chosenError === "Student Not in Argo11") ?
+                            [...tempResult.noArgo11Id].map((item, index) => {
+                                return <p key={index}>{item}</p>
+                            }) :
+                            (chosenError === "No Program Plan for student") ?
+                                [...tempResult.noProgramPlanId].map((item, index) => {
+                                    return <p key={index}>{item}</p>
+                                }) : <></>
+                        }
+
+                    </Modal>
                 </>
                 : <></>}
-
-
-
-            <Modal
-                opened={showModal}
-                onClose={() => setShowModal(false)}
-                title={chosenError}
-            >
-                {(chosenError === "Student Not in Argo11") ?
-                    [...tempResult.noArgo11Id].map((item, index) => {
-                        return <p>{item}</p>
-                    }) :
-                    (chosenError === "No Program Plan for student") ?
-                        [...tempResult.noProgramPlanId].map((item, index) => {
-                            return <p>{item}</p>
-                        }) : <></>
-                }
-
-            </Modal>
 
         </>
     )
