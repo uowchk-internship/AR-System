@@ -3,8 +3,6 @@ const axios = require('axios');
 export const getTempExecuteResult = async (url, idList) => {
     let result = ""
     url += "/api/report/grade/tempResult"
-    console.log("idList")
-    console.log(idList)
     await axios.post(url, idList)
         .then((response) => {
             if (response.status === 200) {
@@ -43,7 +41,6 @@ export const generateWithId = async (url) => {
 export const updateHashmap = async (url) => {
     let result = ""
     url += "/api/report/grade/updateHashmap"
-    console.log("updateHashmap: ")
     await axios.get(url)
         .then((response) => {
             if (response.status === 200) {

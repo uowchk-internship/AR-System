@@ -88,11 +88,9 @@ const Grade = () => {
         setLoading(true)
         setTempResult({})
 
-        // console.log(JSON.stringify(chosenStudentList))
-        // let body = JSON.stringify(chosenStudentList)
         let result = await getTempExecuteResult(url, chosenStudentList);
 
-
+        console.log(result)
         setTempResult(result)
         setLoading(false)
     }
@@ -216,26 +214,26 @@ const Grade = () => {
                                 <td></td>
                             </tr>
                             <tr>
-                                <td style={{ color: "red" }}><b>Student Not in Argo11</b></td>
-                                <td>{tempResult.noArgo11RecordCount}</td>
+                                <td style={{ color: "red" }}><b>Students have no record in Argo10</b></td>
+                                <td>{tempResult.noArgo10RecordCount}</td>
                                 <td>
                                     <Button
                                         onClick={() => {
                                             setShowModal(true)
-                                            setChosenError("Student Not in Argo11")
+                                            setChosenError("Students have no record in Argo10")
                                         }}>
                                         View
                                     </Button>
                                 </td>
                             </tr>
                             <tr>
-                                <td style={{ color: "red" }}><b>No Program Plan for student</b></td>
+                                <td style={{ color: "red" }}><b>No Program Plan for students</b></td>
                                 <td>{tempResult.noProgramPlanCount}</td>
                                 <td>
                                     <Button
                                         onClick={() => {
                                             setShowModal(true)
-                                            setChosenError("No Program Plan for student")
+                                            setChosenError("No Program Plan for students")
                                         }}>
                                         View
                                     </Button>
@@ -245,27 +243,30 @@ const Grade = () => {
                     </Table>
 
                     <br /><br />
-                    <a href={`${url}/api/report/grade/`} target="_blank" rel="noreferrer">
-                        <Button>
-                            Download single report
-                        </Button>
-                    </a>
 
-                    <a href={`${url}/api/report/grade/zip`} download="Degreeworks-All.zip">
-                        <Button>
-                            Download all reports in zip
-                        </Button>
-                    </a>
+                    {(count === 1) ?
+                        <a href={`${url}/api/report/grade/single/${chosenStudentList[0]}`} target="_blank" rel="noreferrer">
+                            <Button>
+                                Download single report
+                            </Button>
+                        </a>
+                        :
+                        <a href={`${url}/api/report/grade/zip`} download="Degreeworks-All.zip">
+                            <Button>
+                                Download all reports in zip
+                            </Button>
+                        </a>
+                    }
                     <Modal
                         opened={showModal}
                         onClose={() => setShowModal(false)}
                         title={chosenError}
                     >
-                        {(chosenError === "Student Not in Argo11") ?
-                            [...tempResult.noArgo11Id].map((item, index) => {
+                        {(chosenError === "Students have no record in Argo10") ?
+                            [...tempResult.noArgo10Id].map((item, index) => {
                                 return <p key={index}>{item}</p>
                             }) :
-                            (chosenError === "No Program Plan for student") ?
+                            (chosenError === "No Program Plan for students") ?
                                 [...tempResult.noProgramPlanId].map((item, index) => {
                                     return <p key={index}>{item}</p>
                                 }) : <></>
