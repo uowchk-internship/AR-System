@@ -23,7 +23,6 @@ function UploadSection() {
     useEffect(() => {
         const getYears = async () => {
             let result = await getArgo10Years(url)
-            console.log(result)
             setProgramYears(result)
             setFetched(true)
         }

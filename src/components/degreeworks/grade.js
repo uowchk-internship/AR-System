@@ -1,8 +1,9 @@
 import { useSelector } from "react-redux";
 import { useState, useEffect } from 'react'
-import { Button, Select, Group, Table, Modal } from '@mantine/core';
+import { Button, Select, Table, Modal } from '@mantine/core';
 
-import { getArgo11Items, getProgramList, getTempExecuteResult } from '../../functions/source/Argo11'
+import { getArgo11Items, getProgramList } from '../../functions/source/Argo11'
+import { getTempExecuteResult } from '../../functions/report/degreeworks'
 
 const Grade = () => {
     const { url } = useSelector((state) => state.setting);
@@ -39,28 +40,26 @@ const Grade = () => {
     const [showModal, setShowModal] = useState(false)
     const [chosenError, setChosenError] = useState("argo11")
 
-    const filter = async (studentList_) => {        
-        if (studentList_ === undefined) {
+    const filter = async (studentList_, chosenDepartment_, chosenProgram_, chosenStudent_) => {
+        if (studentList_.length === 0) {
             studentList_ = studentList
         }
 
         let programOptions = [{ value: "ALL", label: "All" }]
         let studentOptions = [{ value: "ALL", label: "All" }]
 
-        let programList = await getProgramList(url, chosenDepartment);
+        let programList = await getProgramList(url, chosenDepartment_);
 
 
         for (let program of programList) {
             programOptions.push({ value: program, label: program })
         }
 
-
-        console.log(studentList_[0])
         for (let student of studentList_) {
             //Student List
             let nameAfterConcat = `${student.progCode} (${student.programmeTitle})`
-            if ((nameAfterConcat === chosenProgram) ||
-                (chosenProgram === "ALL" && programList.includes(nameAfterConcat))) {
+            if ((nameAfterConcat === chosenProgram_) ||
+                (chosenProgram_ === "ALL" && programList.includes(nameAfterConcat))) {
                 studentOptions.push(
                     {
                         value: student.studentId,
@@ -72,11 +71,10 @@ const Grade = () => {
 
         setProgramOptionList(programOptions)
         setStudentIdOptionList(studentOptions)
-
-        if (chosenStudent !== "ALL") {
+        if (chosenStudent_ !== "ALL") {
             setCount(1)
         } else {
-            setCount(studentOptions.length)
+            setCount(studentOptions.length - 1)
         }
     }
 
@@ -93,17 +91,15 @@ const Grade = () => {
     useEffect(() => {
         const loadData = async () => {
             let completeStudentList = await getArgo11Items(url)
-            console.log(completeStudentList)
 
             setStudentList(completeStudentList)
-            filter(completeStudentList)
+            filter(completeStudentList, "ALL", "ALL", "ALL")
             setLoaded(true)
         }
 
         if (!loaded) {
             loadData()
         }
-
 
         if (chosenDepartment !== oldDepartment) {
             setOldDepartment(chosenDepartment)
@@ -114,18 +110,17 @@ const Grade = () => {
             setChosenStudent("ALL")
             setOldStudent("ALL")
 
-            setCount(1)
-            filter()
+            filter([], chosenDepartment, "ALL", "ALL")
         } else if (chosenProgram !== oldProgram) {
             setOldProgram(chosenProgram)
 
             setChosenStudent("ALL")
             setOldStudent("ALL")
 
-            filter()
+            filter([], chosenDepartment, chosenProgram, "ALL")
         } else if (chosenStudent !== oldStudent) {
             setOldStudent(chosenStudent)
-            filter()
+            filter([], chosenDepartment, chosenProgram, chosenStudent)
         }
 
     })
@@ -137,7 +132,7 @@ const Grade = () => {
 
             {/* <Group grow style={{ paddingLeft: 40, paddingRight: 40 }}> */}
             <Table
-                class="reportTable"
+                className="reportTable"
                 striped highlightOnHover
                 style={{ width: "60%", marginLeft: "20%", marginRight: "20%" }}>
                 <tbody>
@@ -195,63 +190,70 @@ const Grade = () => {
 
             <br /><br /><br /><br /><br />
             <hr />
-            <h2>Result</h2>
 
-            <Table
-                striped highlightOnHover
-                style={{ width: "60%", marginLeft: "20%", marginRight: "20%" }}>
-                <thead>
-                    <th>Name</th>
-                    <th>Count</th>
-                    <th>Action</th>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td style={{ color: "green" }}><b>Students generated</b></td>
-                        <td>{tempResult.normalCount}</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td style={{ color: "red" }}><b>Student Not in Argo11</b></td>
-                        <td>{tempResult.noArgo11RecordCount}</td>
-                        <td>
-                            <Button
-                                onClick={() => {
-                                    setShowModal(true)
-                                    setChosenError("Student Not in Argo11")
-                                }}>
-                                View
-                            </Button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style={{ color: "red" }}><b>No Program Plan for student</b></td>
-                        <td>{tempResult.noProgramPlanCount}</td>
-                        <td>
-                            <Button
-                                onClick={() => {
-                                    setShowModal(true)
-                                    setChosenError("No Program Plan for student")
-                                }}>
-                                View
-                            </Button>
-                        </td>
-                    </tr>
-                </tbody>
-            </Table>
+            {(Object.keys(tempResult).length > 0) ?
+                <>
+                    <h2>Result</h2>
 
-            <br /><br />
-            <a href={`${url}/api/report/grade/`} target="_blank">
-                <Button>
-                    Download single report
-                </Button>
-            </a>
+                    <Table
+                        striped highlightOnHover
+                        style={{ width: "60%", marginLeft: "20%", marginRight: "20%" }}>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Count</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style={{ color: "green" }}><b>Students generated</b></td>
+                                <td>{tempResult.normalCount}</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td style={{ color: "red" }}><b>Student Not in Argo11</b></td>
+                                <td>{tempResult.noArgo11RecordCount}</td>
+                                <td>
+                                    <Button
+                                        onClick={() => {
+                                            setShowModal(true)
+                                            setChosenError("Student Not in Argo11")
+                                        }}>
+                                        View
+                                    </Button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style={{ color: "red" }}><b>No Program Plan for student</b></td>
+                                <td>{tempResult.noProgramPlanCount}</td>
+                                <td>
+                                    <Button
+                                        onClick={() => {
+                                            setShowModal(true)
+                                            setChosenError("No Program Plan for student")
+                                        }}>
+                                        View
+                                    </Button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </Table>
 
-            <a href={`${url}/api/report/grade/zip`} download="Degreeworks-All.zip">
-                <Button>
-                    Download all reports in zip
-                </Button>
-            </a>
+                    <br /><br />
+                    <a href={`${url}/api/report/grade/`} target="_blank" rel="noreferrer">
+                        <Button>
+                            Download single report
+                        </Button>
+                    </a>
+
+                    <a href={`${url}/api/report/grade/zip`} download="Degreeworks-All.zip">
+                        <Button>
+                            Download all reports in zip
+                        </Button>
+                    </a>
+                </>
+                : <></>}
 
 
 

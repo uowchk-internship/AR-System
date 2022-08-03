@@ -21,7 +21,6 @@ function App() {
 
   useEffect(() => {
     const fetchStatus = async () => {
-      console.log("checking")
       setStatus(await checkStatus(url))
     }
 

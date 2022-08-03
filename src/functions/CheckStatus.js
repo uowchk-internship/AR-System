@@ -6,8 +6,6 @@ export const checkStatus = async (url) => {
 
     await axios.get(url)
         .then((response) => {
-            console.log("response")
-            console.log(response)
             if (response.status === 200) {
                 result = true
             } else {
