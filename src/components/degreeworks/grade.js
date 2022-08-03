@@ -141,7 +141,7 @@ const Grade = () => {
 
     return (
         <>
-            <h2 style={{ paddingTop: 100 }}>Download reports </h2>
+            <h2 >Download reports </h2>
 
             <Table
                 className="reportTable"
@@ -196,7 +196,7 @@ const Grade = () => {
                 Generate report
             </Button>
 
-            <br /><br /><br /><br /><br />
+            <br /><br />
             <hr />
 
             {(Object.keys(tempResult).length > 0) ?
