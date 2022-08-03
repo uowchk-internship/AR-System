@@ -216,12 +216,13 @@ const Grade = () => {
                         <tbody>
                             <tr>
                                 <td style={{ color: "green" }}><b>Students generated</b></td>
-                                <td>{tempResult.normalCount}</td>
+                                <td><b style={{ fontSize: 18 }}>{tempResult.normalCount}</b></td>
+
                                 <td></td>
                             </tr>
                             <tr>
                                 <td style={{ color: "red" }}><b>Students have no record in Argo10</b></td>
-                                <td>{tempResult.noArgo10RecordCount}</td>
+                                <td><b style={{ fontSize: 18 }}>{tempResult.noArgo10RecordCount}</b></td>
                                 <td>
                                     <Button
                                         onClick={() => {
@@ -234,7 +235,7 @@ const Grade = () => {
                             </tr>
                             <tr>
                                 <td style={{ color: "red" }}><b>No Program Plan for students</b></td>
-                                <td>{tempResult.noProgramPlanCount}</td>
+                                <td><b style={{ fontSize: 18 }}>{tempResult.noProgramPlanCount}</b></td>
                                 <td>
                                     <Button
                                         onClick={() => {
@@ -254,12 +255,14 @@ const Grade = () => {
                     {(count === 1) ?
                         <>
                             <a href={`${url}/api/report/grade/single/inline/${chosenStudentList[0]}`} target="_blank" rel="noreferrer">
-                                <Button>
+                                <Button
+                                    disabled={tempResult.normalCount === 0}>
                                     View in New Tab
                                 </Button>
                             </a>
                             <a href={`${url}/api/report/grade/single/attachment/${chosenStudentList[0]}`} download={`${chosenStudentList[0]}.pdf`}>
-                                <Button>
+                                <Button
+                                    disabled={tempResult.normalCount === 0}>
                                     Download as PDF File
                                 </Button>
                             </a>
