@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 
 import Argo10 from './argo10'
 import Argo11 from './argo11'
+import Argo12 from './argo12'
 import Argo16 from './argo16'
 import Argo29 from './argo29'
 import ProgramPlan from './programPlan'
@@ -45,6 +46,7 @@ function UploadSection() {
                 <tbody>
                     <Argo10 setShowData={setShowData} setDisplayData={setDisplayData} />
                     <Argo11 setShowData={setShowData} setDisplayData={setDisplayData} />
+                    <Argo12 setShowData={setShowData} setDisplayData={setDisplayData} />
                     <Argo16 setShowData={setShowData} setDisplayData={setDisplayData} />
                     <Argo29 setShowData={setShowData} setDisplayData={setDisplayData} />
                     <Cge setShowData={setShowData} setDisplayData={setDisplayData} />

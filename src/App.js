@@ -5,6 +5,7 @@ import { AppShell, Navbar } from '@mantine/core';
 import UploadSection from './components/uploadSource/uploadSection'
 import Degreeworks from './components/reports/degreeworks'
 import ExamHomeComponent from './components/reports/exam/examHome'
+import AttendanceComponent from './components/reports/attendance'
 
 import SettingComponent from './components/setting'
 import NavBarItem from './components/navBarItem'
@@ -59,9 +60,10 @@ function App() {
               (chosenTab === "degreeworks") ?
                 <Degreeworks /> :
                 (chosenTab === "exam") ?
-                  <ExamHomeComponent />
-
-                  : <></>
+                  <ExamHomeComponent /> :
+                  (chosenTab === "attendance") ?
+                    <AttendanceComponent /> :
+                    <></>
         }
       </AppShell>
 

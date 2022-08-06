@@ -141,7 +141,7 @@ const Degreeworks = () => {
 
     return (
         <>
-            <h2 >Download reports </h2>
+            <h2 >Download Degreeworks reports </h2>
 
             <Table
                 className="reportTable"
