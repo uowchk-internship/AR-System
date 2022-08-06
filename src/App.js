@@ -3,7 +3,8 @@ import { useSelector } from "react-redux";
 import { AppShell, Navbar } from '@mantine/core';
 
 import UploadSection from './components/uploadSource/uploadSection'
-import Grade from './components/degreeworks/grade'
+import Degreeworks from './components/reports/degreeworks'
+import ExamHomeComponent from './components/reports/exam/examHome'
 
 import SettingComponent from './components/setting'
 import NavBarItem from './components/navBarItem'
@@ -56,8 +57,11 @@ function App() {
             (chosenTab === "upload") ?
               <UploadSection /> :
               (chosenTab === "degreeworks") ?
-                <Grade /> :
-                <></>
+                <Degreeworks /> :
+                (chosenTab === "exam") ?
+                  <ExamHomeComponent />
+
+                  : <></>
         }
       </AppShell>
 

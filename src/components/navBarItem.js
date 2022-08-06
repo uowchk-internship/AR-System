@@ -1,5 +1,5 @@
-import { Navbar, Button, Badge } from '@mantine/core';
-import { CloudUpload, Settings, Checklist } from 'tabler-icons-react';
+import { Navbar, Button, Badge, ScrollArea } from '@mantine/core';
+import { CloudUpload, Settings, Checklist, Book, ListCheck, Books, Checkbox, ReportAnalytics } from 'tabler-icons-react';
 
 
 export default function NavBarItem(props) {
@@ -31,10 +31,10 @@ export default function NavBarItem(props) {
             </Navbar.Section>
 
             {/* Body */}
-            <Navbar.Section >
-                <div style={{ paddingBottom: 10 }}>
+            <Navbar.Section grow mt="md" component={ScrollArea}>
+                <div >
                     <hr />
-                    <Badge size="xl" >Import Section</Badge>
+                    <h3>Import Section</h3>
                 </div>
 
                 <Button variant={chosenTab === "upload" ? "filled" : "subtle"}
@@ -42,14 +42,15 @@ export default function NavBarItem(props) {
                     leftIcon={<CloudUpload />}
                     disabled={!status}
                     onClick={() => setChosenTab("upload")}
-                    style={{ width: '100%', height: "50px" }}>
-                    <h2>Upload Data Source</h2>
+                    style={{ width: '100%', height: "50px", textAlign: "left"}}>
+                    <h2 className="navBtn">Upload Data Source</h2>
                 </Button>
-            </Navbar.Section>
-            <Navbar.Section grow mt="md">
+
+
+                {/* Reports Section */}
                 <div style={{ paddingBottom: 10 }}>
                     <hr />
-                    <Badge size="xl" >Reports Section</Badge>
+                    <h3>Reports Section</h3>
                 </div>
 
                 <Button variant={chosenTab === "degreeworks" ? "filled" : "subtle"}
@@ -60,6 +61,52 @@ export default function NavBarItem(props) {
                     style={{ width: '100%', height: "50px" }}>
                     <h2>Degreeworks</h2>
                 </Button>
+
+                <Button variant={chosenTab === "exam" ? "filled" : "subtle"}
+                    color={chosenTab === "exam" ? "" : "gray"}
+                    leftIcon={<Book />}
+                    disabled={!status}
+                    onClick={() => setChosenTab("exam")}
+                    style={{ width: '100%', height: "50px" }}>
+                    <h2>Exam Related</h2>
+                </Button>
+
+                <Button variant={chosenTab === "grad" ? "filled" : "subtle"}
+                    color={chosenTab === "grad" ? "" : "gray"}
+                    leftIcon={<Checkbox />}
+                    disabled={!status}
+                    onClick={() => setChosenTab("grad")}
+                    style={{ width: '100%', height: "50px" }}>
+                    <h2>Graduation List</h2>
+                </Button>
+
+                <Button variant={chosenTab === "moodle" ? "filled" : "subtle"}
+                    color={chosenTab === "moodle" ? "" : "gray"}
+                    leftIcon={<Books />}
+                    disabled={!status}
+                    onClick={() => setChosenTab("moodle")}
+                    style={{ width: '100%', height: "50px" }}>
+                    <h2>Moodle List</h2>
+                </Button>
+
+                <Button variant={chosenTab === "attendance" ? "filled" : "subtle"}
+                    color={chosenTab === "attendance" ? "" : "gray"}
+                    leftIcon={<ListCheck />}
+                    disabled={!status}
+                    onClick={() => setChosenTab("attendance")}
+                    style={{ width: '100%', height: "50px" }}>
+                    <h2>Attendance List</h2>
+                </Button>
+
+                <Button variant={chosenTab === "grade" ? "filled" : "subtle"}
+                    color={chosenTab === "grade" ? "" : "gray"}
+                    leftIcon={<ReportAnalytics />}
+                    disabled={!status}
+                    onClick={() => setChosenTab("grade")}
+                    style={{ width: '100%', height: "50px", textAlign: "left"}}>
+                    <h2 className="navBtn">Grade Sheet</h2>
+                </Button>
+
             </Navbar.Section>
 
 

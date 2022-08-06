@@ -5,7 +5,7 @@ import { Button, Select, Table, Modal } from '@mantine/core';
 import { getArgo11Items, getProgramList } from '../../functions/source/Argo11'
 import { getTempExecuteResult, generateWithId, updateHashmap } from '../../functions/report/degreeworks'
 
-const Grade = () => {
+const Degreeworks = () => {
     const { url } = useSelector((state) => state.setting);
 
     const [studentList, setStudentList] = useState([])
@@ -313,4 +313,4 @@ const Grade = () => {
 
 }
 
-export default Grade;
+export default Degreeworks;

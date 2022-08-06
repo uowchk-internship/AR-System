@@ -20,3 +20,8 @@ td {
 .reportTable tr {
     padding: 5px;
 }
+
+.navBtn {
+    text-align: left;
+    padding-left: 0;
+}
