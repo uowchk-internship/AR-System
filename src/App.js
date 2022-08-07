@@ -23,7 +23,7 @@ function App() {
 
   useEffect(() => {
     console.log("env: "+JSON.stringify(process.env))
-    console.log("env - SERVER_URL: "+process.env.SERVER_URL)
+    console.log("env - SERVER_URL: "+process.env.REACT_APP_SERVER_URL)
     const fetchStatus = async () => {
       setStatus(await checkStatus(url))
     }

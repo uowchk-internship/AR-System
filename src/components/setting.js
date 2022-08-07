@@ -16,7 +16,7 @@ const SettingComponent = (props) => {
 
             <div style={{ backgroundColor: 'lightgrey', padding: 10, borderRadius: 10 }}>
                 <Button
-                    onClick={() => dispatch(setURL("http://localhost:8080"))} >
+                    onClick={() => dispatch(setURL((process.env.REACT_APP_SERVER_URL !== undefined) ? process.env.REACT_APP_SERVER : ''))} >
                     Local Server
                 </Button>
                 <Button

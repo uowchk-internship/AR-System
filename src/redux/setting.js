@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   // url: 'http://localhost:8080'
-  url: 'https://tomcat.johnnyip.com/ar'
+  url: (process.env.REACT_APP_SERVER_URL !== undefined) ? process.env.REACT_APP_SERVER : 'https://tomcat.johnnyip.com/ar'
 }
 
 export const settingSlice = createSlice({
@@ -13,7 +13,7 @@ export const settingSlice = createSlice({
       console.log("payload: " + action.payload)
       state.url = action.payload
     },
-    
+
   },
 })
 
