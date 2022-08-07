@@ -64,23 +64,25 @@ export default function AttendanceList(props) {
                     }
                 }
             }
-            if (chosenCourse_ !== "ALL" && chosenCourse_ === course.courseCode && chosenSection_ === "ALL") {
+            if (chosenCourse_ !== "ALL" && chosenCourse_ === course.courseCode ) {
                 for (let crn of course.sectionCrnList) {
                     let crnCode = crn.substring(crn.length - 6, crn.length - 1)
                     sectionOptions.push({
                         value: crnCode,
                         label: crn
                     })
-                    chosenCrnList.push(crnCode)
+                    if (chosenSection_ === "ALL"){
+                        chosenCrnList.push(crnCode)
+                    }
+                    if (chosenSection_ !== "ALL" && chosenSection_ === crnCode){
+                        chosenCrnList.push(crnCode)            
+                    }
                 }
             }
         }
-        
-        if (chosenSection_ !== "ALL") {
-            let crnCode = chosenSection_.substring(chosenSection_.length - 6, chosenSection_.length - 1)
-            chosenCrnList.push(crnCode)
-        }
-        
+
+        console.log("chosenSection_: "+chosenSection_)
+                
         setCourseOptionList(courseOptions)
         setSectionOptionList(sectionOptions)
         setCrnList(chosenCrnList)
