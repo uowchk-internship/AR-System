@@ -22,7 +22,7 @@ function App() {
   const [height, setHeight] = useState(0)
 
   useEffect(() => {
-    console.log("env: "+process.env)
+    console.log("env: "+JSON.stringify(process.env))
     console.log("env - SERVER_URL: "+process.env.SERVER_URL)
     const fetchStatus = async () => {
       setStatus(await checkStatus(url))
