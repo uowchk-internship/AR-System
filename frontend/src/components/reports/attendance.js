@@ -187,7 +187,7 @@ export default function AttendanceList(props) {
                     }, 3000);
                 }}
                 action={`${url}/api/report/attendanceList/zip`} >
-                <input type="text" name="crn" value={crnList}></input>
+                <input type="hidden" name="crn" value={crnList}></input>
                 <Button
                     type="submit"
                     disabled={tempResult.normalCount === 0}

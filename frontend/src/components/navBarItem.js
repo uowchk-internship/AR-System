@@ -65,7 +65,8 @@ export default function NavBarItem(props) {
                 <Button variant={chosenTab === "exam" ? "filled" : "subtle"}
                     color={chosenTab === "exam" ? "" : "gray"}
                     leftIcon={<Book />}
-                    disabled={!status}
+                    // disabled={!status}
+                    disabled={true}
                     onClick={() => setChosenTab("exam")}
                     style={{ width: '100%', height: "50px" }}>
                     <h2>Exam Related</h2>
@@ -74,7 +75,8 @@ export default function NavBarItem(props) {
                 <Button variant={chosenTab === "grad" ? "filled" : "subtle"}
                     color={chosenTab === "grad" ? "" : "gray"}
                     leftIcon={<Checkbox />}
-                    disabled={!status}
+                    // disabled={!status}
+                    disabled={true}
                     onClick={() => setChosenTab("grad")}
                     style={{ width: '100%', height: "50px" }}>
                     <h2>Graduation List</h2>
@@ -83,7 +85,8 @@ export default function NavBarItem(props) {
                 <Button variant={chosenTab === "moodle" ? "filled" : "subtle"}
                     color={chosenTab === "moodle" ? "" : "gray"}
                     leftIcon={<Books />}
-                    disabled={!status}
+                    // disabled={!status}
+                    disabled={true}
                     onClick={() => setChosenTab("moodle")}
                     style={{ width: '100%', height: "50px" }}>
                     <h2>Moodle List</h2>
@@ -101,7 +104,8 @@ export default function NavBarItem(props) {
                 <Button variant={chosenTab === "grade" ? "filled" : "subtle"}
                     color={chosenTab === "grade" ? "" : "gray"}
                     leftIcon={<ReportAnalytics />}
-                    disabled={!status}
+                    // disabled={!status}
+                    disabled={true}
                     onClick={() => setChosenTab("grade")}
                     style={{ width: '100%', height: "50px", textAlign: "left"}}>
                     <h2 className="navBtn">Grade Sheet</h2>
