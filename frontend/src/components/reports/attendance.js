@@ -35,7 +35,6 @@ export default function AttendanceList(props) {
     const [loaded, setLoaded] = useState(false)
 
     const [tempResult, setTempResult] = useState({})
-    const [loading, setLoading] = useState(false)
     const [downloading, setDownloading] = useState(false)
 
     const filter = async (courseList_, chosenDepartment_, chosenCourse_, chosenSection_) => {

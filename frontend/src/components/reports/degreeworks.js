@@ -3,11 +3,7 @@ import { useState, useEffect } from "react";
 import { Button, Select, Table, Modal } from "@mantine/core";
 
 import { getArgo11Items, getProgramList } from "../../functions/source/Argo11";
-import {
-  getTempExecuteResult,
-  generateWithId,
-  updateHashmap,
-} from "../../functions/report/degreeworks";
+import { getTempExecuteResult, updateHashmap } from "../../functions/report/degreeworks";
 
 const Degreeworks = () => {
   const { url } = useSelector((state) => state.setting);

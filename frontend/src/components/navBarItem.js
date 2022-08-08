@@ -1,4 +1,4 @@
-import { Navbar, Button, Badge, ScrollArea } from '@mantine/core';
+import { Navbar, Button,  ScrollArea } from '@mantine/core';
 import { CloudUpload, Settings, Checklist, Book, ListCheck, Books, Checkbox, ReportAnalytics } from 'tabler-icons-react';
 
 
