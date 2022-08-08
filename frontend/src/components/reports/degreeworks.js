@@ -24,12 +24,14 @@ const Degreeworks = () => {
   ];
   const [programOptionList, setProgramOptionList] = useState([]);
   const [yearOptionList, setYearOptionList] = useState([]);
+  const [enrolOptionList, setEnrolOptionList] = useState([]);
   const [studentIdOptionList, setStudentIdOptionList] = useState([]);
 
   //Selected values
   const [chosenDepartment, setChosenDepartment] = useState("ALL");
   const [chosenProgram, setChosenProgram] = useState("ALL");
   const [chosenYear, setChosenYear] = useState("ALL");
+  const [chosenEnrolStatus, setChosenEnrolStatus] = useState("ALL");
   const [chosenStudent, setChosenStudent] = useState("ALL");
   const [chosenStudentList, setChosenStudentList] = useState([]);
 
@@ -37,6 +39,7 @@ const Degreeworks = () => {
   const [oldDepartment, setOldDepartment] = useState("ALL");
   const [oldProgram, setOldProgram] = useState("ALL");
   const [oldYear, setOldYear] = useState("ALL");
+  const [oldEnrolStatus, setOldEnrolStatus] = useState("ALL");
   const [oldStudent, setOldStudent] = useState("ALL");
 
   const [count, setCount] = useState(0);
@@ -49,7 +52,7 @@ const Degreeworks = () => {
   const [showModal, setShowModal] = useState(false);
   const [chosenError, setChosenError] = useState("argo11");
 
-  const filter = async (studentList_, chosenDepartment_, chosenProgram_, chosenYear_, chosenStudent_) => {
+  const filter = async (studentList_, chosenDepartment_, chosenProgram_, chosenYear_, chosenEnrolStatus_, chosenStudent_) => {
     setTempResult({});
 
     if (studentList_.length === 0) {
@@ -59,6 +62,7 @@ const Degreeworks = () => {
     let programOptions = [{ value: "ALL", label: "All" }];
     let studentOptions = [{ value: "ALL", label: "All" }];
     let yearOptions = [{ value: "ALL", label: "All" }];
+    let enrolStatusOptions = [{ value: "ALL", label: "All" }];
     let tempStudentList = [];
 
     let programList = await getProgramList(url, chosenDepartment_);
@@ -82,13 +86,25 @@ const Degreeworks = () => {
           })
         }
 
-        if (chosenYear_ === "ALL" || chosenYear_ === student.cohort) {
-          studentOptions.push({
-            value: student.studentId,
-            label: `${student.studentId} (${student.lastName} ${student.firstName})`,
-          });
+        if ((chosenYear_ === "ALL" || chosenYear_ === student.cohort)) {
 
-          tempStudentList.push(student.studentId);
+          //EnrolStatus option
+          if (!enrolStatusOptions.some(e => e.value === student.currentEnrolStatus)) {
+            enrolStatusOptions.push({
+              value: student.currentEnrolStatus,
+              label: student.currentEnrolStatus
+            })
+          }
+
+          if ((chosenEnrolStatus_ === "ALL" || chosenEnrolStatus_ === student.currentEnrolStatus)) {
+
+            studentOptions.push({
+              value: student.studentId,
+              label: `${student.studentId} (${student.lastName} ${student.firstName})`,
+            });
+
+            tempStudentList.push(student.studentId);
+          }
         }
       }
     }
@@ -98,6 +114,7 @@ const Degreeworks = () => {
     setProgramOptionList(programOptions);
     setStudentIdOptionList(studentOptions);
     setYearOptionList(yearOptions);
+    setEnrolOptionList(enrolStatusOptions);
 
     if (chosenStudent_ !== "ALL") {
       setCount(1);
@@ -124,7 +141,7 @@ const Degreeworks = () => {
       let completeStudentList = await getArgo11Items(url);
 
       setStudentList(completeStudentList);
-      filter(completeStudentList, "ALL", "ALL", "ALL", "ALL");
+      filter(completeStudentList, "ALL", "ALL", "ALL", "ALL", "ALL");
       setLoaded(true);
 
       updateHashmap(url);
@@ -134,6 +151,7 @@ const Degreeworks = () => {
       loadData();
     }
 
+    //Check changes
     if (chosenDepartment !== oldDepartment) {
       setOldDepartment(chosenDepartment);
 
@@ -143,31 +161,47 @@ const Degreeworks = () => {
       setChosenYear("ALL");
       setOldYear("ALL");
 
+      setChosenEnrolStatus("ALL");
+      setOldEnrolStatus("ALL");
+
       setChosenStudent("ALL");
       setOldStudent("ALL");
 
-      filter([], chosenDepartment, "ALL", "ALL", "ALL");
+      filter([], chosenDepartment, "ALL", "ALL", "ALL", "ALL");
     } else if (chosenProgram !== oldProgram) {
       setOldProgram(chosenProgram);
 
       setChosenYear("ALL");
       setOldYear("ALL");
 
+      setChosenEnrolStatus("ALL");
+      setOldEnrolStatus("ALL");
+
       setChosenStudent("ALL");
       setOldStudent("ALL");
 
-      filter([], chosenDepartment, chosenProgram, "ALL", "ALL");
+      filter([], chosenDepartment, chosenProgram, "ALL", "ALL", "ALL");
     } else if (chosenYear !== oldYear) {
       setOldYear(chosenYear);
 
+      setChosenEnrolStatus("ALL");
+      setOldEnrolStatus("ALL");
+
       setChosenStudent("ALL");
       setOldStudent("ALL");
 
-      filter([], chosenDepartment, chosenProgram, chosenYear, "ALL");
-    } else if (chosenStudent !== oldStudent) {
+      filter([], chosenDepartment, chosenProgram, chosenYear, "ALL", "ALL");
+    } else if (chosenEnrolStatus !== oldEnrolStatus) {
+      setOldEnrolStatus(chosenEnrolStatus);
 
+      setChosenStudent("ALL");
+      setOldStudent("ALL");
+
+      filter([], chosenDepartment, chosenProgram, chosenYear, chosenEnrolStatus, "ALL");
+    } else if (chosenStudent !== oldStudent) {
       setOldStudent(chosenStudent);
-      filter([], chosenDepartment, chosenProgram, chosenYear, chosenStudent);
+
+      filter([], chosenDepartment, chosenProgram, chosenYear, chosenEnrolStatus, chosenStudent);
     }
   });
 
@@ -211,6 +245,17 @@ const Degreeworks = () => {
                 data={yearOptionList}
                 onChange={setChosenYear}
                 value={chosenYear}
+              />
+            </td>
+          </tr>
+          <tr>
+            <th>Enrollment Status</th>
+            <td>
+              <Select
+                searchable
+                data={enrolOptionList}
+                onChange={setChosenEnrolStatus}
+                value={chosenEnrolStatus}
               />
             </td>
           </tr>
