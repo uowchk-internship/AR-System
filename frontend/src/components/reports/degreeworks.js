@@ -67,21 +67,38 @@ const Degreeworks = () => {
       programOptions.push({ value: program, label: program });
     }
 
+    console.log(studentList_)
     for (let student of studentList_) {
       //Student List
       let nameAfterConcat = `${student.progCode} (${student.programmeTitle})`;
       if (nameAfterConcat === chosenProgram_ ||
         (chosenProgram_ === "ALL" && programList.includes(nameAfterConcat))) {
-        studentOptions.push({
-          value: student.studentId,
-          label: `${student.studentId} (${student.lastName} ${student.firstName})`,
-        });
-        tempStudentList.push(student.studentId);
+
+        //Year option
+        if (!yearOptions.some(e => e.value === student.cohort)) {
+          yearOptions.push({
+            value: student.cohort,
+            label: student.cohort
+          })
+        }
+
+        if (chosenYear_ === "ALL" || chosenYear_ === student.cohort) {
+          studentOptions.push({
+            value: student.studentId,
+            label: `${student.studentId} (${student.lastName} ${student.firstName})`,
+          });
+
+          tempStudentList.push(student.studentId);
+        }
       }
     }
+    //sort 
+    yearOptions.sort((a, b) => { return a.value - b.value });
 
     setProgramOptionList(programOptions);
     setStudentIdOptionList(studentOptions);
+    setYearOptionList(yearOptions);
+
     if (chosenStudent_ !== "ALL") {
       setCount(1);
       setChosenStudentList([chosenStudent_]);
@@ -187,7 +204,7 @@ const Degreeworks = () => {
             </td>
           </tr>
           <tr>
-            <th>Cohort</th>
+            <th>Intake Cohort</th>
             <td>
               <Select
                 searchable
