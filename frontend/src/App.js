@@ -6,6 +6,7 @@ import UploadSection from './components/uploadSource/uploadSection'
 import Degreeworks from './components/reports/degreeworks'
 import ExamHomeComponent from './components/reports/exam/examHome'
 import AttendanceComponent from './components/reports/attendance'
+import MoodleCSVComponent from './components/reports/moodle'
 
 import SettingComponent from './components/setting'
 import NavBarItem from './components/navBarItem'
@@ -65,7 +66,9 @@ function App() {
                   <ExamHomeComponent /> :
                   (chosenTab === "attendance") ?
                     <AttendanceComponent /> :
-                    <></>
+                    (chosenTab === "moodle") ?
+                      <MoodleCSVComponent /> :
+                      <></>
         }
       </AppShell>
 

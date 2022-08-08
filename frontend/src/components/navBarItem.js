@@ -85,8 +85,7 @@ export default function NavBarItem(props) {
                 <Button variant={chosenTab === "moodle" ? "filled" : "subtle"}
                     color={chosenTab === "moodle" ? "" : "gray"}
                     leftIcon={<Books />}
-                    // disabled={!status}
-                    disabled={true}
+                    disabled={!status}
                     onClick={() => setChosenTab("moodle")}
                     style={{ width: '100%', height: "50px" }}>
                     <h2>Moodle List</h2>
