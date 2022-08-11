@@ -1,18 +1,25 @@
-import { Navbar, Button,  ScrollArea } from '@mantine/core';
+import { Navbar, Button, ScrollArea } from '@mantine/core';
 import { CloudUpload, Settings, Checklist, Book, ListCheck, Books, Checkbox, ReportAnalytics } from 'tabler-icons-react';
 
+import { logout } from '../functions/login'
 
 export default function NavBarItem(props) {
     let status = props.status
     let setChosenTab = props.setChosenTab
     let chosenTab = props.chosenTab
+    let signedIn = props.signedIn
+    let username = props.username
+    let setSignedIn = props.setSignedIn
+
+    let isAdmin = (username === "admin" ||
+        username === "demo") ? true : false
 
     return (
         <>
             {/* Header */}
 
             <Navbar.Section style={{ backgroundColor: "lightgray", borderRadius: 5 }}>
-                <div style={{ display: 'inline-block', marginRight: 20 }} >
+                <div style={{ display: 'inline-block' }} >
                     <h1>UOWCHK AR System</h1>
                     <h2 style={{ fontSize: 20 }}>
                         Server
@@ -22,10 +29,29 @@ export default function NavBarItem(props) {
                                 <span style={{ color: 'red' }}> Not connected</span>
                         }
                     </h2>
-                    <p>
-                        Hi, username.
-                        <Button>Sign Out</Button>
-                    </p>
+
+                    {(signedIn) ?
+                        <>
+                            <p>
+                                Signed in as <b>{username}</b>.
+                            </p>
+                            <Button
+                                onClick={() => {
+                                    logout()
+                                    setSignedIn(false)
+
+                                }}
+                            >Sign Out</Button>
+                        </>
+                        : <>
+                            <p>
+                                Please Sign in
+                            </p>
+                            <Button
+                                onClick={() => setChosenTab("")}
+                            >Sign in</Button>
+                        </>
+                    }
                     {/* <Button>Sign In</Button> */}
                 </div>
             </Navbar.Section>
@@ -40,9 +66,9 @@ export default function NavBarItem(props) {
                 <Button variant={chosenTab === "upload" ? "filled" : "subtle"}
                     color={chosenTab === "upload" ? "" : "gray"}
                     leftIcon={<CloudUpload />}
-                    disabled={!status}
+                    disabled={!status || !signedIn || (signedIn && !isAdmin)}
                     onClick={() => setChosenTab("upload")}
-                    style={{ width: '100%', height: "50px", textAlign: "left"}}>
+                    style={{ width: '100%', height: "50px", textAlign: "left" }}>
                     <h2 className="navBtn">Upload Data Source</h2>
                 </Button>
 
@@ -56,7 +82,7 @@ export default function NavBarItem(props) {
                 <Button variant={chosenTab === "degreeworks" ? "filled" : "subtle"}
                     color={chosenTab === "degreeworks" ? "" : "gray"}
                     leftIcon={<Checklist />}
-                    disabled={!status}
+                    disabled={!status || !signedIn}
                     onClick={() => setChosenTab("degreeworks")}
                     style={{ width: '100%', height: "50px" }}>
                     <h2>Degreeworks</h2>
@@ -65,7 +91,7 @@ export default function NavBarItem(props) {
                 <Button variant={chosenTab === "exam" ? "filled" : "subtle"}
                     color={chosenTab === "exam" ? "" : "gray"}
                     leftIcon={<Book />}
-                    // disabled={!status}
+                    // disabled={!status || !signedIn}
                     disabled={true}
                     onClick={() => setChosenTab("exam")}
                     style={{ width: '100%', height: "50px" }}>
@@ -75,7 +101,7 @@ export default function NavBarItem(props) {
                 <Button variant={chosenTab === "grad" ? "filled" : "subtle"}
                     color={chosenTab === "grad" ? "" : "gray"}
                     leftIcon={<Checkbox />}
-                    // disabled={!status}
+                    // disabled={!status || !signedIn}
                     disabled={true}
                     onClick={() => setChosenTab("grad")}
                     style={{ width: '100%', height: "50px" }}>
@@ -85,7 +111,7 @@ export default function NavBarItem(props) {
                 <Button variant={chosenTab === "moodle" ? "filled" : "subtle"}
                     color={chosenTab === "moodle" ? "" : "gray"}
                     leftIcon={<Books />}
-                    disabled={!status}
+                    disabled={!status || !signedIn}
                     onClick={() => setChosenTab("moodle")}
                     style={{ width: '100%', height: "50px" }}>
                     <h2>Moodle List</h2>
@@ -94,7 +120,7 @@ export default function NavBarItem(props) {
                 <Button variant={chosenTab === "attendance" ? "filled" : "subtle"}
                     color={chosenTab === "attendance" ? "" : "gray"}
                     leftIcon={<ListCheck />}
-                    disabled={!status}
+                    disabled={!status || !signedIn}
                     onClick={() => setChosenTab("attendance")}
                     style={{ width: '100%', height: "50px" }}>
                     <h2>Attendance List</h2>
@@ -103,10 +129,10 @@ export default function NavBarItem(props) {
                 <Button variant={chosenTab === "grade" ? "filled" : "subtle"}
                     color={chosenTab === "grade" ? "" : "gray"}
                     leftIcon={<ReportAnalytics />}
-                    // disabled={!status}
+                    // disabled={!status || !signedIn}
                     disabled={true}
                     onClick={() => setChosenTab("grade")}
-                    style={{ width: '100%', height: "50px", textAlign: "left"}}>
+                    style={{ width: '100%', height: "50px", textAlign: "left" }}>
                     <h2 className="navBtn">Grade Sheet</h2>
                 </Button>
 

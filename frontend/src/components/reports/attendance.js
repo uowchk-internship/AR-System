@@ -7,21 +7,24 @@ import { updateHashmap, getCourseList } from '../../functions/report/attendanceL
 export default function AttendanceList(props) {
     const { url } = useSelector((state) => state.setting);
 
+    let username = props.username
+
     const [courseList, setCourseList] = useState([])
+    console.log("username: " + username)
 
     //Options
     const departmentOptionList = [
-        { value: 'ALL', label: 'All' },
-        { value: 'BU', label: 'BU (Business)' },
-        { value: 'AH', label: 'AH (Arts and Humanities)' },
-        { value: 'ST', label: 'ST (Science and Technology)' },
-        { value: 'SS', label: 'SS (Social Science)' },
+        { value: 'ALL', label: 'All', disabled: (username !== "admin") },
+        { value: 'BU', label: 'BU (Business)', disabled: (username !== "admin" && username !== "bu") },
+        { value: 'AH', label: 'AH (Arts and Humanities)', disabled: (username !== "admin" && username !== "ah") },
+        { value: 'ST', label: 'ST (Science and Technology)', disabled: (username !== "admin" && username !== "st") },
+        { value: 'SS', label: 'SS (Social Science)', disabled: (username !== "admin" && username !== "ss") },
     ]
     const [courseOptionList, setCourseOptionList] = useState([])
     const [sectionOptionList, setSectionOptionList] = useState([])
 
     //Selected values
-    const [chosenDepartment, setChosenDepartment] = useState("ALL")
+    const [chosenDepartment, setChosenDepartment] = useState((username === "admin") ? "ALL" : username.toUpperCase())
     const [chosenCourse, setChosenCourse] = useState("ALL")
     const [chosenSection, setChosenSection] = useState("ALL")
     const [crnList, setCrnList] = useState([])
@@ -63,25 +66,25 @@ export default function AttendanceList(props) {
                     }
                 }
             }
-            if (chosenCourse_ !== "ALL" && chosenCourse_ === course.courseCode ) {
+            if (chosenCourse_ !== "ALL" && chosenCourse_ === course.courseCode) {
                 for (let crn of course.sectionCrnList) {
                     let crnCode = crn.substring(crn.length - 6, crn.length - 1)
                     sectionOptions.push({
                         value: crnCode,
                         label: crn
                     })
-                    if (chosenSection_ === "ALL"){
+                    if (chosenSection_ === "ALL") {
                         chosenCrnList.push(crnCode)
                     }
-                    if (chosenSection_ !== "ALL" && chosenSection_ === crnCode){
-                        chosenCrnList.push(crnCode)            
+                    if (chosenSection_ !== "ALL" && chosenSection_ === crnCode) {
+                        chosenCrnList.push(crnCode)
                     }
                 }
             }
         }
 
-        console.log("chosenSection_: "+chosenSection_)
-                
+        console.log("chosenSection_: " + chosenSection_)
+
         setCourseOptionList(courseOptions)
         setSectionOptionList(sectionOptions)
         setCrnList(chosenCrnList)
@@ -95,7 +98,7 @@ export default function AttendanceList(props) {
             let courseList = await getCourseList(url)
 
             setCourseList(courseList)
-            filter(courseList, "ALL", "ALL", "ALL")
+            filter(courseList, (username === "admin") ? "ALL" : username.toUpperCase(), "ALL", "ALL")
             setLoaded(true)
 
             updateHashmap(url)

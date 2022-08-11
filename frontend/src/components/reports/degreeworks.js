@@ -5,18 +5,20 @@ import { Button, Select, Table, Modal } from "@mantine/core";
 import { getArgo11Items, getProgramList } from "../../functions/source/Argo11";
 import { getTempExecuteResult, updateHashmap } from "../../functions/report/degreeworks";
 
-const Degreeworks = () => {
+const Degreeworks = (props) => {
   const { url } = useSelector((state) => state.setting);
+
+  let username = props.username
 
   const [studentList, setStudentList] = useState([]);
 
   //Options
   const departmentOptionList = [
-    { value: "ALL", label: "All" },
-    { value: "BU", label: "BU (Business)" },
-    { value: "AH", label: "AH (Arts and Humanities)" },
-    { value: "ST", label: "ST (Science and Technology)" },
-    { value: "SS", label: "SS (Social Science)" },
+    { value: 'ALL', label: 'All', disabled: (username !== "admin") },
+    { value: 'BU', label: 'BU (Business)', disabled: (username !== "admin" && username !== "bu") },
+    { value: 'AH', label: 'AH (Arts and Humanities)', disabled: (username !== "admin" && username !== "ah") },
+    { value: 'ST', label: 'ST (Science and Technology)', disabled: (username !== "admin" && username !== "st") },
+    { value: 'SS', label: 'SS (Social Science)', disabled: (username !== "admin" && username !== "ss") },
   ];
   const [programOptionList, setProgramOptionList] = useState([]);
   const [yearOptionList, setYearOptionList] = useState([]);
@@ -24,7 +26,7 @@ const Degreeworks = () => {
   const [studentIdOptionList, setStudentIdOptionList] = useState([]);
 
   //Selected values
-  const [chosenDepartment, setChosenDepartment] = useState("ALL");
+  const [chosenDepartment, setChosenDepartment] = useState((username === "admin") ? "ALL" : username.toUpperCase())
   const [chosenProgram, setChosenProgram] = useState("ALL");
   const [chosenYear, setChosenYear] = useState("ALL");
   const [chosenEnrolStatus, setChosenEnrolStatus] = useState("ALL");
@@ -137,7 +139,7 @@ const Degreeworks = () => {
       let completeStudentList = await getArgo11Items(url);
 
       setStudentList(completeStudentList);
-      filter(completeStudentList, "ALL", "ALL", "ALL", "ALL", "ALL");
+      filter(completeStudentList, (username === "admin") ? "ALL" : username.toUpperCase(), "ALL", "ALL", "ALL", "ALL");
       setLoaded(true);
 
       updateHashmap(url);

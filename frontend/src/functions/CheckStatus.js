@@ -1,12 +1,12 @@
 const axios = require('axios');
 
-export const checkStatus = async (url) => {
+export const checkServerStatus = async (url) => {
     let result = false
-    url += '/api/source/argo10/count'
+    url += '/'
 
     await axios.get(url)
         .then((response) => {
-            if (response.status === 200) {
+            if (response.status === 200 && response.data === "Hello world" ) {
                 result = true
             } else {
                 result = false

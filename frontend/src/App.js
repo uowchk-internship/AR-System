@@ -7,12 +7,15 @@ import Degreeworks from './components/reports/degreeworks'
 import ExamHomeComponent from './components/reports/exam/examHome'
 import AttendanceComponent from './components/reports/attendance'
 import MoodleCSVComponent from './components/reports/moodle'
+import LoginComponent from './components/login'
 
 import SettingComponent from './components/setting'
 import NavBarItem from './components/navBarItem'
 import './style.css'
 
-import { checkStatus } from './functions/CheckStatus'
+import { checkLoginStatus } from './functions/login'
+import { checkServerStatus } from './functions/CheckStatus'
+// import { Login } from 'tabler-icons-react';
 
 function App() {
   //Redux
@@ -21,15 +24,32 @@ function App() {
   const [status, setStatus] = useState(false)
   const [chosenTab, setChosenTab] = useState("")
   const [height, setHeight] = useState(0)
+  const [needReload, setNeedReload] = useState(true)
+
+  const [signedIn, setSignedIn] = useState(false)
+  const [username, setUsername] = useState("")
 
   useEffect(() => {
     // console.log("env: "+JSON.stringify(process.env))
     // console.log("env - SERVER_URL: "+process.env.REACT_APP_SERVER_URL)
     const fetchStatus = async () => {
-      setStatus(await checkStatus(url))
+      setStatus(await checkServerStatus(url))
+      let loginStatus = await checkLoginStatus(url)
+      console.log("login: " + loginStatus)
+
+      if (loginStatus === "") {
+        // setSignedIn(false)
+        // setUsername("")
+      } else {
+        setSignedIn(true)
+        setUsername(loginStatus)
+      }
     }
 
+    // if (needReload){
     fetchStatus()
+    // }
+    console.log("chosenTab: " + chosenTab)
 
     if (typeof (window.innerWidth) == 'number') {
       setHeight(window.innerHeight - 20)
@@ -46,7 +66,10 @@ function App() {
           <Navbar width={{ base: 300 }} height={height} p="xs">
             <NavBarItem
               status={status}
+              signedIn={signedIn}
+              username={username}
               setChosenTab={setChosenTab}
+              setSignedIn={setSignedIn}
               chosenTab={chosenTab} />
           </Navbar>}
 
@@ -57,25 +80,30 @@ function App() {
 
         {
           (chosenTab === "setting") ?
-            <SettingComponent /> :
-            (chosenTab === "upload") ?
-              <UploadSection /> :
-              (chosenTab === "degreeworks") ?
-                <Degreeworks /> :
-                (chosenTab === "exam") ?
-                  <ExamHomeComponent /> :
-                  (chosenTab === "attendance") ?
-                    <AttendanceComponent /> :
-                    (chosenTab === "moodle") ?
-                      <MoodleCSVComponent /> :
-                      <></>
+            <SettingComponent setSignedIn={setSignedIn} /> :
+            (signedIn) ?
+              (chosenTab === "upload") ?
+                <UploadSection /> :
+                (chosenTab === "degreeworks") ?
+                  <Degreeworks username={username} /> :
+                  (chosenTab === "exam") ?
+                    <ExamHomeComponent username={username} /> :
+                    (chosenTab === "attendance") ?
+                      <AttendanceComponent username={username} /> :
+                      (chosenTab === "moodle") ?
+                        <MoodleCSVComponent username={username} /> :
+                        <>
+                          <h2>Please choose tabs on the left</h2>
+                        </> :
+              // if not signed in
+              <>
+                <LoginComponent
+                  setSignedIn={setSignedIn}
+                />
+              </>
+
         }
       </AppShell>
-
-      {/* <div style={{ backgroundColor: 'lightgray', padding: 20 }}>
-        <UploadSection />
-        <Grade />
-      </div > */}
 
     </div>
   );

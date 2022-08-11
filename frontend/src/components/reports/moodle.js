@@ -7,20 +7,22 @@ import { updateHashmap, getCourseList } from '../../functions/report/attendanceL
 export default function AttendanceList(props) {
     const { url } = useSelector((state) => state.setting);
 
+    let username = props.username
+
     const [courseList, setCourseList] = useState([])
 
     //Options
     const departmentOptionList = [
-        { value: 'ALL', label: 'All' },
-        { value: 'BU', label: 'BU (Business)' },
-        { value: 'AH', label: 'AH (Arts and Humanities)' },
-        { value: 'ST', label: 'ST (Science and Technology)' },
-        { value: 'SS', label: 'SS (Social Science)' },
+        { value: 'ALL', label: 'All', disabled: (username !== "admin") },
+        { value: 'BU', label: 'BU (Business)', disabled: (username !== "admin" && username !== "bu") },
+        { value: 'AH', label: 'AH (Arts and Humanities)', disabled: (username !== "admin" && username !== "ah") },
+        { value: 'ST', label: 'ST (Science and Technology)', disabled: (username !== "admin" && username !== "st") },
+        { value: 'SS', label: 'SS (Social Science)', disabled: (username !== "admin" && username !== "ss") },
     ]
     const [courseOptionList, setCourseOptionList] = useState([])
 
     //Selected values
-    const [chosenDepartment, setChosenDepartment] = useState("ALL")
+    const [chosenDepartment, setChosenDepartment] = useState((username === "admin") ? "ALL" : username.toUpperCase())
     const [chosenCourse, setChosenCourse] = useState("ALL")
     const [finalCourseList, setFinalCourseList] = useState([])
 
@@ -75,7 +77,7 @@ export default function AttendanceList(props) {
             let courseList = await getCourseList(url)
 
             setCourseList(courseList)
-            filter(courseList, "ALL", "ALL")
+            filter(courseList, (username === "admin") ? "ALL" : username.toUpperCase(), "ALL")
             setLoaded(true)
 
             updateHashmap(url)
@@ -183,7 +185,8 @@ export default function AttendanceList(props) {
                 <p style={{ fontSize: 21 }}>
                     There are two versions of the csv file. They have the same contents but have different column names.<br />
                     You may try the new format when the old format failed to import to moodle.<br /><br />
-                    For zip download, it may takes a few minutes to generate.</p>
+                    For zip download, it may takes a few minutes to generate.
+                </p>
             </form>
         </>
     )
