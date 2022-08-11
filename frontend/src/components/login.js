@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useSelector } from "react-redux";
-import { TextInput, PasswordInput, Button } from '@mantine/core';
+import { TextInput, PasswordInput, Button, Badge } from '@mantine/core';
 
 import { login } from '../functions/login'
 
@@ -30,7 +30,9 @@ const Login = (props) => {
 
     return (
         <div style={{ width: "50%", textAlign: "center", marginLeft: "auto", marginRight: "auto" }}>
-            <h2>Login</h2>
+            <Badge size="xl" radius="md" style={{ width: "50%" }}>
+                Login
+            </Badge>
             <br /><br />
 
             <h3>Username</h3>

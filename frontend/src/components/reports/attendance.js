@@ -10,7 +10,6 @@ export default function AttendanceList(props) {
     let username = props.username
 
     const [courseList, setCourseList] = useState([])
-    console.log("username: " + username)
 
     //Options
     const departmentOptionList = [
@@ -55,35 +54,43 @@ export default function AttendanceList(props) {
 
 
         // console.log(courseList_)
+        if (chosenSection_ !== "ALL") {
+            chosenCrnList = [chosenSection_]
+        } else {
 
-        for (let course of courseList_) {
-            if (chosenDepartment_ === "ALL" || chosenDepartment_ === course.courseOfferDept) {
-                courseOptions.push({ value: course.courseCode, label: `${course.courseCode} (${course.courseTitle})` })
-                if (chosenCourse_ === "ALL") {
-                    for (let crn of course.sectionCrnList) {
-                        let crnCode = crn.substring(crn.length - 6, crn.length - 1)
-                        chosenCrnList.push(crnCode)
+
+
+            for (let course of courseList_) {
+                if (chosenDepartment_ === "ALL" || chosenDepartment_ === course.courseOfferDept) {
+                    courseOptions.push({ value: course.courseCode, label: `${course.courseCode} (${course.courseTitle})` })
+                    if (chosenCourse_ === "ALL") {
+                        for (let crn of course.sectionCrnList) {
+                            let crnCode = crn.substring(crn.length - 6, crn.length - 1)
+                            chosenCrnList.push(crnCode)
+                            sectionOptions.push({ value: crnCode, label: crn })
+                        }
                     }
                 }
-            }
-            if (chosenCourse_ !== "ALL" && chosenCourse_ === course.courseCode) {
-                for (let crn of course.sectionCrnList) {
-                    let crnCode = crn.substring(crn.length - 6, crn.length - 1)
-                    sectionOptions.push({
-                        value: crnCode,
-                        label: crn
-                    })
-                    if (chosenSection_ === "ALL") {
-                        chosenCrnList.push(crnCode)
-                    }
-                    if (chosenSection_ !== "ALL" && chosenSection_ === crnCode) {
-                        chosenCrnList.push(crnCode)
+                if (chosenCourse_ !== "ALL" && chosenCourse_ === course.courseCode) {
+                    for (let crn of course.sectionCrnList) {
+                        let crnCode = crn.substring(crn.length - 6, crn.length - 1)
+                        sectionOptions.push({
+                            value: crnCode,
+                            label: crn
+                        })
+                        if (chosenSection_ === "ALL") {
+                            chosenCrnList.push(crnCode)
+                        }
+                        console.log(crnCode)
+                        if (chosenSection_ !== "ALL" && chosenSection_ === crnCode) {
+                            console.log(chosenSection_ === crnCode)
+                            chosenCrnList.push(crnCode)
+                        }
                     }
                 }
             }
         }
 
-        console.log("chosenSection_: " + chosenSection_)
 
         setCourseOptionList(courseOptions)
         setSectionOptionList(sectionOptions)
