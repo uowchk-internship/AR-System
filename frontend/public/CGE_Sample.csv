@@ -1,6 +1,4 @@
 ﻿Type,No.,Code,Title,Domain,Lvl
-CGE,2100,CGE2100,Advanced English Reading and Writing Skills,,2
-CGE,2101,CGE2101,Advanced English Reading and Writing Skills,,2
 CGE,12412,CGE12412,Appreciation of Western Art,AH,1
 CGE,26513,CGE26513,Chinese Culture and Contemporary Life,AH,2
 CGE,26503,CGE26503,Chinese Culture and Contemporary Life,AH,2
@@ -12,12 +10,6 @@ CGE,14411,CGE14411,Critical Thinking,AH,1
 CGE,12311,CGE12311,"Cultural Neighbours - China, Japan and Korea",AH,1
 CGE,12301,CGE12301,"Cultural Neighbours - China, Japan and Korea",AH,1
 CGE,12313,CGE12313,Design in Cultural Context,AH,1
-CGE,1000,CGE1000,English for Academic Studies A,E1,1
-CGE,1500,CGE1500,English for Academic Studies B,E1,1
-CGE,2000,CGE2000,English Professional Communication Skills,E2,2
-CGE,2001,CGE2001,English Professional Communication Skills for Business,E2,2
-CGE,2002,CGE2002,English Professional Communication Skills for Social Science,E2,2
-CGE,2003,CGE2003,English Professional Communication Skills for Technology,E2,2
 CGE,23216,CGE23216,Environment and Technology,ST,2
 CGE,24411,CGE24411,Ethics and Society,AH,2
 CGE,13214,CGE13214,Food and Health,ST,1
@@ -33,7 +25,6 @@ CGE,13215,CGE13215,Nature and Conservation in Hong Kong,ST,1
 CGE,17115,CGE17115,Personal Financial Planning,SO,1
 CGE,17105,CGE17105,Personal Financial Planning,SO,1
 CGE,14402,CGE14402,Practical Pyschology for Everyday Life,AH,1
-CGE,1200,CGE1200,Practical Chinese,CN,1
 CGE,14412,CGE14412,Practical Pyschology for Everyday Life,AH,1
 CGE,12413,CGE12413,Psychology and Life,AH,1
 CGE,17412,CGE17412,Public Leadership and Social Change in Hong Kong,SO,1

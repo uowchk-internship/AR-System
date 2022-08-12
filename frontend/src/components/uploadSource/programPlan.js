@@ -40,7 +40,7 @@ const ProgramPlan = (props) => {
         let fileJson = XLSX.utils.sheet_to_json(workbook);
         // console.log(fileJson);
 
-        console.log("Year: " + year)
+        // console.log("Year: " + year)
         let jsonObjects = []
         for (let item of fileJson) {
 
@@ -51,7 +51,7 @@ const ProgramPlan = (props) => {
             for (let key of objectKeys) {
 
                 if (!(key === "Course" || key === "UOC")) {
-                    console.log("key: "+key)
+                    // console.log("key: "+key)
                     let tempObj = {
                         course: item["Course"],
                         credit: (item["Course"].charAt(0) === "_" ? item[key] : item["UOC"]),
