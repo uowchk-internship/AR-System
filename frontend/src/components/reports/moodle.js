@@ -7,8 +7,9 @@ import { updateHashmap, getCourseList } from '../../functions/report/attendanceL
 export default function AttendanceList(props) {
     const { url } = useSelector((state) => state.setting);
 
-    let username = props.username
-
+    let username_ = props.username
+    let username = (username_ === "demo") ? "admin" : username_
+  
     const [courseList, setCourseList] = useState([])
 
     //Options

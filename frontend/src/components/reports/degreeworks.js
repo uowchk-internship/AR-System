@@ -8,7 +8,8 @@ import { getTempExecuteResult, updateHashmap } from "../../functions/report/degr
 const Degreeworks = (props) => {
   const { url } = useSelector((state) => state.setting);
 
-  let username = props.username
+  let username_ = props.username
+  let username = (username_ === "demo") ? "admin" : username_
 
   const [studentList, setStudentList] = useState([]);
 
