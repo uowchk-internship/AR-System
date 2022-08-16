@@ -24,7 +24,6 @@ function App() {
   const [status, setStatus] = useState(false)
   const [chosenTab, setChosenTab] = useState("")
   const [height, setHeight] = useState(0)
-  const [needReload, setNeedReload] = useState(true)
 
   const [signedIn, setSignedIn] = useState(false)
   const [username, setUsername] = useState("")
@@ -81,27 +80,33 @@ function App() {
         {
           (chosenTab === "setting") ?
             <SettingComponent setSignedIn={setSignedIn} /> :
-            (signedIn) ?
-              (chosenTab === "upload") ?
-                <UploadSection /> :
-                (chosenTab === "degreeworks") ?
-                  <Degreeworks username={username} /> :
-                  (chosenTab === "exam") ?
-                    <ExamHomeComponent username={username} /> :
-                    (chosenTab === "attendance") ?
-                      <AttendanceComponent username={username} /> :
-                      (chosenTab === "moodle") ?
-                        <MoodleCSVComponent username={username} /> :
-                        <>
-                          <h2>Please choose tabs on the left</h2>
-                        </> :
-              // if not signed in
+            
+            (status) ?
+              (signedIn) ?
+                (chosenTab === "upload") ?
+                  <UploadSection /> :
+                  (chosenTab === "degreeworks") ?
+                    <Degreeworks username={username} /> :
+                    (chosenTab === "exam") ?
+                      <ExamHomeComponent username={username} /> :
+                      (chosenTab === "attendance") ?
+                        <AttendanceComponent username={username} /> :
+                        (chosenTab === "moodle") ?
+                          <MoodleCSVComponent username={username} /> :
+                          <>
+                            <h2>Please choose tabs on the left</h2>
+                          </> :
+                // if not signed in
+                <>
+                  <LoginComponent
+                    setSignedIn={setSignedIn}
+                  />
+                </>
+              :
               <>
-                <LoginComponent
-                  setSignedIn={setSignedIn}
-                />
+                <h1>Unable to connect to backend server.</h1>
+                <h2>Please check the server url in "Settings"</h2>
               </>
-
         }
       </AppShell>
 

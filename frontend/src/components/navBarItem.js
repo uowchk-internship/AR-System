@@ -48,6 +48,7 @@ export default function NavBarItem(props) {
                                 Please Sign in
                             </p>
                             <Button
+                                disabled={(status) ? false : true}
                                 onClick={() => setChosenTab("")}
                             >Sign in</Button>
                         </>
