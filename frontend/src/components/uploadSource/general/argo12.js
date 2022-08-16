@@ -4,9 +4,9 @@ import { useSelector } from "react-redux";
 import { Badge, Button } from '@mantine/core';
 import * as XLSX from 'xlsx';
 
-import { saveArgo29, getArgo29Count, getFirst10RowOfItem, clearArgo29 } from '../../functions/source/Argo29'
+import { saveArgo12, getArgo12Count, getFirst10RowOfItem, clearArgo12 } from '../../../functions/source/Argo12'
 
-const Argo29 = (props) => {
+const Argo12 = (props) => {
     let setShowData = props.setShowData
     let setDisplayData = props.setDisplayData
 
@@ -20,7 +20,7 @@ const Argo29 = (props) => {
 
     const clearData = async () => {
         setLoading(true)
-        await clearArgo29(url)
+        await clearArgo12(url)
         setLoaded(false)
         setLoading(false)
     }
@@ -41,22 +41,33 @@ const Argo29 = (props) => {
         for (let item of fileJson) {
             let jsonObj = {
                 id: 0,
-                spridenId: (item["MultiColumn1.SPRIDEN_ID"] === undefined) ? "" : item["MultiColumn1.SPRIDEN_ID"],
-                shrttrmPidm: (item["MultiColumn1.SHRTTRM_PIDM"] === undefined) ? "" : item["MultiColumn1.SHRTTRM_PIDM"],
-                shrttrmTermCode: (item["MultiColumn1.SHRTTRM_TERM_CODE"] === undefined) ? "" : item["MultiColumn1.SHRTTRM_TERM_CODE"],
-                stvastdDesc: (item["MultiColumn1.STVASTD_DESC"] === undefined) ? "" : item["MultiColumn1.STVASTD_DESC"]
+                termCode: (item["TermCode"] === undefined) ? "" : item["TermCode"],
+                pidm: (item["PIDM"] === undefined) ? "" : item["PIDM"],
+                crn: (item["CRN"] === undefined) ? "" : item["CRN"],
+                studNo: (item["StudNo"] === undefined) ? "" : item["StudNo"],
+                studentName: (item["StudentName"] === undefined) ? "" : item["StudentName"],
+                gender: (item["Gender"] === undefined) ? "" : item["Gender"],
+                courseCode: (item["CourseCode"] === undefined) ? "" : item["CourseCode"],
+                courseOfferDept: (item["CourseOfferDept"] === undefined) ? "" : item["CourseOfferDept"],
+                enrolStatus: (item["EnorlStatus"] === undefined) ? "" : item["EnorlStatus"],
+                courseTitle: (item["CourseTitle"] === undefined) ? "" : item["CourseTitle"],
+                subjType: (item["SubjType"] === undefined) ? "" : item["SubjType"],
+                progCode: (item["ProgCode"] === undefined) ? "" : item["ProgCode"],
+                cohort: (item["Cohort"] === undefined) ? "" : item["Cohort"],
             }
             jsonObjects.push(jsonObj);
         }
 
-        await saveArgo29(url, jsonObjects)
+        // console.log(JSON.stringify(jsonObjects));
+
+        await saveArgo12(url, jsonObjects)
         setLoaded(false)
         setLoading(false)
     }
 
     useEffect(() => {
         const fetchNumber = async () => {
-            setEntryCount(await getArgo29Count(url))
+            setEntryCount(await getArgo12Count(url))
             setLoaded(true)
             setOldURL(url)
         }
@@ -74,9 +85,8 @@ const Argo29 = (props) => {
     return (
         <tr>
             <td>
-                <h2>Argo29</h2>
+                <h2>Argo12</h2>
             </td>
-
             <td>
                 <Badge size="lg" variant="outline" color={(entryCount > 0) ? "" : "gray"}>
                     {loaded ?
@@ -84,12 +94,14 @@ const Argo29 = (props) => {
                             {(entryCount > 0) ?
                                 `${entryCount} rows` : `Not yet upload`
                             }
+
                         </> :
                         <> Loading...</>
                     }
                 </Badge>
             </td>
             <td>
+
                 {(entryCount > 0) ?
                     <>
                         <Button
@@ -104,24 +116,24 @@ const Argo29 = (props) => {
                             color="red"
                             loading={loading}
                             onClick={() => clearData()}>
-                            Clear all argo29 data
+                            Clear all argo12 data
                         </Button>
                     </> :
                     <>
-                        <label htmlFor="argo29Upload">
+                        <label htmlFor="argo12Upload">
                             <Button
-                                onClick={() => document.getElementById('argo29Upload').click()}
+                                onClick={() => document.getElementById('argo12Upload').click()}
                                 loading={loading}>
-                                Upload argo29
+                                Upload argo12
                             </Button>
                         </label>
-                        <input hidden type="file" id="argo29Upload" onChange={handleFileAsync} />
+                        <input hidden type="file" id="argo12Upload" onChange={handleFileAsync} />
 
                     </>
                 }
             </td>
         </tr >
-    )
+    );
 }
 
-export default Argo29;
+export default Argo12;

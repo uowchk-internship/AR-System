@@ -4,12 +4,9 @@ import { useSelector } from "react-redux";
 import { Badge, Button } from '@mantine/core';
 import * as XLSX from 'xlsx';
 
-import { saveProgramPlan, getProgramPlanCountByYear, getFirst10RowOfItem, clearProgramPlan } from '../../functions/source/ProgramPlan'
+import { saveArgo29, getArgo29Count, getFirst10RowOfItem, clearArgo29 } from '../../../functions/source/Argo29'
 
-const ProgramPlan = (props) => {
-    let item = props.item
-    let year = item.substring(0, 4)
-
+const Argo29 = (props) => {
     let setShowData = props.setShowData
     let setDisplayData = props.setDisplayData
 
@@ -23,7 +20,7 @@ const ProgramPlan = (props) => {
 
     const clearData = async () => {
         setLoading(true)
-        await clearProgramPlan(url, year)
+        await clearArgo29(url)
         setLoaded(false)
         setLoading(false)
     }
@@ -40,41 +37,26 @@ const ProgramPlan = (props) => {
         let fileJson = XLSX.utils.sheet_to_json(workbook);
         // console.log(fileJson);
 
-        // console.log("Year: " + year)
         let jsonObjects = []
         for (let item of fileJson) {
-
-            let objectKeys = Object.keys(item)
-            // console.log(item)
-            // console.log(objectKeys)
-
-            for (let key of objectKeys) {
-
-                if (!(key === "Course" || key === "UOC")) {
-                    // console.log("key: "+key)
-                    let tempObj = {
-                        course: item["Course"],
-                        credit: (item["Course"].charAt(0) === "_" ? item[key] : item["UOC"]),
-                        program: key.toUpperCase(),
-                        type: (item["Course"].charAt(0) === "_" ? item["Course"].substring(1, item["Course"].length - 9) : item[key]),
-                        year: year
-                    }
-
-
-                    jsonObjects.push(tempObj)
-                }
-
+            let jsonObj = {
+                id: 0,
+                spridenId: (item["MultiColumn1.SPRIDEN_ID"] === undefined) ? "" : item["MultiColumn1.SPRIDEN_ID"],
+                shrttrmPidm: (item["MultiColumn1.SHRTTRM_PIDM"] === undefined) ? "" : item["MultiColumn1.SHRTTRM_PIDM"],
+                shrttrmTermCode: (item["MultiColumn1.SHRTTRM_TERM_CODE"] === undefined) ? "" : item["MultiColumn1.SHRTTRM_TERM_CODE"],
+                stvastdDesc: (item["MultiColumn1.STVASTD_DESC"] === undefined) ? "" : item["MultiColumn1.STVASTD_DESC"]
             }
-
+            jsonObjects.push(jsonObj);
         }
-        await saveProgramPlan(url, jsonObjects)
+
+        await saveArgo29(url, jsonObjects)
         setLoaded(false)
         setLoading(false)
     }
 
     useEffect(() => {
         const fetchNumber = async () => {
-            setEntryCount(await getProgramPlanCountByYear(url, year))
+            setEntryCount(await getArgo29Count(url))
             setLoaded(true)
             setOldURL(url)
         }
@@ -92,7 +74,7 @@ const ProgramPlan = (props) => {
     return (
         <tr>
             <td>
-                <h2>Program Plan - ({year})</h2>
+                <h2>Argo29</h2>
             </td>
 
             <td>
@@ -113,7 +95,7 @@ const ProgramPlan = (props) => {
                         <Button
                             onClick={async () => {
                                 setShowData(true)
-                                setDisplayData(await getFirst10RowOfItem(url, year))
+                                setDisplayData(await getFirst10RowOfItem(url))
                             }}>
                             View First 10 Rows
                         </Button>
@@ -122,31 +104,24 @@ const ProgramPlan = (props) => {
                             color="red"
                             loading={loading}
                             onClick={() => clearData()}>
-                            Clear all Program Plan data
+                            Clear all argo29 data
                         </Button>
                     </> :
                     <>
-                        <label htmlFor={`programPlanUpload_${year}`}>
+                        <label htmlFor="argo29Upload">
                             <Button
-                                onClick={() => document.getElementById(`programPlanUpload_${year}`).click()}
+                                onClick={() => document.getElementById('argo29Upload').click()}
                                 loading={loading}>
-                                Upload Program Plan
+                                Upload argo29
                             </Button>
                         </label>
-                        <a href="/Program_Plan_Sample.xlsx" download="Program_Plan_Sample.xlsx">
-                            <Button>
-                                Download Sample
-                            </Button>
-                        </a>
-
-
-                        <input hidden type="file" id={`programPlanUpload_${year}`} onChange={handleFileAsync} />
+                        <input hidden type="file" id="argo29Upload" onChange={handleFileAsync} />
 
                     </>
                 }
             </td>
         </tr >
-    );
+    )
 }
 
-export default ProgramPlan;
+export default Argo29;

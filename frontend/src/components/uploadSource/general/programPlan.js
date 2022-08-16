@@ -4,9 +4,12 @@ import { useSelector } from "react-redux";
 import { Badge, Button } from '@mantine/core';
 import * as XLSX from 'xlsx';
 
-import { saveCge, getCgeCount, getFirst10RowOfItem, clearCge } from '../../functions/source/Cge'
+import { saveProgramPlan, getProgramPlanCountByYear, getFirst10RowOfItem, clearProgramPlan } from '../../../functions/source/ProgramPlan'
 
-const Cge = (props) => {
+const ProgramPlan = (props) => {
+    let item = props.item
+    let year = item.substring(0, 4)
+
     let setShowData = props.setShowData
     let setDisplayData = props.setDisplayData
 
@@ -20,7 +23,7 @@ const Cge = (props) => {
 
     const clearData = async () => {
         setLoading(true)
-        await clearCge(url)
+        await clearProgramPlan(url, year)
         setLoaded(false)
         setLoading(false)
     }
@@ -37,32 +40,41 @@ const Cge = (props) => {
         let fileJson = XLSX.utils.sheet_to_json(workbook);
         // console.log(fileJson);
 
+        // console.log("Year: " + year)
         let jsonObjects = []
         for (let item of fileJson) {
 
-            console.log(item);
+            let objectKeys = Object.keys(item)
+            // console.log(item)
+            // console.log(objectKeys)
 
-            let tempObj = {
-                id: 0,
-                code: (item["Code"] === undefined) ? "" : item["Code"],
-                title: (item["Title"] === undefined) ? "" : item["Title"],
-                domain: (item["Domain"] === undefined) ? "" : item["Domain"],
-                lvl: (item["Lvl"] === undefined) ? "" : item["Lvl"],
+            for (let key of objectKeys) {
+
+                if (!(key === "Course" || key === "UOC")) {
+                    // console.log("key: "+key)
+                    let tempObj = {
+                        course: item["Course"],
+                        credit: (item["Course"].charAt(0) === "_" ? item[key] : item["UOC"]),
+                        program: key.toUpperCase(),
+                        type: (item["Course"].charAt(0) === "_" ? item["Course"].substring(1, item["Course"].length - 9) : item[key]),
+                        year: year
+                    }
+
+
+                    jsonObjects.push(tempObj)
+                }
+
             }
 
-            jsonObjects.push(tempObj);
-
-
         }
-
-        await saveCge(url, jsonObjects)
+        await saveProgramPlan(url, jsonObjects)
         setLoaded(false)
         setLoading(false)
     }
 
     useEffect(() => {
         const fetchNumber = async () => {
-            setEntryCount(await getCgeCount(url))
+            setEntryCount(await getProgramPlanCountByYear(url, year))
             setLoaded(true)
             setOldURL(url)
         }
@@ -80,7 +92,7 @@ const Cge = (props) => {
     return (
         <tr>
             <td>
-                <h2>CGE</h2>
+                <h2>Program Plan - ({year})</h2>
             </td>
 
             <td>
@@ -101,7 +113,7 @@ const Cge = (props) => {
                         <Button
                             onClick={async () => {
                                 setShowData(true)
-                                setDisplayData(await getFirst10RowOfItem(url))
+                                setDisplayData(await getFirst10RowOfItem(url, year))
                             }}>
                             View First 10 Rows
                         </Button>
@@ -110,30 +122,31 @@ const Cge = (props) => {
                             color="red"
                             loading={loading}
                             onClick={() => clearData()}>
-                            Clear all CGE data
+                            Clear all Program Plan data
                         </Button>
                     </> :
                     <>
-                        <label htmlFor="cgeUpload">
+                        <label htmlFor={`programPlanUpload_${year}`}>
                             <Button
-                                onClick={() => document.getElementById('cgeUpload').click()}
+                                onClick={() => document.getElementById(`programPlanUpload_${year}`).click()}
                                 loading={loading}>
-                                Upload CGE
+                                Upload Program Plan
                             </Button>
                         </label>
-                        <a href="/CGE_Sample.csv" download="CGE_Sample.csv">
+                        <a href="/Program_Plan_Sample.xlsx" download="Program_Plan_Sample.xlsx">
                             <Button>
                                 Download Sample
                             </Button>
                         </a>
-                        <input hidden type="file" id="cgeUpload" onChange={handleFileAsync} />
+
+
+                        <input hidden type="file" id={`programPlanUpload_${year}`} onChange={handleFileAsync} />
 
                     </>
                 }
             </td>
         </tr >
-
     );
 }
 
-export default Cge;
+export default ProgramPlan;

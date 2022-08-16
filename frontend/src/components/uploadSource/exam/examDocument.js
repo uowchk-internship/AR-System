@@ -4,9 +4,9 @@ import { useSelector } from "react-redux";
 import { Badge, Button } from '@mantine/core';
 import * as XLSX from 'xlsx';
 
-import { saveArgo10, getArgo10Count, getFirst10RowOfItem, clearArgo10 } from '../../functions/source/Argo10'
+import { saveArgo10, getArgo10Count, getFirst10RowOfItem, clearArgo10 } from '../../../functions/source/Argo10'
 
-const Argo10 = (props) => {
+const ExamDocument = (props) => {
     let setShowData = props.setShowData
     let setDisplayData = props.setDisplayData
 
@@ -98,7 +98,7 @@ const Argo10 = (props) => {
     return (
         <tr>
             <td>
-                <h2>Argo10</h2>
+                <h2>Exam Document</h2>
             </td>
 
             <td>
@@ -147,4 +147,4 @@ const Argo10 = (props) => {
     );
 }
 
-export default Argo10;
+export default ExamDocument;

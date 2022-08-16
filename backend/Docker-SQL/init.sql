@@ -135,3 +135,66 @@ create table program_plan
     constraint program_plan_id_uindex
         unique (id)
 );
+
+create table exam_document
+(
+    id                      int auto_increment
+        primary key,
+    course_code             varchar(255) null,
+    course_name             varchar(255) null,
+    course_title            varchar(255) null,
+    start_date_time         varchar(255) null,
+    end_date_time           varchar(255) null,
+    remarks                 varchar(255) null,
+    loc_host_key            varchar(255) null,
+    venue                   varchar(255) null,
+    loc_name                varchar(255) null,
+    zone_name               varchar(255) null,
+    zone_description        varchar(255) null,
+    seat_no                 int          null,
+    student_host_key        varchar(255) null,
+    stu_display_name        varchar(255) null,
+    exam_period_name        varchar(255) null,
+    exam_period_description varchar(255) null,
+    constraint exam_document_id_uindex
+        unique (id)
+);
+
+create table exam_material
+(
+    id                        int auto_increment
+        primary key,
+    course                    varchar(255) null,
+    answer_booklet            varchar(255) null,
+    supp_sheets               varchar(255) null,
+    mc_answer_sheet           varchar(255) null,
+    graph_paper               varchar(255) null,
+    a4_blank_paper            varchar(255) null,
+    other_specified_materials varchar(255) null,
+    open_book_exam            varchar(255) null,
+    approved_calculators      varchar(255) null,
+    approved_notes            varchar(255) null,
+    others                    varchar(255) null,
+    constraint exam_material_id_uindex
+        unique (id)
+);
+
+create table exam_sen
+(
+    id                        int auto_increment
+        primary key,
+    student_name              varchar(255) null,
+    programme                 varchar(255) null,
+    home_faculty              varchar(255) null,
+    reason                    varchar(255) null,
+    extra_time                varchar(255) null,
+    break_laps                int          null,
+    no_breaks_in_2hr          int          null,
+    no_breaks_in_3hr          int          null,
+    separate_venue            varchar(255) null,
+    permission_use_computer   varchar(255) null,
+    other_special_arrangement varchar(255) null,
+    constraint exam_sen_id_uindex
+        unique (id)
+);
+

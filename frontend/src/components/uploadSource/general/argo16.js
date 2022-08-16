@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { Badge, Button } from '@mantine/core';
 import * as XLSX from 'xlsx';
 
-import { saveArgo16, getArgo16Count, getFirst10RowOfItem, clearArgo16 } from '../../functions/source/Argo16'
+import { saveArgo16, getArgo16Count, getFirst10RowOfItem, clearArgo16 } from '../../../functions/source/Argo16'
 
 const Argo16 = (props) => {
     let setShowData = props.setShowData
