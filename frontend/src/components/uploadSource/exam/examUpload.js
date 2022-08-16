@@ -26,9 +26,9 @@ function ExamUploadComponent() {
                 </thead>
 
                 <tbody>
-                    <ExamDocument setShowData={setShowData} setDisplayData={setDisplayData} />
+                    {/* <ExamDocument setShowData={setShowData} setDisplayData={setDisplayData} />
                     <ExamMaterial setShowData={setShowData} setDisplayData={setDisplayData} />
-                    <ExamSEN setShowData={setShowData} setDisplayData={setDisplayData} />
+                    <ExamSEN setShowData={setShowData} setDisplayData={setDisplayData} /> */}
 
                 </tbody>
             </Table>
