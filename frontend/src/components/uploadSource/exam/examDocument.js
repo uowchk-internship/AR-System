@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { Badge, Button } from '@mantine/core';
 import * as XLSX from 'xlsx';
 
-import { saveArgo10, getArgo10Count, getFirst10RowOfItem, clearArgo10 } from '../../../functions/source/Argo10'
+import { saveExamDocument, getExamDocumentCount, getFirst10RowOfItem, clearExamDocument } from '../../../functions/source/ExamDocument'
 
 const ExamDocument = (props) => {
     let setShowData = props.setShowData
@@ -20,7 +20,7 @@ const ExamDocument = (props) => {
 
     const clearData = async () => {
         setLoading(true)
-        await clearArgo10(url)
+        await clearExamDocument(url)
         setLoaded(false)
         setLoading(false)
     }
@@ -31,7 +31,8 @@ const ExamDocument = (props) => {
         const file = e.target.files[0];
         const data = await file.arrayBuffer();
         /* data is an ArrayBuffer */
-        const workbook = XLSX.read(data).Sheets["Sheet1"];
+        let workbook = XLSX.read(data);
+        workbook = workbook.Sheets[workbook.SheetNames[0]]
         // console.log(workbook);
 
         let fileJson = XLSX.utils.sheet_to_json(workbook);
@@ -41,46 +42,34 @@ const ExamDocument = (props) => {
         for (let item of fileJson) {
             let jsonObj = {
                 id: 0,
-                cohort: (item["MultiColumn1.Cohort"] === undefined) ? "" : item["MultiColumn1.Cohort"],
-                internalId: (item["MultiColumn1.InternalId"] === undefined) ? "" : item["MultiColumn1.InternalId"],
-                studentId: (item["MultiColumn1.StudentID"] === undefined) ? "" : item["MultiColumn1.StudentID"],
-                lastName: (item["MultiColumn1.LastName"] === undefined) ? "" : item["MultiColumn1.LastName"],
-                firstName: (item["MultiColumn1.FirstName"] === undefined) ? "" : item["MultiColumn1.FirstName"],
-                enrolYearTerm: (item["MultiColumn1.EnrolYearTerm"] === undefined) ? "" : item["MultiColumn1.EnrolYearTerm"],
-                progCode: (item["MultiColumn1.ProgCode"] === undefined) ? "" : item["MultiColumn1.ProgCode"],
-                studStatus: (item["MultiColumn1.StudStatus"] === undefined) ? "" : item["MultiColumn1.StudStatus"],
-                deptCode: (item["MultiColumn1.DeptCode"] === undefined) ? "" : item["MultiColumn1.DeptCode"],
-                blockCode: (item["MultiColumn1.BlockCode"] === undefined) ? "" : item["MultiColumn1.BlockCode"],
-                shrtcknTermCode: (item["MultiColumn1.SHRTCKN_TERM_CODE"] === undefined) ? "" : item["MultiColumn1.SHRTCKN_TERM_CODE"],
-                shrtcknSubjCode: (item["MultiColumn1.SHRTCKN_SUBJ_CODE"] === undefined) ? "" : item["MultiColumn1.SHRTCKN_SUBJ_CODE"],
-                shrtcknCrseNumb: (item["MultiColumn1.SHRTCKN_CRSE_NUMB"] === undefined) ? "" : item["MultiColumn1.SHRTCKN_CRSE_NUMB"],
-                shrtcknCrseTitle: (item["MultiColumn1.shrtckn_crse_title"] === undefined) ? "" : item["MultiColumn1.shrtckn_crse_title"],
-                shrtckgCreditHours: (item["MultiColumn1.SHRTCKG_CREDIT_HOURS"] === undefined || item["MultiColumn1.SHRTCKG_GRDE_CODE_FINAL"] === undefined) ? "" :
-                    ((item["MultiColumn1.SHRTCKG_GRDE_CODE_FINAL"].charAt(0) === "A") || (item["MultiColumn1.SHRTCKG_GRDE_CODE_FINAL"].charAt(0) === "B") ||
-                        (item["MultiColumn1.SHRTCKG_GRDE_CODE_FINAL"].charAt(0) === "C") || (item["MultiColumn1.SHRTCKG_GRDE_CODE_FINAL"].charAt(0) === "D") ||
-                        (item["MultiColumn1.SHRTCKG_GRDE_CODE_FINAL"].charAt(0) === "P")) ?
-                        item["MultiColumn1.SHRTCKG_CREDIT_HOURS"] : 0,
-                shrtckgHoursAttempted: (item["MultiColumn1.shrtckg_hours_attempted"] === undefined) ? "" : item["MultiColumn1.shrtckg_hours_attempted"],
-                shrtckgGrdeCodeFinal: (item["MultiColumn1.SHRTCKG_GRDE_CODE_FINAL"] === undefined) ? "" : item["MultiColumn1.SHRTCKG_GRDE_CODE_FINAL"],
-                excludeSubject: (item["MultiColumn1.exclude_subject"] === undefined) ? "" : item["MultiColumn1.exclude_subject"],
-                gradePoint: (item["MultiColumn1.grade_point"] === undefined) ? "" : item["MultiColumn1.grade_point"],
-                countGpaInd: (item["MultiColumn1.count_gpa_ind"] === undefined) ? "" : item["MultiColumn1.count_gpa_ind"],
-                instName: (item["MultiColumn1.inst_name"] === undefined) ? "" : item["MultiColumn1.inst_name"],
-                attemptedInd: (item["MultiColumn1.attempted_ind"] === undefined) ? "" : item["MultiColumn1.attempted_ind"],
-                passedInd: (item["MultiColumn1.passed_ind"] === undefined) ? "" : item["MultiColumn1.passed_ind"],
-                completedInd: (item["MultiColumn1.completed_ind"] === undefined) ? "" : item["MultiColumn1.completed_ind"]
+                courseCode: (item["CourseCode"] === undefined) ? "" : item["CourseCode"],
+                courseName: (item["CourseName"] === undefined) ? "" : item["CourseName"],
+                courseTitle: (item["CourseTitle"] === undefined) ? "" : item["CourseTitle"],
+                startDateTime: (item["StartDateTime"] === undefined) ? "" : item["StartDateTime"],
+                endDateTime: (item["EndDateTime"] === undefined) ? "" : item["EndDateTime"],
+                remarks: (item["Remarks"] === undefined) ? "" : item["Remarks"],
+                locHostKey: (item["locHostKey"] === undefined) ? "" : item["locHostKey"],
+                venue: (item["Venue"] === undefined) ? "" : item["Venue"],
+                locName: (item["locName"] === undefined) ? "" : item["locName"],
+                zoneName: (item["zoneName"] === undefined) ? "" : item["zoneName"],
+                zoneDescription: (item["zoneDescription"] === undefined) ? "" : item["zoneDescription"],
+                seatNo: (item["SeatNo"] === undefined) ? "" : item["SeatNo"],
+                studentHostKey: (item["StudentHostKey"] === undefined) ? "" : item["StudentHostKey"],
+                stuDisplayName: (item["stuDisplayName"] === undefined) ? "" : item["stuDisplayName"],
+                examPeriodName: (item["ExamPeriodName"] === undefined) ? "" : item["ExamPeriodName"],
+                examPeriodDescription: (item["ExamPeriodDescription"] === undefined) ? "" : item["ExamPeriodDescription"],
             }
             jsonObjects.push(jsonObj);
         }
 
-        await saveArgo10(url, jsonObjects)
+        await saveExamDocument(url, jsonObjects)
         setLoaded(false)
         setLoading(false)
     }
 
     useEffect(() => {
         const fetchNumber = async () => {
-            setEntryCount(await getArgo10Count(url))
+            setEntryCount(await getExamDocumentCount(url))
             setLoaded(true)
             setOldURL(url)
         }
@@ -128,18 +117,18 @@ const ExamDocument = (props) => {
                             color="red"
                             loading={loading}
                             onClick={() => clearData()}>
-                            Clear All Argo10 Data
+                            Clear All Exam Document Data
                         </Button>
                     </> :
                     <>
-                        <label htmlFor="argo10Upload">
+                        <label htmlFor="examDocumentUpload">
                             <Button
-                                onClick={() => document.getElementById('argo10Upload').click()}
+                                onClick={() => document.getElementById('examDocumentUpload').click()}
                                 loading={loading}>
-                                Upload argo10
+                                Upload Exam Document
                             </Button>
                         </label>
-                        <input hidden type="file" id="argo10Upload" onChange={handleFileAsync} />
+                        <input hidden type="file" id="examDocumentUpload" onChange={handleFileAsync} />
                     </>
                 }
             </td>

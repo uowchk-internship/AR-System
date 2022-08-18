@@ -183,17 +183,18 @@ create table exam_sen
 (
     id                        int auto_increment
         primary key,
-    student_name              varchar(255) null,
-    programme                 varchar(255) null,
-    home_faculty              varchar(255) null,
-    reason                    varchar(255) null,
-    extra_time                varchar(255) null,
-    break_laps                int          null,
-    no_breaks_in_2hr          int          null,
-    no_breaks_in_3hr          int          null,
-    separate_venue            varchar(255) null,
-    permission_use_computer   varchar(255) null,
-    other_special_arrangement varchar(255) null,
+    student_id                varchar(255)  null,
+    student_name              varchar(255)  null,
+    programme                 varchar(255)  null,
+    home_faculty              varchar(255)  null,
+    reason                    varchar(255)  null,
+    extra_time                varchar(255)  null,
+    break_laps                int           null,
+    no_breaks_in_2hr          int           null,
+    no_breaks_in_3hr          int           null,
+    separate_venue            varchar(255)  null,
+    permission_use_computer   varchar(255)  null,
+    other_special_arrangement varchar(2000) null,
     constraint exam_sen_id_uindex
         unique (id)
 );

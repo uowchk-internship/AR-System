@@ -19,11 +19,15 @@ const Login = (props) => {
     const loginHandler = async () => {
         setLoading(true)
 
-        let result = await login(url, username, password)
+        if ((url !== "https://tomcat.johnnyip.com/ar" && username !== "demo") || url === "https://tomcat.johnnyip.com/ar") {
+            let result = await login(url, username, password)
+            console.log(result)
+            if (result === "") { setError(true) }
+            else { setSignedIn(true) }    
+        }else{
+            setError(true)
+        }
 
-        console.log(result)
-        if (result === "") { setError(true) }
-        else { setSignedIn(true) }
 
         setLoading(false)
     }
@@ -34,6 +38,7 @@ const Login = (props) => {
                 Login
             </Badge>
             <br /><br />
+            <h2>Signing into [{(url === "https://tomcat.johnnyip.com/ar") ? "Remote" : "Local"}] server: {url}</h2>
 
             <h3>Username</h3>
             <TextInput
@@ -63,6 +68,13 @@ const Login = (props) => {
                 onClick={async () => {
                     await loginHandler()
                 }}>Login</Button>
+            {(url === "https://tomcat.johnnyip.com/ar") ?
+                <Button
+                    onClick={async () => {
+                        setUsername("demo")
+                        setPassword("demo")
+                    }}>Load demo account</Button>
+                : <></>}
         </div>
     )
 }

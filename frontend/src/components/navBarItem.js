@@ -92,8 +92,8 @@ export default function NavBarItem(props) {
                 <Button variant={chosenTab === "exam" ? "filled" : "subtle"}
                     color={chosenTab === "exam" ? "" : "gray"}
                     leftIcon={<Book />}
-                    // disabled={!status || !signedIn}
-                    disabled={true}
+                    disabled={!status || !signedIn}
+                    // disabled={true}
                     onClick={() => setChosenTab("exam")}
                     style={{ width: '100%', height: "50px" }}>
                     <h2>Exam Related</h2>

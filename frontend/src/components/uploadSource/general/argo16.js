@@ -31,7 +31,8 @@ const Argo16 = (props) => {
         const file = e.target.files[0];
         const data = await file.arrayBuffer();
         /* data is an ArrayBuffer */
-        const workbook = XLSX.read(data).Sheets["Sheet1"];
+        let workbook = XLSX.read(data);
+        workbook = workbook.Sheets[workbook.SheetNames[0]]
         // console.log(workbook);
 
         let fileJson = XLSX.utils.sheet_to_json(workbook);
