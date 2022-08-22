@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useSelector } from "react-redux";
 import { AppShell, Navbar } from '@mantine/core';
 
+
 import UploadSection from './components/uploadSource/uploadSection'
 import Degreeworks from './components/reports/degreeworks'
 import ExamHomeComponent from './components/reports/exam/examHome'
@@ -31,6 +32,7 @@ function App() {
   useEffect(() => {
     // console.log("env: "+JSON.stringify(process.env))
     // console.log("env - SERVER_URL: "+process.env.REACT_APP_SERVER_URL)
+
     const fetchStatus = async () => {
       setStatus(await checkServerStatus(url))
       let loginStatus = await checkLoginStatus(url)
@@ -80,7 +82,7 @@ function App() {
         {
           (chosenTab === "setting") ?
             <SettingComponent setSignedIn={setSignedIn} /> :
-            
+
             (status) ?
               (signedIn) ?
                 (chosenTab === "upload") ?
