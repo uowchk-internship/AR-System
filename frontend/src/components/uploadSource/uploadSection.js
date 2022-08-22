@@ -11,13 +11,13 @@ function UploadSectionComponent(props) {
         <>
             <div style={{ paddingTop: 20 }}>
 
-                <SegmentedControl fullWidth size="lg"
+                {/* <SegmentedControl fullWidth size="lg"
                     value={activeTab}
                     onChange={setActiveTab}
                     data={[
                         { label: "General Data", value: "general" },
                         { label: "Exam Related Data", value: "exam" },
-                    ]} />
+                    ]} /> */}
             </div>
 
             {(activeTab === "general") ?
