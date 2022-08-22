@@ -23,8 +23,8 @@ const Login = (props) => {
             let result = await login(url, username, password)
             console.log(result)
             if (result === "") { setError(true) }
-            else { setSignedIn(true) }    
-        }else{
+            else { setSignedIn(true) }
+        } else {
             setError(true)
         }
 
@@ -38,7 +38,9 @@ const Login = (props) => {
                 Login
             </Badge>
             <br /><br />
-            <h2>Signing into [{(url === "https://tomcat.johnnyip.com/ar") ? "Remote" : "School Server"}]</h2>
+            <h2>Signing into {(url === "https://tomcat.johnnyip.com/ar") ?
+                "[Remote Server] (Outside School Network)"
+                : "[School Server]"}</h2>
 
             <h3>Username</h3>
             <TextInput
