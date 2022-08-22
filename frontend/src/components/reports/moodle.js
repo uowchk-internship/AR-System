@@ -114,7 +114,7 @@ export default function AttendanceList(props) {
                 style={{ width: "60%", marginLeft: "20%", marginRight: "20%" }}>
                 <tbody>
                     <tr>
-                        <th>Department</th>
+                        <th>Faculty</th>
                         <td>
                             <Select
                                 data={departmentOptionList}

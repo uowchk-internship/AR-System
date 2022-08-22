@@ -216,7 +216,7 @@ const Degreeworks = (props) => {
       >
         <tbody>
           <tr>
-            <th>Department</th>
+            <th>Faculty</th>
             <td>
               <Select
                 data={departmentOptionList}
