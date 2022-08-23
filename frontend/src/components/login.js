@@ -38,7 +38,7 @@ const Login = (props) => {
                 Login
             </Badge>
             <br /><br />
-            <h2>Signing into {(url === "https://tomcat.johnnyip.com/ar") ?
+            <h2>Connecting to {(url === "https://tomcat.johnnyip.com/ar") ?
                 "[Remote Server] (Outside School Network)"
                 : "[School Server]"}</h2>
 
