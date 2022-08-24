@@ -470,7 +470,7 @@ const Degreeworks = (props) => {
           <h1>Loading...</h1>
         </>
         : <>
-          <h1>Error: The data source is not imported.</h1>
+          <h1>Error: The required data source is not imported.</h1>
           <h2>Data source required: Argo10, Argo11, Argo16, Argo29, Cge</h2>
         </>
     )

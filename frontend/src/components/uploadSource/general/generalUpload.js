@@ -2,6 +2,7 @@ import { Table, Modal, SegmentedControl } from '@mantine/core';
 import { useState, useEffect } from 'react'
 import { useSelector } from "react-redux";
 
+import Argo5 from './argo5'
 import Argo10 from './argo10'
 import Argo11 from './argo11'
 import Argo12 from './argo12'
@@ -44,6 +45,7 @@ function GeneralUploadComponent() {
                 </thead>
 
                 <tbody>
+                    <Argo5 setShowData={setShowData} setDisplayData={setDisplayData} />
                     <Argo10 setShowData={setShowData} setDisplayData={setDisplayData} />
                     <Argo11 setShowData={setShowData} setDisplayData={setDisplayData} />
                     <Argo12 setShowData={setShowData} setDisplayData={setDisplayData} />

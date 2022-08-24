@@ -5,6 +5,7 @@ import { Button, Select, Table } from '@mantine/core';
 import { updateHashmap, getCourseList } from '../../functions/report/attendanceList'
 
 import { getArgo12Count } from '../../functions/source/Argo12'
+import { getArgo5Count } from '../../functions/source/Argo5'
 
 export default function AttendanceList(props) {
     const { url } = useSelector((state) => state.setting);
@@ -15,6 +16,7 @@ export default function AttendanceList(props) {
     const [courseList, setCourseList] = useState([])
 
     const [argo12Count, setArgo12Count] = useState(-1)
+    const [argo5Count, setArgo5Count] = useState(-1)
 
     //Options
     const departmentOptionList = [
@@ -116,6 +118,7 @@ export default function AttendanceList(props) {
             updateHashmap(url)
 
             setArgo12Count(await getArgo12Count(url));
+            setArgo5Count(await getArgo5Count(url));
         }
 
         if (!loaded) {
@@ -147,7 +150,7 @@ export default function AttendanceList(props) {
 
     })
 
-    if (argo12Count > 0) {
+    if (argo12Count > 0 && argo5Count > 0) {
         return (
             <>
                 <h2 >Download Attendance List </h2>
@@ -222,13 +225,13 @@ export default function AttendanceList(props) {
 
     } else {
         return (
-            (argo12Count === -1) ?
+            (argo12Count === -1 && argo5Count === -1) ?
                 <>
                     <h1>Loading...</h1>
                 </>
                 : <>
-                    <h1>Error: The data source is not imported.</h1>
-                    <h2>Data source required: Argo12</h2>
+                    <h1>Error: The required data source is not imported.</h1>
+                    <h2>Data source required: Argo5, Argo12</h2>
                 </>
         )
     }

@@ -210,7 +210,7 @@ export default function AttendanceList(props) {
                     <h1>Loading...</h1>
                 </>
                 : <>
-                    <h1>Error: The data source is not imported.</h1>
+                    <h1>Error: The required data source is not imported.</h1>
                     <h2>Data source required: Argo11 and Argo12</h2>
                 </>
         )
