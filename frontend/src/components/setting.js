@@ -50,6 +50,11 @@ const SettingComponent = (props) => {
             <a href="https://admin.johnnyip.com/sharing/ZqPeBXcGo" target="_blank">
                 <Button>Download Docker-Compose files</Button>
             </a>
+
+
+            <hr />
+            <h3>Version: 1.0 (24 Aug 2022)</h3>
+
         </div>
     )
 }
