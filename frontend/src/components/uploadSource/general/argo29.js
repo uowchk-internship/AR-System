@@ -42,10 +42,10 @@ const Argo29 = (props) => {
         for (let item of fileJson) {
             let jsonObj = {
                 id: 0,
-                spridenId: (item["MultiColumn1.SPRIDEN_ID"] === undefined) ? "" : item["MultiColumn1.SPRIDEN_ID"],
-                shrttrmPidm: (item["MultiColumn1.SHRTTRM_PIDM"] === undefined) ? "" : item["MultiColumn1.SHRTTRM_PIDM"],
-                shrttrmTermCode: (item["MultiColumn1.SHRTTRM_TERM_CODE"] === undefined) ? "" : item["MultiColumn1.SHRTTRM_TERM_CODE"],
-                stvastdDesc: (item["MultiColumn1.STVASTD_DESC"] === undefined) ? "" : item["MultiColumn1.STVASTD_DESC"]
+                spridenId: (item["SPRIDEN_ID"] === undefined) ? "" : item["SPRIDEN_ID"],
+                shrttrmPidm: (item["SHRTTRM_PIDM"] === undefined) ? "" : item["SHRTTRM_PIDM"],
+                shrttrmTermCode: (item["SHRTTRM_TERM_CODE"] === undefined) ? "" : item["SHRTTRM_TERM_CODE"],
+                stvastdDesc: (item["STVASTD_DESC"] === undefined) ? "" : item["STVASTD_DESC"]
             }
             jsonObjects.push(jsonObj);
         }

@@ -42,34 +42,34 @@ const Argo10 = (props) => {
         for (let item of fileJson) {
             let jsonObj = {
                 id: 0,
-                cohort: (item["MultiColumn1.Cohort"] === undefined) ? "" : item["MultiColumn1.Cohort"],
-                internalId: (item["MultiColumn1.InternalId"] === undefined) ? "" : item["MultiColumn1.InternalId"],
-                studentId: (item["MultiColumn1.StudentID"] === undefined) ? "" : item["MultiColumn1.StudentID"],
-                lastName: (item["MultiColumn1.LastName"] === undefined) ? "" : item["MultiColumn1.LastName"],
-                firstName: (item["MultiColumn1.FirstName"] === undefined) ? "" : item["MultiColumn1.FirstName"],
-                enrolYearTerm: (item["MultiColumn1.EnrolYearTerm"] === undefined) ? "" : item["MultiColumn1.EnrolYearTerm"],
-                progCode: (item["MultiColumn1.ProgCode"] === undefined) ? "" : item["MultiColumn1.ProgCode"],
-                studStatus: (item["MultiColumn1.StudStatus"] === undefined) ? "" : item["MultiColumn1.StudStatus"],
-                deptCode: (item["MultiColumn1.DeptCode"] === undefined) ? "" : item["MultiColumn1.DeptCode"],
-                blockCode: (item["MultiColumn1.BlockCode"] === undefined) ? "" : item["MultiColumn1.BlockCode"],
-                shrtcknTermCode: (item["MultiColumn1.SHRTCKN_TERM_CODE"] === undefined) ? "" : item["MultiColumn1.SHRTCKN_TERM_CODE"],
-                shrtcknSubjCode: (item["MultiColumn1.SHRTCKN_SUBJ_CODE"] === undefined) ? "" : item["MultiColumn1.SHRTCKN_SUBJ_CODE"],
-                shrtcknCrseNumb: (item["MultiColumn1.SHRTCKN_CRSE_NUMB"] === undefined) ? "" : item["MultiColumn1.SHRTCKN_CRSE_NUMB"],
-                shrtcknCrseTitle: (item["MultiColumn1.shrtckn_crse_title"] === undefined) ? "" : item["MultiColumn1.shrtckn_crse_title"],
-                shrtckgCreditHours: (item["MultiColumn1.SHRTCKG_CREDIT_HOURS"] === undefined || item["MultiColumn1.SHRTCKG_GRDE_CODE_FINAL"] === undefined) ? "" :
-                    ((item["MultiColumn1.SHRTCKG_GRDE_CODE_FINAL"].charAt(0) === "A") || (item["MultiColumn1.SHRTCKG_GRDE_CODE_FINAL"].charAt(0) === "B") ||
-                        (item["MultiColumn1.SHRTCKG_GRDE_CODE_FINAL"].charAt(0) === "C") || (item["MultiColumn1.SHRTCKG_GRDE_CODE_FINAL"].charAt(0) === "D") ||
-                        (item["MultiColumn1.SHRTCKG_GRDE_CODE_FINAL"].charAt(0) === "P")) ?
-                        item["MultiColumn1.SHRTCKG_CREDIT_HOURS"] : 0,
-                shrtckgHoursAttempted: (item["MultiColumn1.shrtckg_hours_attempted"] === undefined) ? "" : item["MultiColumn1.shrtckg_hours_attempted"],
-                shrtckgGrdeCodeFinal: (item["MultiColumn1.SHRTCKG_GRDE_CODE_FINAL"] === undefined) ? "" : item["MultiColumn1.SHRTCKG_GRDE_CODE_FINAL"],
-                excludeSubject: (item["MultiColumn1.exclude_subject"] === undefined) ? "" : item["MultiColumn1.exclude_subject"],
-                gradePoint: (item["MultiColumn1.grade_point"] === undefined) ? "" : item["MultiColumn1.grade_point"],
-                countGpaInd: (item["MultiColumn1.count_gpa_ind"] === undefined) ? "" : item["MultiColumn1.count_gpa_ind"],
-                instName: (item["MultiColumn1.inst_name"] === undefined) ? "" : item["MultiColumn1.inst_name"],
-                attemptedInd: (item["MultiColumn1.attempted_ind"] === undefined) ? "" : item["MultiColumn1.attempted_ind"],
-                passedInd: (item["MultiColumn1.passed_ind"] === undefined) ? "" : item["MultiColumn1.passed_ind"],
-                completedInd: (item["MultiColumn1.completed_ind"] === undefined) ? "" : item["MultiColumn1.completed_ind"]
+                cohort: (item["Cohort"] === undefined) ? "" : item["Cohort"],
+                internalId: (item["InternalId"] === undefined) ? "" : item["InternalId"],
+                studentId: (item["StudentID"] === undefined) ? "" : item["StudentID"],
+                lastName: (item["LastName"] === undefined) ? "" : item["LastName"],
+                firstName: (item["FirstName"] === undefined) ? "" : item["FirstName"],
+                enrolYearTerm: (item["EnrolYearTerm"] === undefined) ? "" : item["EnrolYearTerm"],
+                progCode: (item["ProgCode"] === undefined) ? "" : item["ProgCode"],
+                studStatus: (item["StudStatus"] === undefined) ? "" : item["StudStatus"],
+                deptCode: (item["DeptCode"] === undefined) ? "" : item["DeptCode"],
+                blockCode: (item["BlockCode"] === undefined) ? "" : item["BlockCode"],
+                shrtcknTermCode: (item["SHRTCKN_TERM_CODE"] === undefined) ? "" : item["SHRTCKN_TERM_CODE"],
+                shrtcknSubjCode: (item["SHRTCKN_SUBJ_CODE"] === undefined) ? "" : item["SHRTCKN_SUBJ_CODE"],
+                shrtcknCrseNumb: (item["SHRTCKN_CRSE_NUMB"] === undefined) ? "" : item["SHRTCKN_CRSE_NUMB"],
+                shrtcknCrseTitle: (item["shrtckn_crse_title"] === undefined) ? "" : item["shrtckn_crse_title"],
+                shrtckgCreditHours: (item["SHRTCKG_CREDIT_HOURS"] === undefined || item["SHRTCKG_GRDE_CODE_FINAL"] === undefined) ? "" :
+                    ((item["SHRTCKG_GRDE_CODE_FINAL"].charAt(0) === "A") || (item["SHRTCKG_GRDE_CODE_FINAL"].charAt(0) === "B") ||
+                        (item["SHRTCKG_GRDE_CODE_FINAL"].charAt(0) === "C") || (item["SHRTCKG_GRDE_CODE_FINAL"].charAt(0) === "D") ||
+                        (item["SHRTCKG_GRDE_CODE_FINAL"].charAt(0) === "P")) ?
+                        item["SHRTCKG_CREDIT_HOURS"] : 0,
+                shrtckgHoursAttempted: (item["shrtckg_hours_attempted"] === undefined) ? "" : item["shrtckg_hours_attempted"],
+                shrtckgGrdeCodeFinal: (item["SHRTCKG_GRDE_CODE_FINAL"] === undefined) ? "" : item["SHRTCKG_GRDE_CODE_FINAL"],
+                excludeSubject: (item["exclude_subject"] === undefined) ? "" : item["exclude_subject"],
+                gradePoint: (item["grade_point"] === undefined) ? "" : item["grade_point"],
+                countGpaInd: (item["count_gpa_ind"] === undefined) ? "" : item["count_gpa_ind"],
+                instName: (item["inst_name"] === undefined) ? "" : item["inst_name"],
+                attemptedInd: (item["attempted_ind"] === undefined) ? "" : item["attempted_ind"],
+                passedInd: (item["passed_ind"] === undefined) ? "" : item["passed_ind"],
+                completedInd: (item["completed_ind"] === undefined) ? "" : item["completed_ind"]
             }
             jsonObjects.push(jsonObj);
         }
