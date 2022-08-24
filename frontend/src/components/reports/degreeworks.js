@@ -5,6 +5,12 @@ import { Button, Select, Table, Modal } from "@mantine/core";
 import { getArgo11Items, getProgramList } from "../../functions/source/Argo11";
 import { getTempExecuteResult, updateHashmap } from "../../functions/report/degreeworks";
 
+import { getArgo10Count } from '../../functions/source/Argo10'
+import { getArgo11Count } from '../../functions/source/Argo11'
+import { getArgo16Count } from '../../functions/source/Argo16'
+import { getArgo29Count } from '../../functions/source/Argo29'
+import { getCgeCount } from '../../functions/source/Cge'
+
 const Degreeworks = (props) => {
   const { url } = useSelector((state) => state.setting);
 
@@ -12,6 +18,13 @@ const Degreeworks = (props) => {
   let username = (username_ === "demo") ? "admin" : username_
 
   const [studentList, setStudentList] = useState([]);
+
+  const [argo10Count, setArgo10Count] = useState(-1)
+  const [argo11Count, setArgo11Count] = useState(-1)
+  const [argo16Count, setArgo16Count] = useState(-1)
+  const [argo29Count, setArgo29Count] = useState(-1)
+  const [cgeCount, setCgeCount] = useState(-1)
+
 
   //Options
   const departmentOptionList = [
@@ -70,7 +83,7 @@ const Degreeworks = (props) => {
       programOptions.push({ value: program, label: program });
     }
 
-    console.log(studentList_)
+    // console.log(studentList_)
     for (let student of studentList_) {
       //Student List
       let nameAfterConcat = `${student.progCode} (${student.programmeTitle})`;
@@ -130,7 +143,7 @@ const Degreeworks = (props) => {
 
     let result = await getTempExecuteResult(url, chosenStudentList);
 
-    console.log(result);
+    // console.log(result);
     setTempResult(result);
     setLoading(false);
   };
@@ -144,6 +157,14 @@ const Degreeworks = (props) => {
       setLoaded(true);
 
       updateHashmap(url);
+
+      setArgo10Count(await getArgo10Count(url));
+      setArgo11Count(await getArgo11Count(url));
+      setArgo16Count(await getArgo16Count(url));
+      setArgo29Count(await getArgo29Count(url));
+      setCgeCount(await getCgeCount(url));
+
+
     };
 
     if (!loaded) {
@@ -204,242 +225,256 @@ const Degreeworks = (props) => {
     }
   });
 
-  return (
-    <>
-      <h2>Download Degreeworks reports </h2>
+  if (argo10Count > 0 && argo11Count > 0 && argo16Count > 0 && argo29Count > 0 && cgeCount > 0) {
 
-      <Table
-        className="reportTable"
-        striped
-        highlightOnHover
-        style={{ width: "60%", marginLeft: "20%", marginRight: "20%" }}
-      >
-        <tbody>
-          <tr>
-            <th>Faculty</th>
-            <td>
-              <Select
-                data={departmentOptionList}
-                onChange={setChosenDepartment}
-                value={chosenDepartment}
-              />
-            </td>
-          </tr>
-          <tr>
-            <th>Program</th>
-            <td>
-              <Select
-                searchable
-                data={programOptionList}
-                onChange={setChosenProgram}
-                value={chosenProgram}
-              />
-            </td>
-          </tr>
-          <tr>
-            <th>Intake Cohort</th>
-            <td>
-              <Select
-                searchable
-                data={yearOptionList}
-                onChange={setChosenYear}
-                value={chosenYear}
-              />
-            </td>
-          </tr>
-          <tr>
-            <th>Enrollment Status</th>
-            <td>
-              <Select
-                searchable
-                data={enrolOptionList}
-                onChange={setChosenEnrolStatus}
-                value={chosenEnrolStatus}
-              />
-            </td>
-          </tr>
-          <tr>
-            <th>Students</th>
-            <td>
-              <Select
-                searchable
-                data={studentIdOptionList}
-                onChange={setChosenStudent}
-                value={chosenStudent}
-              />
-            </td>
-          </tr>
-        </tbody>
-      </Table>
+    return (
+      <>
+        <h2>Download Degreeworks reports </h2>
 
-      <h2>
-        <span style={{ fontSize: 30 }}>{count} </span>
-        Students Chosen
-      </h2>
+        <Table
+          className="reportTable"
+          striped
+          highlightOnHover
+          style={{ width: "60%", marginLeft: "20%", marginRight: "20%" }}
+        >
+          <tbody>
+            <tr>
+              <th>Faculty</th>
+              <td>
+                <Select
+                  data={departmentOptionList}
+                  onChange={setChosenDepartment}
+                  value={chosenDepartment}
+                />
+              </td>
+            </tr>
+            <tr>
+              <th>Program</th>
+              <td>
+                <Select
+                  searchable
+                  data={programOptionList}
+                  onChange={setChosenProgram}
+                  value={chosenProgram}
+                />
+              </td>
+            </tr>
+            <tr>
+              <th>Intake Cohort</th>
+              <td>
+                <Select
+                  searchable
+                  data={yearOptionList}
+                  onChange={setChosenYear}
+                  value={chosenYear}
+                />
+              </td>
+            </tr>
+            <tr>
+              <th>Enrollment Status</th>
+              <td>
+                <Select
+                  searchable
+                  data={enrolOptionList}
+                  onChange={setChosenEnrolStatus}
+                  value={chosenEnrolStatus}
+                />
+              </td>
+            </tr>
+            <tr>
+              <th>Students</th>
+              <td>
+                <Select
+                  searchable
+                  data={studentIdOptionList}
+                  onChange={setChosenStudent}
+                  value={chosenStudent}
+                />
+              </td>
+            </tr>
+          </tbody>
+        </Table>
 
-      <Button
-        loading={loading}
-        onClick={async () => {
-          setDownloading(false);
+        <h2>
+          <span style={{ fontSize: 30 }}>{count} </span>
+          Students Chosen
+        </h2>
 
-          await retrieveTempResult();
-        }}
-      >
-        Generate report
-      </Button>
+        <Button
+          loading={loading}
+          onClick={async () => {
+            setDownloading(false);
 
-      <br />
-      <br />
-      <hr />
+            await retrieveTempResult();
+          }}
+        >
+          Generate report
+        </Button>
 
-      {Object.keys(tempResult).length > 0 ? (
-        <>
-          <h2>Result</h2>
+        <br />
+        <br />
+        <hr />
 
-          <Table
-            striped
-            highlightOnHover
-            style={{ width: "60%", marginLeft: "20%", marginRight: "20%" }}
-          >
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Count</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td style={{ color: "green" }}>
-                  <b>Students generated</b>
-                </td>
-                <td>
-                  <b style={{ fontSize: 18 }}>{tempResult.normalCount}</b>
-                </td>
+        {Object.keys(tempResult).length > 0 ? (
+          <>
+            <h2>Result</h2>
 
-                <td></td>
-              </tr>
-              <tr>
-                <td style={{ color: "red" }}>
-                  <b>Students have no record in Argo10</b>
-                </td>
-                <td>
-                  <b style={{ fontSize: 18 }}>
-                    {tempResult.noArgo10RecordCount}
-                  </b>
-                </td>
-                <td>
-                  <Button
-                    onClick={() => {
-                      setShowModal(true);
-                      setChosenError("Students have no record in Argo10");
-                    }}
-                  >
-                    View
-                  </Button>
-                </td>
-              </tr>
-              <tr>
-                <td style={{ color: "red" }}>
-                  <b>No Program Plan for students</b>
-                </td>
-                <td>
-                  <b style={{ fontSize: 18 }}>
-                    {tempResult.noProgramPlanCount}
-                  </b>
-                </td>
-                <td>
-                  <Button
-                    onClick={() => {
-                      setShowModal(true);
-                      setChosenError("No Program Plan for students");
-                    }}
-                  >
-                    View
-                  </Button>
-                </td>
-              </tr>
-            </tbody>
-            <caption>
-              For those students fall into the red category, their reports will
-              not be generated.
-            </caption>
-          </Table>
+            <Table
+              striped
+              highlightOnHover
+              style={{ width: "60%", marginLeft: "20%", marginRight: "20%" }}
+            >
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Count</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style={{ color: "green" }}>
+                    <b>Students generated</b>
+                  </td>
+                  <td>
+                    <b style={{ fontSize: 18 }}>{tempResult.normalCount}</b>
+                  </td>
 
-          <br />
-          <br />
+                  <td></td>
+                </tr>
+                <tr>
+                  <td style={{ color: "red" }}>
+                    <b>Students have no record in Argo10</b>
+                  </td>
+                  <td>
+                    <b style={{ fontSize: 18 }}>
+                      {tempResult.noArgo10RecordCount}
+                    </b>
+                  </td>
+                  <td>
+                    <Button
+                      onClick={() => {
+                        setShowModal(true);
+                        setChosenError("Students have no record in Argo10");
+                      }}
+                    >
+                      View
+                    </Button>
+                  </td>
+                </tr>
+                <tr>
+                  <td style={{ color: "red" }}>
+                    <b>No Program Plan for students</b>
+                  </td>
+                  <td>
+                    <b style={{ fontSize: 18 }}>
+                      {tempResult.noProgramPlanCount}
+                    </b>
+                  </td>
+                  <td>
+                    <Button
+                      onClick={() => {
+                        setShowModal(true);
+                        setChosenError("No Program Plan for students");
+                      }}
+                    >
+                      View
+                    </Button>
+                  </td>
+                </tr>
+              </tbody>
+              <caption>
+                For those students fall into the red category, their reports will
+                not be generated.
+              </caption>
+            </Table>
 
-          {count === 1 ? (
-            <>
-              <a
-                href={`${url}/api/report/grade/single/inline/${chosenStudentList[0]}`}
-                target="_blank"
-                rel="noreferrer"
-              >
-                <Button disabled={tempResult.normalCount === 0}>
-                  View in New Tab
-                </Button>
-              </a>
-              <a
-                href={`${url}/api/report/grade/single/attachment/${chosenStudentList[0]}`}
-                download={`${chosenStudentList[0]}.pdf`}
-              >
-                <Button disabled={tempResult.normalCount === 0}>
-                  Download as PDF File
-                </Button>
-              </a>
-            </>
-          ) : (
-            <>
-              <form
-                method="post"
-                onSubmit={() => {
-                  setDownloading(true);
-                  setInterval(() => {
-                    setDownloading(false);
-                  }, 3000);
-                }}
-                action={`${url}/api/report/grade/zip`}
-              >
-                <input
-                  type="hidden"
-                  name="sid"
-                  value={chosenStudentList}
-                ></input>
-                <Button
-                  type="submit"
-                  disabled={tempResult.normalCount === 0}
-                  loading={downloading}
-                  name=""
+            <br />
+            <br />
+
+            {count === 1 ? (
+              <>
+                <a
+                  href={`${url}/api/report/grade/single/inline/${chosenStudentList[0]}`}
+                  target="_blank"
+                  rel="noreferrer"
                 >
-                  Download All Reports in ZIP
-                </Button>
-              </form>
-            </>
-          )}
-          <Modal
-            opened={showModal}
-            onClose={() => setShowModal(false)}
-            title={chosenError}
-          >
-            {chosenError === "Students have no record in Argo10" ? (
-              [...tempResult.noArgo10Id].map((item, index) => {
-                return <p key={index}>{item}</p>;
-              })
-            ) : chosenError === "No Program Plan for students" ? (
-              [...tempResult.noProgramPlanId].map((item, index) => {
-                return <p key={index}>{item}</p>;
-              })
+                  <Button disabled={tempResult.normalCount === 0}>
+                    View in New Tab
+                  </Button>
+                </a>
+                <a
+                  href={`${url}/api/report/grade/single/attachment/${chosenStudentList[0]}`}
+                  download={`${chosenStudentList[0]}.pdf`}
+                >
+                  <Button disabled={tempResult.normalCount === 0}>
+                    Download as PDF File
+                  </Button>
+                </a>
+              </>
             ) : (
-              <></>
+              <>
+                <form
+                  method="post"
+                  onSubmit={() => {
+                    setDownloading(true);
+                    setInterval(() => {
+                      setDownloading(false);
+                    }, 3000);
+                  }}
+                  action={`${url}/api/report/grade/zip`}
+                >
+                  <input
+                    type="hidden"
+                    name="sid"
+                    value={chosenStudentList}
+                  ></input>
+                  <Button
+                    type="submit"
+                    disabled={tempResult.normalCount === 0}
+                    loading={downloading}
+                    name=""
+                  >
+                    Download All Reports in ZIP
+                  </Button>
+                </form>
+              </>
             )}
-          </Modal>
+            <Modal
+              opened={showModal}
+              onClose={() => setShowModal(false)}
+              title={chosenError}
+            >
+              {chosenError === "Students have no record in Argo10" ? (
+                [...tempResult.noArgo10Id].map((item, index) => {
+                  return <p key={index}>{item}</p>;
+                })
+              ) : chosenError === "No Program Plan for students" ? (
+                [...tempResult.noProgramPlanId].map((item, index) => {
+                  return <p key={index}>{item}</p>;
+                })
+              ) : (
+                <></>
+              )}
+            </Modal>
+          </>
+        ) : (
+          <></>
+        )}
+      </>
+    );
+  } else {
+    return (
+      (argo10Count === -1 && argo11Count === -1 && argo16Count === -1 && argo29Count === -1 && cgeCount === -1) ?
+        <>
+          <h1>Loading...</h1>
         </>
-      ) : (
-        <></>
-      )}
-    </>
-  );
-};
+        : <>
+          <h1>Error: The data source is not imported.</h1>
+          <h2>Data source required: Argo10, Argo11, Argo16, Argo29, Cge</h2>
+        </>
+    )
+  }
+}
 
 export default Degreeworks;

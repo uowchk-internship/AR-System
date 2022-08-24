@@ -21,7 +21,7 @@ const Login = (props) => {
 
         if ((url !== "https://tomcat.johnnyip.com/ar" && username !== "demo") || url === "https://tomcat.johnnyip.com/ar") {
             let result = await login(url, username, password)
-            console.log(result)
+            // console.log(result)
             if (result === "") { setError(true) }
             else { setSignedIn(true) }
         } else {

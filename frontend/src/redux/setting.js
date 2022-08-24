@@ -10,7 +10,6 @@ export const settingSlice = createSlice({
   initialState,
   reducers: {
     setURL: (state, action) => {
-      console.log("payload: " + action.payload)
       state.url = action.payload
     },
 

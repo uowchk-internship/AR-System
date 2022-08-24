@@ -36,7 +36,6 @@ function App() {
     const fetchStatus = async () => {
       setStatus(await checkServerStatus(url))
       let loginStatus = await checkLoginStatus(url)
-      console.log("login: " + loginStatus)
 
       if (loginStatus === "") {
         // setSignedIn(false)
@@ -50,7 +49,6 @@ function App() {
     // if (needReload){
     fetchStatus()
     // }
-    console.log("chosenTab: " + chosenTab)
 
     if (typeof (window.innerWidth) == 'number') {
       setHeight(window.innerHeight - 20)

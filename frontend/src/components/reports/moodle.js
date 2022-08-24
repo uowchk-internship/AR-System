@@ -4,13 +4,20 @@ import { Button, Select, Table } from '@mantine/core';
 
 import { updateHashmap, getCourseList } from '../../functions/report/attendanceList'
 
+import { getArgo11Count } from '../../functions/source/Argo11'
+import { getArgo12Count } from '../../functions/source/Argo12'
+
+
 export default function AttendanceList(props) {
     const { url } = useSelector((state) => state.setting);
 
     let username_ = props.username
     let username = (username_ === "demo") ? "admin" : username_
-  
+
     const [courseList, setCourseList] = useState([])
+
+    const [argo11Count, setArgo11Count] = useState(-1)
+    const [argo12Count, setArgo12Count] = useState(-1)
 
     //Options
     const departmentOptionList = [
@@ -51,7 +58,7 @@ export default function AttendanceList(props) {
 
 
 
-        console.log(courseList_)
+        // console.log(courseList_)
 
         for (let course of courseList_) {
             if (chosenDepartment_ === "ALL" || chosenDepartment_ === course.courseOfferDept) {
@@ -82,6 +89,9 @@ export default function AttendanceList(props) {
             setLoaded(true)
 
             updateHashmap(url)
+
+            setArgo11Count(await getArgo11Count(url));
+            setArgo12Count(await getArgo12Count(url));
         }
 
         if (!loaded) {
@@ -104,91 +114,105 @@ export default function AttendanceList(props) {
 
     })
 
-    return (
-        <>
-            <h2 >Download Moodle CSV File </h2>
+    if (argo12Count > 0 && argo11Count > 0) {
 
-            <Table
-                className="reportTable"
-                striped highlightOnHover
-                style={{ width: "60%", marginLeft: "20%", marginRight: "20%" }}>
-                <tbody>
-                    <tr>
-                        <th>Faculty</th>
-                        <td>
-                            <Select
-                                data={departmentOptionList}
-                                onChange={setChosenDepartment}
-                                value={chosenDepartment} />
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>Course</th>
-                        <td>
-                            <Select
-                                searchable
-                                data={courseOptionList}
-                                onChange={setChosenCourse}
-                                value={chosenCourse} />
-                        </td>
-                    </tr>
-                </tbody>
-            </Table>
+        return (
+            <>
+                <h2 >Download Moodle CSV File </h2>
 
-            <h2>
-                <span style={{ fontSize: 30 }}>{count} </span>
-                Course Chosen
-            </h2>
+                <Table
+                    className="reportTable"
+                    striped highlightOnHover
+                    style={{ width: "60%", marginLeft: "20%", marginRight: "20%" }}>
+                    <tbody>
+                        <tr>
+                            <th>Faculty</th>
+                            <td>
+                                <Select
+                                    data={departmentOptionList}
+                                    onChange={setChosenDepartment}
+                                    value={chosenDepartment} />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Course</th>
+                            <td>
+                                <Select
+                                    searchable
+                                    data={courseOptionList}
+                                    onChange={setChosenCourse}
+                                    value={chosenCourse} />
+                            </td>
+                        </tr>
+                    </tbody>
+                </Table>
+
+                <h2>
+                    <span style={{ fontSize: 30 }}>{count} </span>
+                    Course Chosen
+                </h2>
 
 
-            <form
-                method="post"
-                onSubmit={() => {
-                    setDownloading1(true)
-                    setInterval(() => {
-                        setDownloading1(false)
-                    }, 3000);
-                }}
-                action={`${url}/api/report/moodleCSV/zip/v1`} >
-                <input type="hidden" name="course" value={finalCourseList}></input>
-                <Button
-                    type="submit"
-                    disabled={tempResult.normalCount === 0}
-                    loading={downloading1}
-                    name="" >
-                    {(count === 1) ?
-                        "Download Moodle CSV file [Old Format]" :
-                        "Download Moodle CSV files in zip [Old Format]"}
-                </Button>
+                <form
+                    method="post"
+                    onSubmit={() => {
+                        setDownloading1(true)
+                        setInterval(() => {
+                            setDownloading1(false)
+                        }, 3000);
+                    }}
+                    action={`${url}/api/report/moodleCSV/zip/v1`} >
+                    <input type="hidden" name="course" value={finalCourseList}></input>
+                    <Button
+                        type="submit"
+                        disabled={tempResult.normalCount === 0}
+                        loading={downloading1}
+                        name="" >
+                        {(count === 1) ?
+                            "Download Moodle CSV file [Old Format]" :
+                            "Download Moodle CSV files in zip [Old Format]"}
+                    </Button>
 
-            </form>
-            <br />
-            <form
-                method="post"
-                onSubmit={() => {
-                    setDownloading2(true)
-                    setInterval(() => {
-                        setDownloading2(false)
-                    }, 3000);
-                }}
-                action={`${url}/api/report/moodleCSV/zip/v2`} >
-                <input type="hidden" name="course" value={finalCourseList}></input>
-                <Button
-                    type="submit"
-                    disabled={tempResult.normalCount === 0}
-                    loading={downloading2}
-                    name="" >
-                    {(count === 1) ?
-                        "Download Moodle CSV file [New Format]" :
-                        "Download Moodle CSV files in zip [New Format]"}
-                </Button>
+                </form>
+                <br />
+                <form
+                    method="post"
+                    onSubmit={() => {
+                        setDownloading2(true)
+                        setInterval(() => {
+                            setDownloading2(false)
+                        }, 3000);
+                    }}
+                    action={`${url}/api/report/moodleCSV/zip/v2`} >
+                    <input type="hidden" name="course" value={finalCourseList}></input>
+                    <Button
+                        type="submit"
+                        disabled={tempResult.normalCount === 0}
+                        loading={downloading2}
+                        name="" >
+                        {(count === 1) ?
+                            "Download Moodle CSV file [New Format]" :
+                            "Download Moodle CSV files in zip [New Format]"}
+                    </Button>
 
-                <p style={{ fontSize: 21 }}>
-                    There are two versions of the csv file. They have the same contents but have different column names.<br />
-                    You may try the new format when the old format failed to import to moodle.<br /><br />
-                    For zip download, it may takes a few minutes to generate.
-                </p>
-            </form>
-        </>
-    )
+                    <p style={{ fontSize: 21 }}>
+                        There are two versions of the csv file. They have the same contents but have different column names.<br />
+                        You may try the new format when the old format failed to import to moodle.<br /><br />
+                        For zip download, it may takes a few minutes to generate.
+                    </p>
+                </form>
+            </>
+        )
+    } else {
+        return (
+            (argo12Count === -1 && argo11Count === -1) ?
+                <>
+                    <h1>Loading...</h1>
+                </>
+                : <>
+                    <h1>Error: The data source is not imported.</h1>
+                    <h2>Data source required: Argo11 and Argo12</h2>
+                </>
+        )
+    }
 }
