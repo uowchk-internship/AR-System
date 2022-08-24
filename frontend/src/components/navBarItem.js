@@ -20,7 +20,7 @@ export default function NavBarItem(props) {
 
             <Navbar.Section style={{ backgroundColor: "lightgray", borderRadius: 5 }}>
                 <div style={{ display: 'inline-block' }} >
-                    <h1>UOWCHK AR System</h1>
+                    <h1>[UOWCHK AR System]</h1>
                     <h2 style={{ fontSize: 20 }}>
                         Server
                         {
