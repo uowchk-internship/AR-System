@@ -1,5 +1,5 @@
 import { Navbar, Button, ScrollArea } from '@mantine/core';
-import { CloudUpload, Settings, Checklist, Book, ListCheck, Books, Checkbox, ReportAnalytics } from 'tabler-icons-react';
+import { CloudUpload, Settings, Checklist, Book, ListCheck, Books, Checkbox, ReportAnalytics, Help } from 'tabler-icons-react';
 
 import { logout } from '../functions/login'
 
@@ -150,6 +150,15 @@ export default function NavBarItem(props) {
                     style={{ width: '100%', height: "50px" }}>
                     <h2>Settings</h2>
                 </Button>
+
+                <a href="https://johnnyip.com/ar/" target="_blank">
+                    <Button variant={"outline"}
+                        leftIcon={<Help />}
+                        style={{ width: '100%', height: "50px" }}>
+                        <h2>User Guide</h2>
+                    </Button>
+                </a>
+                <p>Version: 1.0 (24 Aug 2022)</p>
             </Navbar.Section>
 
         </>
