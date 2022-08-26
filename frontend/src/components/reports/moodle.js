@@ -42,8 +42,7 @@ export default function AttendanceList(props) {
     const [loaded, setLoaded] = useState(false)
 
     const [tempResult, setTempResult] = useState({})
-    const [downloading1, setDownloading1] = useState(false)
-    const [downloading2, setDownloading2] = useState(false)
+    const [downloading, setDownloading] = useState(false)
 
     const filter = async (courseList_, chosenDepartment_, chosenCourse_) => {
 
@@ -153,7 +152,7 @@ export default function AttendanceList(props) {
                 </h2>
 
 
-                <form
+                {/* <form
                     method="post"
                     onSubmit={() => {
                         setDownloading1(true)
@@ -174,32 +173,32 @@ export default function AttendanceList(props) {
                     </Button>
 
                 </form>
-                <br />
+                <br /> */}
                 <form
                     method="post"
                     onSubmit={() => {
-                        setDownloading2(true)
+                        setDownloading(true)
                         setInterval(() => {
-                            setDownloading2(false)
+                            setDownloading(false)
                         }, 3000);
                     }}
-                    action={`${url}/api/report/moodleCSV/zip/v2`} >
+                    action={`${url}/api/report/moodleCSV/zip`} >
                     <input type="hidden" name="course" value={finalCourseList}></input>
                     <Button
                         type="submit"
                         disabled={tempResult.normalCount === 0}
-                        loading={downloading2}
+                        loading={downloading}
                         name="" >
                         {(count === 1) ?
-                            "Download Moodle CSV file [New Format]" :
-                            "Download Moodle CSV files in zip [New Format]"}
+                            "Download Moodle CSV file" :
+                            "Download Moodle CSV files in zip"}
                     </Button>
 
-                    <p style={{ fontSize: 21 }}>
+                    {/* <p style={{ fontSize: 21 }}>
                         There are two versions of the csv file. They have the same contents but have different column names.<br />
                         You may try the new format when the old format failed to import to moodle.<br /><br />
                         For zip download, it may takes a few minutes to generate.
-                    </p>
+                    </p> */}
                 </form>
             </>
         )

@@ -53,7 +53,7 @@ const SettingComponent = (props) => {
 
 
             <hr />
-            <h3>Version: 1.1 (25 Aug 2022)</h3>
+            <h3>Version: 1.1.1 (26 Aug 2022)</h3>
 
         </div>
     )
