@@ -51,10 +51,6 @@ const SettingComponent = (props) => {
                 <Button>Download Docker-Compose files</Button>
             </a>
 
-
-            <hr />
-            <h3>Version: 1.1.1 (26 Aug 2022)</h3>
-
         </div>
     )
 }

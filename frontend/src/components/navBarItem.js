@@ -158,6 +158,8 @@ export default function NavBarItem(props) {
                         <h2>User Guide</h2>
                     </Button>
                 </a>
+                <p>Version: 1.1.2 (26 Aug 2022)</p>
+
             </Navbar.Section>
 
         </>
