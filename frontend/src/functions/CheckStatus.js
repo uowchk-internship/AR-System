@@ -6,7 +6,7 @@ export const checkServerStatus = async (url) => {
 
     await axios.get(url)
         .then((response) => {
-            if (response.status === 200 && response.data === "Hello world" ) {
+            if (response.status === 200 && response.data === "Hello world") {
                 result = true
             } else {
                 result = false
@@ -18,5 +18,23 @@ export const checkServerStatus = async (url) => {
         })
 
     return result
+}
 
+export const Version = async (url) => {
+    let result = ""
+    url += '/version'
+
+    await axios.get(url)
+        .then((response) => {
+            console.log(response)
+            if (response.status === 200) {
+                result = response.data
+            }
+        })
+        .catch((err) => {
+            console.error(err)
+            result = ""
+        })
+
+    return result
 }

@@ -2,13 +2,13 @@ import { useSelector } from "react-redux";
 import { useState, useEffect } from 'react'
 import { Button, Select, Table } from '@mantine/core';
 
-import { updateHashmap, getCourseList } from '../../functions/report/attendanceList'
+import { updateHashmap, getCourseList } from '../../../functions/report/attendanceList'
 
-import { getArgo11Count } from '../../functions/source/Argo11'
-import { getArgo12Count } from '../../functions/source/Argo12'
+import { getArgo11Count } from '../../../functions/source/Argo11'
+import { getArgo12Count } from '../../../functions/source/Argo12'
 
 
-export default function MoodleList(props) {
+export default function ExamInformation(props) {
     const { url } = useSelector((state) => state.setting);
 
     let username_ = props.username
@@ -117,7 +117,7 @@ export default function MoodleList(props) {
 
         return (
             <>
-                <h2 >Download Moodle CSV File </h2>
+                <h2 >Download Exam Information Sheet </h2>
 
                 <Table
                     className="reportTable"
@@ -151,29 +151,6 @@ export default function MoodleList(props) {
                     Course Chosen
                 </h2>
 
-
-                {/* <form
-                    method="post"
-                    onSubmit={() => {
-                        setDownloading1(true)
-                        setInterval(() => {
-                            setDownloading1(false)
-                        }, 3000);
-                    }}
-                    action={`${url}/api/report/moodleCSV/zip/v1`} >
-                    <input type="hidden" name="course" value={finalCourseList}></input>
-                    <Button
-                        type="submit"
-                        disabled={tempResult.normalCount === 0}
-                        loading={downloading1}
-                        name="" >
-                        {(count === 1) ?
-                            "Download Moodle CSV file [Old Format]" :
-                            "Download Moodle CSV files in zip [Old Format]"}
-                    </Button>
-
-                </form>
-                <br /> */}
                 <form
                     method="post"
                     onSubmit={() => {
@@ -190,15 +167,10 @@ export default function MoodleList(props) {
                         loading={downloading}
                         name="" >
                         {(count === 1) ?
-                            "Download Moodle CSV file" :
-                            "Download Moodle CSV files in zip"}
+                            "Download Exam Information Sheet" :
+                            "Download Exam Information Sheets in zip"}
                     </Button>
 
-                    {/* <p style={{ fontSize: 21 }}>
-                        There are two versions of the csv file. They have the same contents but have different column names.<br />
-                        You may try the new format when the old format failed to import to moodle.<br /><br />
-                        For zip download, it may takes a few minutes to generate.
-                    </p> */}
                 </form>
             </>
         )

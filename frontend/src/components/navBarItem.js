@@ -1,15 +1,33 @@
+import { useState, useEffect } from 'react';
+import { useSelector } from "react-redux";
+
 import { Navbar, Button, ScrollArea } from '@mantine/core';
 import { CloudUpload, Settings, Checklist, Book, ListCheck, Books, Checkbox, ReportAnalytics, Help } from 'tabler-icons-react';
 
 import { logout } from '../functions/login'
+import { Version } from '../functions/CheckStatus'
 
 export default function NavBarItem(props) {
+    //Redux
+    const { url } = useSelector((state) => state.setting);
+
     let status = props.status
     let setChosenTab = props.setChosenTab
     let chosenTab = props.chosenTab
     let signedIn = props.signedIn
     let username = props.username
     let setSignedIn = props.setSignedIn
+
+    const [backendVersion, setBackendVersion] = useState("")
+    const [loaded, setLoaded] = useState(false)
+
+    useEffect(() => {
+        const fetchStatus = async () => {
+            setBackendVersion(await Version(url))
+        }
+        fetchStatus()
+
+    })
 
     let isAdmin = (username === "admin" ||
         username === "demo") ? true : false
@@ -92,8 +110,7 @@ export default function NavBarItem(props) {
                 <Button variant={chosenTab === "exam" ? "filled" : "subtle"}
                     color={chosenTab === "exam" ? "" : "gray"}
                     leftIcon={<Book />}
-                    // disabled={!status || !signedIn}
-                    disabled={true}
+                    disabled={!status || !signedIn}
                     onClick={() => setChosenTab("exam")}
                     style={{ width: '100%', height: "50px" }}>
                     <h2>Exam Related</h2>
@@ -158,7 +175,7 @@ export default function NavBarItem(props) {
                         <h2>User Guide</h2>
                     </Button>
                 </a>
-                <p>Version: 1.1.2 (26 Aug 2022)</p>
+                <p>Version: <b>Front</b> 1.2 <b>Back</b> {backendVersion}</p>
 
             </Navbar.Section>
 

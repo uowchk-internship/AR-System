@@ -1,4 +1,4 @@
-import { Table, Modal, SegmentedControl } from '@mantine/core';
+import { Table, Modal, SegmentedControl, Badge } from '@mantine/core';
 import { useState, useEffect } from 'react'
 import { useSelector } from "react-redux";
 
@@ -32,6 +32,28 @@ function ExamUploadComponent() {
 
                 </tbody>
             </Table>
+            <br /><br /><br />
+
+            <Badge color="dark" size="xl">Invidulators List</Badge>
+            <br /><br />
+            {/* Invidulators */}
+            <Table striped highlightOnHover>
+                <thead>
+                    <tr>
+                        <th width="30%">Name</th>
+                        <th>Count</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <ExamDocument setShowData={setShowData} setDisplayData={setDisplayData} />
+                    <ExamMaterial setShowData={setShowData} setDisplayData={setDisplayData} />
+                    <ExamSEN setShowData={setShowData} setDisplayData={setDisplayData} />
+
+                </tbody>
+            </Table>
+
 
             <Modal
                 opened={showData}
