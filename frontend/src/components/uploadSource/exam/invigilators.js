@@ -4,11 +4,14 @@ import { useSelector } from "react-redux";
 import { Badge, Button } from '@mantine/core';
 import * as XLSX from 'xlsx';
 
-import { saveExamSen, getExamSenCount, getFirst10RowOfItem, clearExamSen } from '../../../functions/source/ExamSen'
+import { saveexamInvigilator, getexamInvigilatorCount, getexamInvigilatorItems, getFirst10RowOfItem, clearexamInvigilator } from '../../../functions/source/Invigilators'
 
-const Invidulators = (props) => {
+const Invigilators = (props) => {
     let setShowData = props.setShowData
     let setDisplayData = props.setDisplayData
+
+    let displayName = props.displayName
+    let code = props.code
 
     //Redux
     const { url } = useSelector((state) => state.setting);
@@ -20,7 +23,7 @@ const Invidulators = (props) => {
 
     const clearData = async () => {
         setLoading(true)
-        await clearExamSen(url)
+        await clearexamInvigilator(url, code)
         setLoaded(false)
         setLoading(false)
     }
@@ -59,14 +62,14 @@ const Invidulators = (props) => {
         }
 
         // console.log(jsonObjects)
-        await saveExamSen(url, jsonObjects)
+        // await saveExamSen(url, jsonObjects)
         setLoaded(false)
         setLoading(false)
     }
 
     useEffect(() => {
         const fetchNumber = async () => {
-            setEntryCount(await getExamSenCount(url))
+            setEntryCount(await getexamInvigilatorCount(url, code))
             setLoaded(true)
             setOldURL(url)
         }
@@ -84,7 +87,7 @@ const Invidulators = (props) => {
     return (
         <tr>
             <td>
-                <h2>Exam SEN</h2>
+                <h2>{displayName}</h2>
             </td>
 
             <td>
@@ -114,18 +117,23 @@ const Invidulators = (props) => {
                             color="red"
                             loading={loading}
                             onClick={() => clearData()}>
-                            Clear All Exam SEN Data
+                            Clear All Invigilators for this faculty
                         </Button>
                     </> :
                     <>
-                        <label htmlFor="examSenUpload">
+                        <Button
+                            onClick={() => document.getElementById('invi_' + code).click()}
+                            loading={loading}>
+                            Download template
+                        </Button>
+                        <label htmlFor={'invi_' + code}>
                             <Button
-                                onClick={() => document.getElementById('examSenUpload').click()}
+                                onClick={() => document.getElementById('invi_' + code).click()}
                                 loading={loading}>
-                                Upload Exam SEN
+                                Upload Invigilators
                             </Button>
                         </label>
-                        <input hidden type="file" id="examSenUpload" onChange={handleFileAsync} />
+                        <input hidden type="file" id={'invi_' + code} onChange={handleFileAsync} />
                     </>
                 }
             </td>
@@ -133,4 +141,4 @@ const Invidulators = (props) => {
     );
 }
 
-export default ExamSEN;
+export default Invigilators;

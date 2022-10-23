@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import ExamDocument from './examDocument'
 import ExamMaterial from './examMaterial'
 import ExamSEN from './examSEN'
+import Invigilators from './invigilators'
 
 function ExamUploadComponent() {
     const { url } = useSelector((state) => state.setting);
@@ -47,10 +48,11 @@ function ExamUploadComponent() {
                 </thead>
 
                 <tbody>
-                    <ExamDocument setShowData={setShowData} setDisplayData={setDisplayData} />
-                    <ExamMaterial setShowData={setShowData} setDisplayData={setDisplayData} />
-                    <ExamSEN setShowData={setShowData} setDisplayData={setDisplayData} />
-
+                    <Invigilators displayName="All" code="all" setShowData={setShowData} setDisplayData={setDisplayData} />
+                    <Invigilators displayName="Business" code="BU" setShowData={setShowData} setDisplayData={setDisplayData} />
+                    <Invigilators displayName="Arts and Humanities" code="AH" setShowData={setShowData} setDisplayData={setDisplayData} />
+                    <Invigilators displayName="Science and Technology" code="ST" setShowData={setShowData} setDisplayData={setDisplayData} />
+                    <Invigilators displayName="Social Science" code="SS" setShowData={setShowData} setDisplayData={setDisplayData} />
                 </tbody>
             </Table>
 
