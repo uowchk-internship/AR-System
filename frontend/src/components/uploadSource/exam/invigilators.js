@@ -69,7 +69,6 @@ const Invigilators = (props) => {
     }
 
     useEffect(() => {
-        console.log("changed, " + changed)
         const fetchNumber = async () => {
             setEntryCount(await getExamInvigilatorCount(url, code))
             setLoaded(true)
