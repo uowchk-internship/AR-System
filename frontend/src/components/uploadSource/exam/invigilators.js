@@ -54,14 +54,13 @@ const Invigilators = (props) => {
                 faculty: (item["Faculty"] === undefined) ? "" : item["Faculty"],
                 venue: (item["Venue"] === undefined) ? "" : item["Venue"],
                 dateTime: (item["Date And Time"] === undefined) ? "" : item["Date And Time"],
-                c1: (item["c1"] === undefined) ? "" : item["c1"],
+                ci: (item["ci"] === undefined) ? "" : item["ci"],
                 i1: (item["i1"] === undefined) ? "" : item["i1"],
                 i2: (item["i2"] === undefined) ? "" : item["i2"]
             }
             jsonObjects.push(jsonObj);
         }
 
-        console.log(jsonObjects)
         await saveExamInvigilator(url, jsonObjects)
         setLoaded(false)
         setLoading(false)
@@ -82,7 +81,7 @@ const Invigilators = (props) => {
             fetchNumber()
         }
 
-        if (lastChangedState != changed) {
+        if (lastChangedState !== changed) {
             setLastChangedState(changed)
             fetchNumber()
         }
@@ -113,7 +112,7 @@ const Invigilators = (props) => {
                         <Button
                             onClick={async () => {
                                 setShowData(true)
-                                setDisplayData(await getFirst10RowOfItem(url))
+                                setDisplayData(await getFirst10RowOfItem(url, code))
                             }}>
                             View First 10 Rows
                         </Button>

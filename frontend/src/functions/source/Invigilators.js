@@ -57,6 +57,7 @@ export const getExamInvigilatorItems = async (url, code) => {
 export const getFirst10RowOfItem = async (url, code) => {
     let result = {}
     url += "/api/source/examInvigilator/first10Rows/" + code
+    console.log(url)
     await axios.get(url)
         .then((response) => {
             if (response.status === 200) {
