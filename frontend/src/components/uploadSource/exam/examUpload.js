@@ -12,6 +12,7 @@ function ExamUploadComponent() {
 
     const [showData, setShowData] = useState(false)
     const [displayData, setDisplayData] = useState([])
+    const [changed, setChanged] = useState(false)
 
     useEffect(() => {
     })
@@ -48,11 +49,11 @@ function ExamUploadComponent() {
                 </thead>
 
                 <tbody>
-                    <Invigilators displayName="All" code="all" setShowData={setShowData} setDisplayData={setDisplayData} />
-                    <Invigilators displayName="Business" code="BU" setShowData={setShowData} setDisplayData={setDisplayData} />
-                    <Invigilators displayName="Arts and Humanities" code="AH" setShowData={setShowData} setDisplayData={setDisplayData} />
-                    <Invigilators displayName="Science and Technology" code="ST" setShowData={setShowData} setDisplayData={setDisplayData} />
-                    <Invigilators displayName="Social Science" code="SS" setShowData={setShowData} setDisplayData={setDisplayData} />
+                    <Invigilators displayName="All" code="all" setShowData={setShowData} setDisplayData={setDisplayData} changed={changed} setChanged={setChanged}/>
+                    <Invigilators displayName="Business" code="BU" setShowData={setShowData} setDisplayData={setDisplayData} changed={changed} setChanged={setChanged}/>
+                    <Invigilators displayName="Arts and Humanities" code="AH" setShowData={setShowData} setDisplayData={setDisplayData} changed={changed} setChanged={setChanged}/>
+                    <Invigilators displayName="Science and Technology" code="ST" setShowData={setShowData} setDisplayData={setDisplayData} changed={changed} setChanged={setChanged}/>
+                    <Invigilators displayName="Social Science" code="SS" setShowData={setShowData} setDisplayData={setDisplayData} changed={changed} setChanged={setChanged}/>
                 </tbody>
             </Table>
 

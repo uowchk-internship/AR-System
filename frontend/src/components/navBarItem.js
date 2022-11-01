@@ -85,7 +85,7 @@ export default function NavBarItem(props) {
                 <Button variant={chosenTab === "upload" ? "filled" : "subtle"}
                     color={chosenTab === "upload" ? "" : "gray"}
                     leftIcon={<CloudUpload />}
-                    disabled={!status || !signedIn || (signedIn && isAdmin)}
+                    disabled={!status || !signedIn || (signedIn && !isAdmin)}
                     onClick={() => setChosenTab("upload")}
                     style={{ width: '100%', height: "50px", textAlign: "left" }}>
                     <h2 className="navBtn">Upload Data Source</h2>

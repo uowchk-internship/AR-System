@@ -1,9 +1,9 @@
 const axios = require('axios');
 
 //examInvigilator
-export const saveexamInvigilator = async (url, data, code) => {
+export const saveExamInvigilator = async (url, data, code) => {
     let result = {}
-    url += "/api/source/examInvigilator/" + code
+    url += "/api/source/examInvigilator/"
     await axios.post(url, data)
         .then((response) => {
             if (response.status === 200) {
@@ -19,7 +19,7 @@ export const saveexamInvigilator = async (url, data, code) => {
     return result
 }
 
-export const getexamInvigilatorCount = async (url, code) => {
+export const getExamInvigilatorCount = async (url, code) => {
     let result = 0
     url += "/api/source/examInvigilator/count/" + code
     await axios.get(url)
@@ -38,7 +38,7 @@ export const getexamInvigilatorCount = async (url, code) => {
 }
 
 
-export const getexamInvigilatorItems = async (url, code) => {
+export const getExamInvigilatorItems = async (url, code) => {
     let result = {}
     url += "/api/source/examInvigilator/" + code
     await axios.get(url)
@@ -70,7 +70,7 @@ export const getFirst10RowOfItem = async (url, code) => {
     return result
 }
 
-export const clearexamInvigilator = async (url, code) => {
+export const clearExamInvigilator = async (url, code) => {
     let result = ""
     url += "/api/source/examInvigilator/remove/" + code
     await axios.get(url)

@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { Badge, Button } from '@mantine/core';
 import * as XLSX from 'xlsx';
 
-import { saveexamInvigilator, getexamInvigilatorCount, getexamInvigilatorItems, getFirst10RowOfItem, clearexamInvigilator } from '../../../functions/source/Invigilators'
+import { saveExamInvigilator, getExamInvigilatorCount, getExamInvigilatorItems, getFirst10RowOfItem, clearExamInvigilator } from '../../../functions/source/Invigilators'
 
 const Invigilators = (props) => {
     let setShowData = props.setShowData
@@ -13,6 +13,9 @@ const Invigilators = (props) => {
     let displayName = props.displayName
     let code = props.code
 
+    let changed = props.changed
+    let setChanged = props.setChanged
+
     //Redux
     const { url } = useSelector((state) => state.setting);
 
@@ -20,10 +23,12 @@ const Invigilators = (props) => {
     const [loaded, setLoaded] = useState(false)
     const [loading, setLoading] = useState(false)
     const [oldURL, setOldURL] = useState("")
+    const [lastChangedState, setLastChangedState] = useState(false)
+
 
     const clearData = async () => {
         setLoading(true)
-        await clearexamInvigilator(url, code)
+        await clearExamInvigilator(url, code)
         setLoaded(false)
         setLoading(false)
     }
@@ -45,31 +50,28 @@ const Invigilators = (props) => {
         for (let item of fileJson) {
             let jsonObj = {
                 id: 0,
-                studentId: (item["Student ID"] === undefined) ? "" : item["Student ID"],
-                studentName: (item["Student Name"] === undefined) ? "" : item["Student Name"],
-                programme: (item["Programme"] === undefined) ? "" : item["Programme"],
-                homeFaculty: (item["Home Faculty"] === undefined) ? "" : item["Home Faculty"],
-                reason: (item["Reason(s) for Special Arrangements"] === undefined) ? "" : item["Reason(s) for Special Arrangements"],
-                extraTime: (item["Extra time %"] === undefined) ? "" : item["Extra time %"],
-                breakLaps: (item["Break Laps"] === undefined) ? "" : item["Break Laps"],
-                noBreaksIn2Hr: (item["No. of Breaks in 2 Hours exam"] === undefined) ? "" : item["No. of Breaks in 2 Hours exam"],
-                noBreaksIn3Hr: (item["No. of Breaks in 3 Hours exam"] === undefined) ? "" : item["No. of Breaks in 3 Hours exam"],
-                separateVenue: (item["Separate Venue (Yes / No)"] === undefined) ? "" : item["Separate Venue (Yes / No)"],
-                permissionUseComputer: (item["Permission to use Computer (Yes / No)"] === undefined) ? "" : item["Permission to use Computer (Yes / No)"],
-                otherSpecialArrangement: (item["Other Special Arrangements"] === undefined) ? "" : item["Other Special Arrangements"],
+                course: (item["Course"] === undefined) ? "" : item["Course"],
+                faculty: (item["Faculty"] === undefined) ? "" : item["Faculty"],
+                venue: (item["Venue"] === undefined) ? "" : item["Venue"],
+                dateTime: (item["Date And Time"] === undefined) ? "" : item["Date And Time"],
+                c1: (item["c1"] === undefined) ? "" : item["c1"],
+                i1: (item["i1"] === undefined) ? "" : item["i1"],
+                i2: (item["i2"] === undefined) ? "" : item["i2"]
             }
             jsonObjects.push(jsonObj);
         }
 
-        // console.log(jsonObjects)
-        // await saveExamSen(url, jsonObjects)
+        console.log(jsonObjects)
+        await saveExamInvigilator(url, jsonObjects)
         setLoaded(false)
         setLoading(false)
+        setChanged(!changed)
     }
 
     useEffect(() => {
+        console.log("changed, " + changed)
         const fetchNumber = async () => {
-            setEntryCount(await getexamInvigilatorCount(url, code))
+            setEntryCount(await getExamInvigilatorCount(url, code))
             setLoaded(true)
             setOldURL(url)
         }
@@ -81,6 +83,10 @@ const Invigilators = (props) => {
             fetchNumber()
         }
 
+        if (lastChangedState != changed) {
+            setLastChangedState(changed)
+            fetchNumber()
+        }
     })
 
 
@@ -116,24 +122,35 @@ const Invigilators = (props) => {
                         <Button
                             color="red"
                             loading={loading}
-                            onClick={() => clearData()}>
+                            onClick={async () => {
+                                await clearData()
+                                await new Promise(resolve => setTimeout(resolve, 500))
+                                setChanged(!changed)
+                            }}>
                             Clear All Invigilators for this faculty
                         </Button>
                     </> :
                     <>
-                        <Button
-                            onClick={() => document.getElementById('invi_' + code).click()}
-                            loading={loading}>
-                            Download template
-                        </Button>
-                        <label htmlFor={'invi_' + code}>
+                        <form
+                            method="get"
+                            action={`${url}/api/report/exam/inviTemplate/${code}`}
+                        >
                             <Button
-                                onClick={() => document.getElementById('invi_' + code).click()}
-                                loading={loading}>
-                                Upload Invigilators
+                                type="submit"
+                            >
+                                Download Template
                             </Button>
-                        </label>
-                        <input hidden type="file" id={'invi_' + code} onChange={handleFileAsync} />
+
+
+                            <label htmlFor={'invi_' + code}>
+                                <Button
+                                    onClick={() => document.getElementById('invi_' + code).click()}
+                                    loading={loading}>
+                                    Upload Invigilators
+                                </Button>
+                            </label>
+                            <input hidden type="file" id={'invi_' + code} onChange={handleFileAsync} />
+                        </form>
                     </>
                 }
             </td>
