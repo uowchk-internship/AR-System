@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  url: 'http://localhost:8080'
-  // url: (process.env.REACT_APP_SERVER_URL !== undefined) ? process.env.REACT_APP_SERVER_URL : 'https://tomcat.johnnyip.com/ar'
+  // url: 'http://localhost:8080'
+  url: (process.env.REACT_APP_SERVER_URL !== undefined) ? process.env.REACT_APP_SERVER_URL : 'https://tomcat.johnnyip.com/ar-dev'
 }
 
 export const settingSlice = createSlice({
