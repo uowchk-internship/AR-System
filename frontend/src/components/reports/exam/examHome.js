@@ -1,14 +1,17 @@
 import { SegmentedControl } from '@mantine/core';
 import { useState } from 'react';
 
+import TimeTable from './timeTable';
 import Information from './information'
+import AttendanceRegister from './attendanceRegister'
+import ExamBoard from './board'
 
 function ExamHomeComponent(props) {
     let username_ = props.username
     let username = (username_ === "demo") ? "admin" : username_
 
     //tab state
-    const [activeTab, setActiveTab] = useState("");
+    const [activeTab, setActiveTab] = useState("timetable");
 
     return (
         <>
@@ -26,7 +29,13 @@ function ExamHomeComponent(props) {
 
                 {
                     (activeTab === "info") ?
-                        <Information username={username} /> : <></>
+                        <Information username={username} /> :
+                        (activeTab === "timetable") ?
+                            <TimeTable username={username} /> :
+                            (activeTab === "attendance") ?
+                                <AttendanceRegister username={username} /> :
+                                (activeTab === "board") ?
+                                    <ExamBoard username={username} /> : <></>
                 }
             </div>
 

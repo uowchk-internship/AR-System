@@ -133,7 +133,7 @@ export default function ExamInformation(props) {
                                     value={chosenDepartment} />
                             </td>
                         </tr>
-                        <tr>
+                        {/* <tr>
                             <th>Course</th>
                             <td>
                                 <Select
@@ -142,7 +142,7 @@ export default function ExamInformation(props) {
                                     onChange={setChosenCourse}
                                     value={chosenCourse} />
                             </td>
-                        </tr>
+                        </tr> */}
                     </tbody>
                 </Table>
 
@@ -159,8 +159,8 @@ export default function ExamInformation(props) {
                             setDownloading(false)
                         }, 3000);
                     }}
-                    action={`${url}/api/report/moodleCSV/zip`} >
-                    <input type="hidden" name="course" value={finalCourseList}></input>
+                    action={`${url}/api/report/exam/information/`} >
+                    <input type="hidden" name="faculty" value={chosenDepartment}></input>
                     <Button
                         type="submit"
                         disabled={tempResult.normalCount === 0}
