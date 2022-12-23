@@ -76,6 +76,7 @@ const Argo29 = (props) => {
         <tr>
             <td>
                 <h2>Argo29</h2>
+                <span style={{fontSize:14}}>Student Academic Status</span>
             </td>
 
             <td>

@@ -102,6 +102,7 @@ const Argo5 = (props) => {
         <tr>
             <td>
                 <h2>Argo5</h2>
+                Course Timetable Information
             </td>
 
             <td>

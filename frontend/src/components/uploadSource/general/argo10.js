@@ -100,6 +100,7 @@ const Argo10 = (props) => {
         <tr>
             <td>
                 <h2>Argo10</h2>
+                Student Grades Records by Faculty by Program
             </td>
 
             <td>

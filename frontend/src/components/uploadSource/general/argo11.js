@@ -109,6 +109,7 @@ const Argo11 = (props) => {
         <tr>
             <td>
                 <h2>Argo11</h2>
+                Student Information by Faculty by Program
             </td>
             <td>
                 <Badge size="lg" variant="outline" color={(entryCount > 0) ? "" : "gray"}>

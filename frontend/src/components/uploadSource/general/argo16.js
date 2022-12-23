@@ -88,6 +88,7 @@ const Argo16 = (props) => {
         <tr>
             <td>
                 <h2>Argo16</h2>
+                Student SGPA Summary by Faculty by Program
             </td>
 
             <td>
