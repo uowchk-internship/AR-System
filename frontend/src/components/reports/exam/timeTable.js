@@ -87,7 +87,7 @@ export default function TimeTable(props) {
             filter(courseList, (username === "admin") ? "ALL" : username.toUpperCase(), "ALL")
             setLoaded(true)
 
-            updateHashmap(url)
+            // updateHashmap(url)
 
             setArgo11Count(await getArgo11Count(url));
             setArgo12Count(await getArgo12Count(url));

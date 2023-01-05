@@ -23,10 +23,10 @@ function ExamHomeComponent(props) {
     useEffect(() => {
         const loadData = async () => {
             setLoaded(true);
-            updateHashmap(url);
-            setTimeout(() => {
+            let status = await updateHashmap(url);
+            console.log(status)
+            if (status === "ok")
                 setHashed(true);
-            }, 5000);
 
         };
 
