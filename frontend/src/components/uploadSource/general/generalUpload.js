@@ -8,6 +8,7 @@ import Argo11 from './argo11'
 import Argo12 from './argo12'
 import Argo16 from './argo16'
 import Argo29 from './argo29'
+import ExamBoardArgo from './ExamBoardArgo';
 import ProgramPlan from './programPlan'
 import Cge from './cge'
 
@@ -51,6 +52,7 @@ function GeneralUploadComponent() {
                     <Argo12 setShowData={setShowData} setDisplayData={setDisplayData} />
                     <Argo16 setShowData={setShowData} setDisplayData={setDisplayData} />
                     <Argo29 setShowData={setShowData} setDisplayData={setDisplayData} />
+                    <ExamBoardArgo setShowData={setShowData} setDisplayData={setDisplayData} />
                     <Cge setShowData={setShowData} setDisplayData={setDisplayData} />
 
                     {programYears.length !== 0 ?
