@@ -58,7 +58,7 @@ const ExamSEN = (props) => {
             jsonObjects.push(jsonObj);
         }
 
-        // console.log(jsonObjects)
+        console.log(jsonObjects)
         await saveExamSen(url, jsonObjects)
         setLoaded(false)
         setLoading(false)

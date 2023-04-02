@@ -12,7 +12,7 @@ export default function AttendanceRegister(props) {
     const { url } = useSelector((state) => state.setting);
 
     let username_ = props.username
-    let username = (username_ === "demo") ? "admin" : username_
+    let username = "admin"
 
     const [courseList, setCourseList] = useState([])
 
@@ -21,7 +21,7 @@ export default function AttendanceRegister(props) {
 
     //Options
     const departmentOptionList = [
-        // { value: 'ALL', label: 'All', disabled: (username !== "admin") },
+        { value: 'ALL', label: 'All', disabled: (username !== "admin") },
         { value: 'BU', label: 'BU (Business)', disabled: (username !== "admin" && username !== "bu") },
         { value: 'AH', label: 'AH (Arts and Humanities)', disabled: (username !== "admin" && username !== "ah") },
         { value: 'ST', label: 'ST (Science and Technology)', disabled: (username !== "admin" && username !== "st") },
@@ -30,7 +30,7 @@ export default function AttendanceRegister(props) {
     const [courseOptionList, setCourseOptionList] = useState([])
 
     //Selected values
-    const [chosenDepartment, setChosenDepartment] = useState((username === "admin") ? "BU" : username.toUpperCase())
+    const [chosenDepartment, setChosenDepartment] = useState("ALL")
     const [chosenCourse, setChosenCourse] = useState("ALL")
     const [finalCourseList, setFinalCourseList] = useState([])
 
@@ -84,7 +84,7 @@ export default function AttendanceRegister(props) {
             let courseList = await getCourseList(url)
 
             setCourseList(courseList)
-            filter(courseList, (username === "admin") ? "ALL" : username.toUpperCase(), "ALL")
+            filter(courseList, "ALL", "ALL")
             setLoaded(true)
 
             // updateHashmap(url)

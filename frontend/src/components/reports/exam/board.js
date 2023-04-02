@@ -1,8 +1,8 @@
 import { useSelector } from "react-redux";
 import { useState, useEffect } from 'react'
-import { Button, Select, Table } from '@mantine/core';
+import { Button, Table } from '@mantine/core';
 
-import { updateHashmap, getCourseList } from '../../../functions/report/attendanceList'
+import { getCourseList } from '../../../functions/report/attendanceList'
 
 import { getArgo11Count } from '../../../functions/source/Argo11'
 import { getArgo12Count } from '../../../functions/source/Argo12'
@@ -117,7 +117,7 @@ export default function ExamBoard(props) {
 
         return (
             <>
-                <h2 >Download Exam Information Sheet </h2>
+                <h2 >Download Exam Board </h2>
 
                 <Table
                     className="reportTable"
@@ -146,10 +146,10 @@ export default function ExamBoard(props) {
                     </tbody>
                 </Table>
 
-                <h2>
+                {/* <h2>
                     <span style={{ fontSize: 30 }}>{count} </span>
                     Course Chosen
-                </h2>
+                </h2> */}
 
                 <form
                     method="post"

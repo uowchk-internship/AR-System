@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { useState, useEffect } from 'react'
 import { Button, Select, Table } from '@mantine/core';
 
-import { updateHashmap, getCourseList } from '../../../functions/report/attendanceList'
+import { getCourseList } from '../../../functions/report/attendanceList'
 
 import { getArgo11Count } from '../../../functions/source/Argo11'
 import { getArgo12Count } from '../../../functions/source/Argo12'
@@ -11,9 +11,6 @@ import { getArgo12Count } from '../../../functions/source/Argo12'
 export default function ExamInformation(props) {
     const { url } = useSelector((state) => state.setting);
 
-    let username_ = props.username
-    let username = (username_ === "demo") ? "admin" : username_
-
     const [courseList, setCourseList] = useState([])
 
     const [argo11Count, setArgo11Count] = useState(-1)
@@ -21,18 +18,18 @@ export default function ExamInformation(props) {
 
     //Options
     const departmentOptionList = [
-        { value: 'ALL', label: 'All', disabled: (username !== "admin") },
-        { value: 'BU', label: 'BU (Business)', disabled: (username !== "admin" && username !== "bu") },
-        { value: 'AH', label: 'AH (Arts and Humanities)', disabled: (username !== "admin" && username !== "ah") },
-        { value: 'ST', label: 'ST (Science and Technology)', disabled: (username !== "admin" && username !== "st") },
-        { value: 'SS', label: 'SS (Social Science)', disabled: (username !== "admin" && username !== "ss") },
+        { value: 'ALL', label: 'All' },
+        { value: 'BU', label: 'BU (Business)' },
+        { value: 'AH', label: 'AH (Arts and Humanities)' },
+        { value: 'ST', label: 'ST (Science and Technology)' },
+        { value: 'SS', label: 'SS (Social Science)' },
     ]
-    const [courseOptionList, setCourseOptionList] = useState([])
+    // const [courseOptionList, setCourseOptionList] = useState([])
 
     //Selected values
-    const [chosenDepartment, setChosenDepartment] = useState((username === "admin") ? "ALL" : username.toUpperCase())
+    const [chosenDepartment, setChosenDepartment] = useState("ALL")
     const [chosenCourse, setChosenCourse] = useState("ALL")
-    const [finalCourseList, setFinalCourseList] = useState([])
+    // const [finalCourseList, setFinalCourseList] = useState([])
 
     //Old value
     const [oldDepartment, setOldDepartment] = useState("ALL")
@@ -72,8 +69,8 @@ export default function ExamInformation(props) {
         }
 
 
-        setCourseOptionList(courseOptions)
-        setFinalCourseList(chosenCourseList)
+        // setCourseOptionList(courseOptions)
+        // setFinalCourseList(chosenCourseList)
         setCount(chosenCourseList.length)
 
     }
@@ -84,7 +81,7 @@ export default function ExamInformation(props) {
             let courseList = await getCourseList(url)
 
             setCourseList(courseList)
-            filter(courseList, (username === "admin") ? "ALL" : username.toUpperCase(), "ALL")
+            filter(courseList, "ALL", "ALL")
             setLoaded(true)
 
             // updateHashmap(url)
@@ -129,7 +126,10 @@ export default function ExamInformation(props) {
                             <td>
                                 <Select
                                     data={departmentOptionList}
-                                    onChange={setChosenDepartment}
+                                    onChange={(state) => {
+                                        // console.log(state)
+                                        setChosenDepartment(state)
+                                    }}
                                     value={chosenDepartment} />
                             </td>
                         </tr>
@@ -154,6 +154,7 @@ export default function ExamInformation(props) {
                 <form
                     method="post"
                     onSubmit={() => {
+                        // console.log(chosenDepartment)
                         setDownloading(true)
                         setInterval(() => {
                             setDownloading(false)
