@@ -112,18 +112,18 @@ export default function TimeTable(props) {
 
     })
 
-    if (argo12Count > 0 && argo11Count > 0) {
+    // if (argo12Count > 0 && argo11Count > 0) {
 
-        return (
-            <>
-                <h2 >Download Exam TimeTable </h2>
+    return (
+        <>
+            <h2 >Download Exam TimeTable </h2>
 
-                <Table
-                    className="reportTable"
-                    striped highlightOnHover
-                    style={{ width: "60%", marginLeft: "20%", marginRight: "20%" }}>
-                    <tbody>
-                        {/* <tr>
+            <Table
+                className="reportTable"
+                striped highlightOnHover
+                style={{ width: "60%", marginLeft: "20%", marginRight: "20%" }}>
+                <tbody>
+                    {/* <tr>
                             <th>Faculty</th>
                             <td>
                                 <Select
@@ -142,46 +142,46 @@ export default function TimeTable(props) {
                                     value={chosenCourse} />
                             </td>
                         </tr> */}
-                    </tbody>
-                </Table>
+                </tbody>
+            </Table>
 
-                {/* <h2>
+            {/* <h2>
                     <span style={{ fontSize: 30 }}>{count} </span>
                     Course Chosen
                 </h2>
  */}
-                <form
-                    method="post"
-                    onSubmit={() => {
-                        setDownloading(true)
-                        setInterval(() => {
-                            setDownloading(false)
-                        }, 3000);
-                    }}
-                    action={`${url}/api/report/exam/timetable/`} >
-                    {/* <input type="hidden" name="faculty" value={chosenDepartment}></input> */}
-                    <Button
-                        type="submit"
-                        disabled={tempResult.normalCount === 0}
-                        loading={downloading}
-                        name="" >
+            <form
+                method="post"
+                onSubmit={() => {
+                    setDownloading(true)
+                    setInterval(() => {
+                        setDownloading(false)
+                    }, 3000);
+                }}
+                action={`${url}/api/report/exam/timetable/`} >
+                {/* <input type="hidden" name="faculty" value={chosenDepartment}></input> */}
+                <Button
+                    type="submit"
+                    disabled={tempResult.normalCount === 0}
+                    loading={downloading}
+                    name="" >
 
-                        Download Exam Timetable
-                    </Button>
+                    Download Exam Timetable
+                </Button>
 
-                </form>
-            </>
-        )
-    } else {
-        return (
-            // (argo12Count === -1 && argo11Count === -1) ?
-                <>
-                    <h1>Loading...</h1>
-                </>
-                // : <>
-                //     <h1>Error: The required data source is not imported.</h1>
-                //     <h2>Data source required: Argo11 and Argo12</h2>
-                // </>
-        )
-    }
+            </form>
+        </>
+    )
+    // } else {
+    //     return (
+    //         // (argo12Count === -1 && argo11Count === -1) ?
+    //             <>
+    //                 <h1>Loading...</h1>
+    //             </>
+    //             // : <>
+    //             //     <h1>Error: The required data source is not imported.</h1>
+    //             //     <h2>Data source required: Argo11 and Argo12</h2>
+    //             // </>
+    //     )
+    // }
 }
