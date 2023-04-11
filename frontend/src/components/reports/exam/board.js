@@ -12,8 +12,7 @@ export default function ExamBoard(props) {
     const { url } = useSelector((state) => state.setting);
 
     let username_ = props.username
-    let username = (username_ === "demo") ? "admin" : username_
-
+    let username = "admin"
     const [courseList, setCourseList] = useState([])
 
     const [argo11Count, setArgo11Count] = useState(-1)
@@ -174,14 +173,14 @@ export default function ExamBoard(props) {
         )
     } else {
         return (
-            (argo12Count === -1 && argo11Count === -1) ?
+            // (argo12Count === -1 && argo11Count === -1) ?
                 <>
                     <h1>Loading...</h1>
                 </>
-                : <>
-                    <h1>Error: The required data source is not imported.</h1>
-                    <h2>Data source required: Argo11 and Argo12</h2>
-                </>
+                // : <>
+                //     <h1>Error: The required data source is not imported.</h1>
+                //     <h2>Data source required: Argo11 and Argo12</h2>
+                // </>
         )
     }
 }

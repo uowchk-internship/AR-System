@@ -13,8 +13,7 @@ function ExamHomeComponent(props) {
     const { url } = useSelector((state) => state.setting);
 
     let username_ = props.username
-    let username = (username_ === "demo") ? "admin" : username_
-
+    let username = "admin"
     //tab state
     const [activeTab, setActiveTab] = useState("timetable");
     const [loaded, setLoaded] = useState(false);

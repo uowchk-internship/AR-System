@@ -177,14 +177,14 @@ export default function ExamInformation(props) {
         )
     } else {
         return (
-            (argo12Count === -1 && argo11Count === -1) ?
+            // (argo12Count === -1 && argo11Count === -1) ?
                 <>
                     <h1>Loading...</h1>
                 </>
-                : <>
-                    <h1>Error: The required data source is not imported.</h1>
-                    <h2>Data source required: Argo11 and Argo12</h2>
-                </>
+                // : <>
+                //     <h1>Error: The required data source is not imported.</h1>
+                //     <h2>Data source required: Argo11 and Argo12</h2>
+                // </>
         )
     }
 }

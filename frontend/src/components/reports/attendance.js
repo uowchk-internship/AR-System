@@ -11,8 +11,7 @@ export default function AttendanceList(props) {
     const { url } = useSelector((state) => state.setting);
 
     let username_ = props.username
-    let username = (username_ === "demo") ? "admin" : username_
-
+    let username = "admin"
     const [courseList, setCourseList] = useState([])
 
     const [argo12Count, setArgo12Count] = useState(-1)

@@ -15,8 +15,7 @@ const Degreeworks = (props) => {
   const { url } = useSelector((state) => state.setting);
 
   let username_ = props.username
-  let username = (username_ === "demo") ? "admin" : username_
-
+  let username = "admin"
   const [studentList, setStudentList] = useState([]);
 
   const [argo10Count, setArgo10Count] = useState(-1)

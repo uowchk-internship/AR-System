@@ -12,8 +12,7 @@ export default function MoodleList(props) {
     const { url } = useSelector((state) => state.setting);
 
     let username_ = props.username
-    let username = (username_ === "demo") ? "admin" : username_
-
+    let username = "admin"
     const [courseList, setCourseList] = useState([])
 
     const [argo11Count, setArgo11Count] = useState(-1)
